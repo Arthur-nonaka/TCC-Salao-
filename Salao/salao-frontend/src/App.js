@@ -13,8 +13,9 @@ function App() {
         }
     };
 
-    const handleInput = () => {
+    const handleChange = (event) => {
 
+        setText(event.target.value);
     };
 
     return (
@@ -22,8 +23,11 @@ function App() {
             <button onClick={handleClick}>
                 {batata}
             </button>
-            <input on={handleInput} value={text}>
+            <input onChange={handleChange} value={text} >
             </input>
+            <h1>
+                {text}
+            </h1>
         </div>
     );
 };
