@@ -1,8 +1,17 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function App() {
     const [batata, setBatata] = useState("batata");
     const [text, setText] = useState();
+    const [message, setMessage] = useState("");
+
+    useEffect(() => {
+        fetch("http://localhost:8000/message")
+        .then((res) => res.json())
+        .then((data) => setMessage(data.message));
+    }, []);
+    console.log(message);
+
 
 
     const handleClick = () => {
@@ -27,6 +36,7 @@ function App() {
             </input>
             <h1>
                 {text}
+                {message}
             </h1>
         </div>
     );
