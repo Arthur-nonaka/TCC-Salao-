@@ -20,28 +20,24 @@ function LoginPage() {
                         <label>
                             Email
                         </label>
-                        <input placeholder='Email'>
-
-                        </input>
+                        <input placeholder='Email'></input>
                     </div>
 
                     <div className='input-login'>
                         <label>
                             Senha
                         </label>
-                        <input placeholder='Senha'>
-
-                        </input>
+                        <input placeholder='Senha'></input>
                     </div>
-
-                    <Button>
-
-                    </Button>
+                    <div className='button-repartition'>
+                        <Link to='/schedule'><Button css="button-login"> Login </Button></Link>
+                    </div>
                 </div>
 
-                    <div className='line'> </div>
+                <div className='line'> </div>
+
                 <div>
-                    <Link to="/signup"> Criar Conta</Link>
+                    <Link to="/signup"> <Button css="button-signup">Criar Conta</Button></Link>
                 </div>
             </div>
         </div>
