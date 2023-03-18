@@ -19,18 +19,9 @@ function App() {
             .then((res) => res.json())
             .then((data) => setMessage(data.message));
     }, []);
-    
-    return (
-        <div className='container'>
-            <div className='menu'>
-                <Link className='link' to="/"> Login </Link>
-                <Link className='link' to="/signup"> Sign Up </Link>
-                <Link className='link' to="/schedule"> Schedule </Link>
-                <Link className='link' to="/clients"> Clients </Link>
-                <Link className='link' to="/products"> Products </Link> 
-                <Link className='link' to="/services"> Services </Link> 
-            </div>
 
+    return (
+        <div>
             <Router>
                 <LoginPage path="/" />
                 <SignUpPage path="/signup" />
@@ -39,8 +30,6 @@ function App() {
                 <ProductsPage path="/products" />
                 <ServicesPage path="/services" />
             </Router>
-
-
         </div>
     );
 };

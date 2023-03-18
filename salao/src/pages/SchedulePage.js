@@ -1,9 +1,14 @@
-function SchedulePage () {
+import NavBar from '../components/NavBar';
+
+function SchedulePage() {
 
 
-    return(
+    return (
         <div>
-            Schedule 
+            <header>
+                <NavBar />
+            </header>
+            Schedule
         </div>
     );
 };

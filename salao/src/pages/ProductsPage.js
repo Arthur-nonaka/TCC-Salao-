@@ -1,8 +1,13 @@
-function ProductsPage () {
+import NavBar from '../components/NavBar';
+
+function ProductsPage() {
 
 
-    return(
+    return (
         <div>
+            <header>
+                <NavBar />
+            </header>
             Products
         </div>
     );
