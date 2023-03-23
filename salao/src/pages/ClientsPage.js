@@ -1,14 +1,10 @@
-import NavBar from '../components/NavBar';
 
-function ClientsPage () {
+function ClientsPage() {
 
 
-    return(
-        <div>
-            <header>
-                <NavBar />
-            </header>
-            Clients
+    return (
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100vw', height: '100vh' }}>
+                Clients
         </div>
     );
 };

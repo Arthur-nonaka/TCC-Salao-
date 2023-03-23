@@ -1,13 +1,9 @@
-import NavBar from '../components/NavBar';
 
 function ProductsPage() {
 
 
     return (
-        <div>
-            <header>
-                <NavBar />
-            </header>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100vw', height: '100vh' }}>
             Products
         </div>
     );

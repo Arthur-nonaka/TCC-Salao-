@@ -1,13 +1,9 @@
-import NavBar from '../components/NavBar';
 
 function SchedulePage() {
 
 
     return (
-        <div>
-            <header>
-                <NavBar />
-            </header>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100vw', height: '100vh' }}>
             Schedule
         </div>
     );

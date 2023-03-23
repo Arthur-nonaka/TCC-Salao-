@@ -1,6 +1,7 @@
-import { Link } from '@reach/router';
+import { Link, useLocation } from 'react-router-dom';
 
 function NavBar() {
+    let currentLocation = useLocation();
 
     return (
         <nav className="navbar navbar-expand-lg fixed-top bg-dark" data-bs-theme="dark">
@@ -12,22 +13,25 @@ function NavBar() {
 
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <Link className='nav-link active ' to='/schedule'> Agenda</Link>
+                        <li className="nav-item">
+                            <Link className={currentLocation.pathname === '/beautyflow/schedule' ?  'nav-link text-primary' : 'nav-link '} to='schedule'> Agenda</Link>
                         </li>
-                        <li class="nav-item">
-                            <Link className='nav-link active' to='/clients'> Clientes</Link>
+                        <li className="nav-item">
+                            <Link className={currentLocation.pathname === '/beautyflow/clients' ?  'nav-link text-primary' : 'nav-link '} to='clients'> Clientes</Link>
                         </li>
-                        <li class="nav-item">
-                            <Link className='nav-link active' to='/products'> Produtos</Link>
+                        <li className="nav-item">
+                            <Link className={currentLocation.pathname === '/beautyflow/products' ?  'nav-link text-primary' : 'nav-link '} to='products'> Produtos</Link>
                         </li>
-                        <li class="nav-item">
-                            <Link className='nav-link active' to='/services'> Serviços</Link>
+                        <li className="nav-item">
+                            <Link className={currentLocation.pathname === '/beautyflow/services' ?  'nav-link text-primary' : 'nav-link '} to='services'> Serviços</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className={currentLocation.pathname === '/beautyflow/expenses' ?  'nav-link text-primary' : 'nav-link '} to='expenses'> Despesas</Link>
                         </li>
                     </ul>
 
-                    <div className='navbar-text' >
-                        <div class="nav-item">
+                    <div className='navbar-nav' >
+                        <div className='nav-item'>
                             <Link className='nav-link' to='/'> Sair </Link>
                         </div>
                     </div>
