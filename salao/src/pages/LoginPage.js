@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import Button from '../components/Button'
 
+import logo from './yoshi.png';
+
 import '../Login.css';
 
 function LoginPage() {
@@ -9,8 +11,10 @@ function LoginPage() {
   return (
     <div className='container-fluid d-flex flex-column align-items-center h-100'>
       <main className="form-signin w-100 m-auto">
-        <form className="border p-5 w-100 ">
-          <img className="mb-4" src="/docs/5.3/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57" />
+        <form className="border p-5 w-100">
+          <div className="d-flex justify-content-center">
+            <img className="mb-4" src={logo} alt="" width="72" height="57" />
+          </div>
 
           <div className="form-floating">
             <input type="email" className="form-control fs-6" id="floatingInput " placeholder="name@example.com" />
