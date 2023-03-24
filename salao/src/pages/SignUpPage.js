@@ -2,21 +2,30 @@ import PhoneInput from '../components/PhoneInput';
 import CPFInput from '../components/CPFInput';
 
 import { useState } from 'react';
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import '../Login.css';
 
 function SignUpPage() {
-    const [phone, setPhone] = useState('');
-    const [cpf, setcpf] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const navigate = useNavigate();
 
 
-    const handleChangePhone = (event) => {
-        setPhone(event.target);
+    const handleChangePassword = (event) => {
+        setPassword(event.target);
     };
 
-    const handleChangeCPF = (event) => {
-        setcpf(event.target);
+    const handleChangeConfirmPassword = (event) => {
+        setConfirmPassword(event.target);
+    };
+
+    const handleClick = () => {
+        if(password !== confirmPassword) {
+            alert('Batata');
+        } else {
+            navigate('schedule');
+        }
     };
 
     return (
@@ -32,33 +41,25 @@ function SignUpPage() {
                     <div className="form-row d-flex">
                         <div className="form-group ms-2 w-50">
                             <div className="form-floating">
-                                <input type="text" className="form-control " id="floatingPassword " placeholder="user@gmail.com" />
-                                <label for="floatingEmail"> Email</label>
+                                <input type="password" className="form-control " id="floatingPassword " placeholder="Senha" value={password} onChange={handleChangePassword}/>
+                                <label for="floatingPassword"> Senha</label>
                             </div>
                         </div>
                         <div className="form-group ps-1 w-50 me-1">
                             <div className="form-floating">
-                                <input type="password" className="form-control " id="floatingPassword " placeholder="Senha" />
-                                <label for="floatingPassword"> Senha</label>
+                                <input type="password" className="form-control " id="floatingPassword " placeholder="Senha" value={confirmPassword} onChange={handleChangeConfirmPassword} />
+                                <label for="floatingPassword"> Confirmar Senha</label>
                             </div>
                         </div>
                     </div>
-                    <div className="form-group m-2 me-1">
+                    <div class="form-group  m-2 w-auto me-1">
                         <div className="form-floating">
-                            <PhoneInput value={phone} onChange={handleChangePhone}>
-                            </PhoneInput>
-                            <label for="floatingEmail"> Telefone </label>
-                        </div>
-                    </div>
-                    <div className="form-group m-2 me-1 mb-3">
-                        <div className="form-floating">
-                            <CPFInput value={cpf} onChange={handleChangeCPF}>
-                            </CPFInput>
-                            <label for="floatingEmail"> CPF </label>
+                            <input type="text" className="form-control " id="floatingPassword " placeholder="user@gmail.com" />
+                            <label for="floatingEmail"> Email </label>
                         </div>
                     </div>
                     <div className="form-row me-1 d-flex justify-content-end">
-                        <button type="submit" class="btn btn-primary p-2 fs-5">Sign in</button>
+                        <button onClick={handleClick} type="submit" class="btn btn-primary p-2 fs-5">Sign in</button>
                     </div>
                 </form>
 
