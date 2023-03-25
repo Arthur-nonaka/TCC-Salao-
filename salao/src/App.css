@@ -1,3 +1,13 @@
+.Xbutton {
+    font-size: 23px;
+}
+
+.Xbutton:hover {
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    color: rgb(37, 7, 7);
+}
+
 
 /* .container {
     display: flex;
