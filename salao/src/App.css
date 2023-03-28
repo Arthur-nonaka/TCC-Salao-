@@ -1,3 +1,11 @@
+.link {
+    text-decoration: none;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
 .Xbutton {
     font-size: 23px;
 }
@@ -5,7 +13,7 @@
 .Xbutton:hover {
     cursor: pointer;
     transition: 0.3s ease-in-out;
-    color: rgb(37, 7, 7);
+    color: rgb(46, 5, 5);
 }
 
 

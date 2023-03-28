@@ -11,7 +11,7 @@ function LoginPage() {
   return (
     <div className='container-fluid d-flex flex-column align-items-center h-100'>
       <main className="form-signin w-100 m-auto">
-        <form className="border p-5 w-100">
+        <form className="border p-5 w-100 rounded">
           <div className="d-flex justify-content-center">
             <img className="mb-4" src={logo} alt="" width="72" height="57" />
           </div>
@@ -32,10 +32,8 @@ function LoginPage() {
 
         </form>
 
-        <div className='d-flex flex-row-reverse border mt-2 p-4 fs-6'>
-          <Link to='/signup'>
-            Criar Conta
-          </Link>
+        <div className='d-flex flex-row justify-content-center border mt-2 p-4 fs-6 rounded'>
+          Não tem uma conta? <Link to='/signup' className="link ms-1">Criar Conta</Link>.
         </div>
       </main>
     </div>
