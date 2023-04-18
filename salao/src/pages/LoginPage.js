@@ -38,18 +38,7 @@ function LoginPage() {
   const onChangePassordd = (event) => {
     setPassword(event.target.value);
   };
-
-  // const handleCloseError = () => {
-  //   setErrorShow(false);
-  // };
-
-  // const content = <div className="border p-4 d-flex justify-content-between align-items-center mb-2 rounded text-danger border-danger bg-danger bg-opacity-25">
-  //   {text}
-  //   <div className='Xbutton' onClick={handleCloseError}>
-  //     X
-  //   </div>
-  // </div>;
-
+  
   return (
     <div className='container-fluid d-flex flex-column align-items-center h-100'>
       <main className="form-signin w-100 m-auto">

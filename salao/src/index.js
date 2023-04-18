@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from './App'
 import './App.css'
-import { EditDeleteProvider } from "./context/EditDelete";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -17,12 +16,10 @@ import ExpensesPage from "./pages/ExpensesPage";
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
-    <EditDeleteProvider>
-        <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<LoginPage />} />
-                <Route path="signup" element={<SignUpPage />} />
-
+    <BrowserRouter>
+        <Routes>
+            <Route path="/" element={<LoginPage />} />
+            <Route path="signup" element={<SignUpPage />} />
                 <Route path="beautyflow/" element={<App />}>
                     <Route path="schedule" element={<SchedulePage />} />
                     <Route path="clients" element={<ClientsPage />} />
@@ -33,8 +30,8 @@ root.render(
 
 
 
-            </Routes>
-        </BrowserRouter>
-    </EditDeleteProvider>
+
+        </Routes>
+    </BrowserRouter>
 
 );

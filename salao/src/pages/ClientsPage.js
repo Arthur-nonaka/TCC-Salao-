@@ -1,11 +1,11 @@
-import EditDeleteContext from '../context/EditDelete';
-import { useState, useContext } from 'react';
+import { useState } from 'react';
+import axios from 'axios';
 
 import Table from "../components/Table";
+import { Navigate, useNavigate } from 'react-router-dom';
 
 function ClientsPage() {
-    const { handleEdit, handleDelete } = useContext(EditDeleteContext);
-
+    const navigate = useNavigate();
     const type = "client";
 
     const [clients, setClients] = useState([
@@ -29,13 +29,32 @@ function ClientsPage() {
         {
             label: "***",
             render: (client) => {
-                <div>
-                    <button onClick={handleChangeEdit}>Editar</button>
-                    <button onClick={() => handleDelete(client.code, type)}>Excluir</button>
-                </div>
+                return (
+                    <div className=''>
+                        <button className="" onClick={() => handleEdit(client.code, type)}>Editar</button>
+                        <button className="" onClick={() => handleDelete(client.code, type)}>Excluir</button>
+                    </div>
+                );
+
             }
         }
     ];
+
+    const handleEdit = (code, type) => {
+
+    };
+
+    const handleDelete = (code, type) => {
+        axios.post("http://localhost:8000/delete", { code, type })
+            .then(res => {
+                console.log(res);
+                navigate('/beautyflow/clients');
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    };
+
 
 
     return (
