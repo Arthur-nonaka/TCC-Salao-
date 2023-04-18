@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios';
 
 import '../Login.css';
 
@@ -43,7 +44,11 @@ function SignUpPage() {
         }
 
         else {
-            navigate('../beautyflow');
+            axios.post('https://localhost:8000/register', { name, email, password })
+                .then(res => {
+                    console.log(res.status);
+                    console.log(res.data);
+                })
         }
     };
 

@@ -1,8 +1,8 @@
-function Button({children, css}) {
+function Button({children, css, onClick}) {
 
 
     return (
-            <button className={css}>
+            <button className={css} onClick={onClick}>
                 {children}
             </button>
     );
