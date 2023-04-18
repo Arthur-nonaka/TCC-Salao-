@@ -3,6 +3,7 @@ import { useState } from 'react';
 import axios from 'axios';
 
 import Button from '../components/Button'
+import ErrorMessage from "../components/ErrorMessage";
 
 import logo from './yoshi.png';
 import '../Login.css';
@@ -23,7 +24,7 @@ function LoginPage() {
         navigate('/beautyflow');
       })
       .catch(err => {
-        if (err.response.status == 400) {
+        if (err.response.status === 400) {
           setText(err.response.data.errorMessage);
           setErrorShow(true);
         }
@@ -38,23 +39,23 @@ function LoginPage() {
     setPassword(event.target.value);
   };
 
-  const handleCloseError = () => {
-    setErrorShow(false);
-  };
+  // const handleCloseError = () => {
+  //   setErrorShow(false);
+  // };
 
-  const content = <div className="border p-4 d-flex justify-content-between align-items-center mb-2 rounded text-danger border-danger bg-danger bg-opacity-25">
-    {text}
-    <div className='Xbutton' onClick={handleCloseError}>
-      X
-    </div>
-  </div>;
+  // const content = <div className="border p-4 d-flex justify-content-between align-items-center mb-2 rounded text-danger border-danger bg-danger bg-opacity-25">
+  //   {text}
+  //   <div className='Xbutton' onClick={handleCloseError}>
+  //     X
+  //   </div>
+  // </div>;
 
   return (
     <div className='container-fluid d-flex flex-column align-items-center h-100'>
       <main className="form-signin w-100 m-auto">
-      <div>
-        {errorShow && content}
-      </div>
+        <div>
+          {errorShow && <ErrorMessage setErrorShow={setErrorShow}>{text}</ErrorMessage>}
+        </div>
         <form className="border p-5 w-100 rounded">
           <div className="d-flex justify-content-center">
             <img className="mb-4" src={logo} alt="" width="72" height="57" />

@@ -15,24 +15,27 @@ const db = mysql.createPool(({
 }));
 
 app.post("/register", async (req, res) => {
-	try {
-		const name = req.body.name;
-		const email = req.body.email;
-		const password = req.body.password;
+	const type = req.body.type;
+	if (type === "user") {
+		try {
+			const name = req.body.name;
+			const email = req.body.email;
+			const password = req.body.password;
 
-		let [rows, fields] = await db.query("SELECT * FROM usuario WHERE usu_email = ?", [email]);
+			let [rows, fields] = await db.query("SELECT * FROM usuario WHERE usu_email = ?", [email]);
 
-		console.log(rows);
-		if (rows.length == 0) {
-			let result = await db.query("INSERT INTO usuario (usu_nome, usu_email, usu_senha) VALUES (?, ?, ?)", [name, email, password]);
-			res.send("Usuário cadastrado com sucesso");
-			return;
-		} else {
-			res.status(400).send({ errorMessage: "Usuário já cadastrado" })
-			return;
+			if (rows.length == 0) {
+				let result = await db.query("INSERT INTO usuario (usu_nome, usu_email, usu_senha) VALUES (?, ?, ?)", [name, email, password]);
+				res.send("Usuário cadastrado com sucesso");
+				return;
+			} else {
+				res.status(400).send({ errorMessage: "Usuário já cadastrado" })
+				return;
+			}
+		} catch (error) {
+			console.log(error);
+			res.status(500).send(error);
 		}
-	} catch (error) {
-		res.status(500).send(error);
 	}
 });
 

@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios';
 
+import ErrorMessage from '../components/ErrorMessage';
+
 import '../Login.css';
 
 function SignUpPage() {
@@ -42,14 +44,15 @@ function SignUpPage() {
         }
 
         else {
-            axios.post('http://localhost:8000/register', { name, email, password })
+            const type = "user";
+            axios.post('http://localhost:8000/register', {type, name, email, password})
                 .then(res => {
                     setText('');
                     setErrorShow(false);
                     navigate('/');
                 })
                 .catch(err => {
-                    if (err.response.status == 400) {
+                    if (err.response.status === 400) {
                         setText(err.response.data.errorMessage);
                         setErrorShow(true);
                     } else {
@@ -61,23 +64,12 @@ function SignUpPage() {
         }
     };
 
-    const handleCloseError = () => {
-        setErrorShow(false);
-    };
-
-
-    const content = <div className="border p-4 d-flex justify-content-between align-items-center mb-2 rounded text-danger border-danger bg-danger bg-opacity-25">
-        {text}
-        <div className='Xbutton' onClick={handleCloseError}>
-            X
-        </div>
-    </div>;
 
     return (
         <div className='container-fluid d-flex  align-items-center h-100'>
             <main className=" m-auto" style={{ width: "500px" }}>
                 <div>
-                    {errorShow && content}
+                    {errorShow && <ErrorMessage setErrorShow={setErrorShow}>{text}</ErrorMessage>}
                 </div>
                 <form className="border p-4 rounded">
                     <div className="form-group  m-2 w-auto me-1">
