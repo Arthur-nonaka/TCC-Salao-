@@ -1,9 +1,15 @@
+import {useState} from 'react';
+
+import Table from "../components/Table";
+
 function ExpensesPage() {
+    const [expenses,setExpenses] = useState([]);
+    const config = [];
 
 
     return(
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100vw', height: '100vh' }}>
-            Despesas
+            <Table data={expenses} config={config}/>
         </div>
     );
 }

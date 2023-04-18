@@ -11,9 +11,7 @@ function SignUpPage() {
     const [email, setEmail] = useState('');
     const [errorShow, setErrorShow] = useState(false);
     const [text, setText] = useState('');
-
     const navigate = useNavigate();
-
 
     const handleChangePassword = (event) => {
         setPassword(event.target.value);
@@ -44,11 +42,22 @@ function SignUpPage() {
         }
 
         else {
-            axios.post('https://localhost:8000/register', { name, email, password })
+            axios.post('http://localhost:8000/register', { name, email, password })
                 .then(res => {
-                    console.log(res.status);
-                    console.log(res.data);
+                    setText('');
+                    setErrorShow(false);
+                    navigate('/');
                 })
+                .catch(err => {
+                    if (err.response.status == 400) {
+                        setText(err.response.data.errorMessage);
+                        setErrorShow(true);
+                    } else {
+
+                        setText(err.message);
+                        setErrorShow(true);
+                    }
+                });
         }
     };
 

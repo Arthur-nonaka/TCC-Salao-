@@ -9,11 +9,20 @@ function ClientsPage() {
         { name: 'Jackson', fone: '107895655745' },
     ]);
 
+    const config = [
+        {
+            label: "Nome"
+        },
+        {
+            label: "Telefone"
+        }
+    ];
+
 
     return (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100vw', height: '100vh' }}>
 
-            <Table data={clients} />
+            <Table data={clients} config={config} />
 
 
         </div>
