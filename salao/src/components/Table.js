@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 function Table({ data, config }) {
 
 
@@ -8,9 +6,14 @@ function Table({ data, config }) {
     });
 
     const renderedRows = data.map((row, index) => {
+        const renderedCells = config.map((cell, index) => {
+            return (
+                <td key={index}>{cell.render(row)}</td>
+            );
+
+        })
         return (<tr key={index}>
-            <td>{row.name}</td>
-            <td>{row.fone}</td>
+            {renderedCells}
         </tr>);
     });
 
