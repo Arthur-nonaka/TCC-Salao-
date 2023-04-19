@@ -12,14 +12,13 @@ function Table({ data, config }) {
 
 
     const renderedRows = data.map((row, index) => {
-
         return (
-            <ShowRow key={index} row={row} index={index} />);
+            <ShowRow key={index} row={row} index={index} config={config}/>);
     });
     
     return (
-        <table className='table table-striped table-primary container-sm'>
-            <thead>
+        <table className='table '>
+            <thead style={{backgroundColor: "#fae6fc"}}>
                 <tr>
                     {updatedHeader}
                 </tr>

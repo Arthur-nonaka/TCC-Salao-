@@ -13,7 +13,9 @@ function ClientsPage() {
     const [clients, setClients] = useState([
         { code: 1, name: 'Arthur', fone: '18997963229' },
         { code: 2, name: 'Pochita', fone: '69343882822' },
-        { code: 3, name: 'Jackson', fone: '107895655745' },
+        { code: 3, name: 'Jackson', fone: '10789565575' },
+        { code: 4, name: 'Erick', fone: '15345433248' },
+        { code: 5, name: 'Jonas', fone: '15423445368' },
     ]);
 
     const showInput = (client) => {
@@ -28,16 +30,16 @@ function ClientsPage() {
     const config = [
         {
             label: "#",
-            render: (client) => client.code
+            render: (value) => value
         },
         {
             label: "Nome",
-            render: (client) => client.name
+            render: (value) => value
 
         },
         {
             label: "Telefone",
-            render: (client) => client.fone
+            render: (value) => value
         },
     ];
 

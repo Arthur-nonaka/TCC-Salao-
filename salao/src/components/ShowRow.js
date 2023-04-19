@@ -1,38 +1,58 @@
 import { useState } from 'react';
 import { BsFillTrash3Fill, BsPencilFill } from "react-icons/bs";
 
-function ShowRow({ index, row }) {
+function ShowRow({ index, row, config }) {
     const [showEdit, setShowEdit] = useState(false);
-
-    // let cells = cells.entries(row); 
-    // cells.forEach(cell => {
-    //     console.log(cell);
-    // });
 
     const handleClickEdit = () => {
         setShowEdit(!showEdit);
     };
 
+    let values = Object.values(row);
+    let cells = Object.values(config);
+
+    const renderedRow = values.map((value, index) => {
+
+        return (
+            <td key={index}>
+                {cells[index].render(value)}
+            </td>
+        );
+    });
+
+    const renderedRowEdit = values.map((value, index) => {
+
+        if (index === 0) {
+            return <td key={index}>{cells[index].render(value)}</td>
+        }
+        return (
+            <td key={index}>
+                <input style={{height: '23px'}} value={cells[index].render(value)} />
+            </td>
+        );
+    });
+
+
     let content =
         <tr>
-            <td>{row.code}</td>
-            <td>{row.name}</td>
-            <td>{row.fone}</td>
+            {renderedRow}
             <td style={{ display: "flex", alignItems: 'center', justifyContent: 'center' }}>
-                <button style={{ display: "flex", alignItems: 'center', justifyContent: "center" }} className="btn btn-primary me-1  " onClick={() => handleClickEdit()}><BsPencilFill fontSize={13} /> </button>
-                <button style={{ display: "flex", alignItems: 'center', justifyContent: "center" }} className="btn btn-danger" onClick={() => { }}><BsFillTrash3Fill fontSize={13} /></button>
+                <div className='btn-group'>
+                    <button style={{ display: "flex", alignItems: 'center', justifyContent: "center" }} className="btn btn-primary" onClick={() => handleClickEdit()}><BsPencilFill fontSize={13} /> </button>
+                    <button style={{ display: "flex", alignItems: 'center', justifyContent: "center" }} className="btn btn-danger" onClick={() => { }}><BsFillTrash3Fill fontSize={13} /></button>
+                </div>
             </td>
         </tr>
 
     if (showEdit) {
         content =
             <tr>
-                <td>{row.code}</td>
-                <td><input value={row.name} style={{ height: '23px' }} /></td>
-                <td><input value={row.fone} style={{ height: '23px' }} /></td>
+                {renderedRowEdit}
                 <td style={{ display: "flex", alignItems: 'center', justifyContent: 'center' }}>
-                    <button style={{ display: "flex", alignItems: 'center', justifyContent: "center" }} className="btn btn-primary me-1  " onClick={() => handleClickEdit()}><BsPencilFill fontSize={13} /> </button>
-                    <button style={{ display: "flex", alignItems: 'center', justifyContent: "center" }} className="btn btn-danger" onClick={() => { }}><BsFillTrash3Fill fontSize={13} /></button>
+                    <div className='btn-group'>
+                        <button style={{ display: "flex", alignItems: 'center', justifyContent: "center" }} className="btn btn-success" onClick={() => handleClickEdit()}><BsPencilFill fontSize={13} /> </button>
+                        <button style={{ display: "flex", alignItems: 'center', justifyContent: "center" }} className="btn btn-danger" onClick={() => { }}><BsFillTrash3Fill fontSize={13} /></button>
+                    </div>
                 </td>
             </tr>
 
