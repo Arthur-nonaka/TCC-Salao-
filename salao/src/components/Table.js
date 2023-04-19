@@ -1,27 +1,27 @@
+import { useState } from 'react';
+
+import ShowRow from "./ShowRow";
+
 function Table({ data, config }) {
 
 
     const renderedHeader = config.map((column, index) => {
-        return (<th key={index}>{column.label}</th>);
+        return (<th scope="col" key={index}>{column.label}</th>);
     });
+    const updatedHeader = [...renderedHeader, <th> </th>];
+
 
     const renderedRows = data.map((row, index) => {
-        const renderedCells = config.map((cell, index) => {
-            return (
-                <td key={index}>{cell.render(row)}</td>
-            );
 
-        })
-        return (<tr key={index}>
-            {renderedCells}
-        </tr>);
+        return (
+            <ShowRow key={index} row={row} index={index} />);
     });
-
+    
     return (
-        <table className='table'>
+        <table className='table table-striped table-primary container-sm'>
             <thead>
                 <tr>
-                    {renderedHeader}
+                    {updatedHeader}
                 </tr>
             </thead>
             <tbody>

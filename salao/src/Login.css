@@ -30,6 +30,7 @@ body {
     border-top-right-radius: 0;
 }
 
-.table{
-    width: 400px;
+.content{
+    display: flex;
+
 }
