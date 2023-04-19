@@ -23,11 +23,11 @@ function ShowRow({ index, row, config }) {
     const renderedRowEdit = values.map((value, index) => {
 
         if (index === 0) {
-            return <td key={index}>{cells[index].render(value)}</td>
+            return <td style={{height: "28px"}} key={index}>{cells[index].render(value)}</td>
         }
         return (
             <td key={index}>
-                <input style={{height: '23px'}} value={cells[index].render(value)} />
+                <input style={{height: '28px'}} value={cells[index].render(value)} />
             </td>
         );
     });
@@ -37,7 +37,7 @@ function ShowRow({ index, row, config }) {
         <tr>
             {renderedRow}
             <td style={{ display: "flex", alignItems: 'center', justifyContent: 'center' }}>
-                <div className='btn-group'>
+                <div className='btn-group' style={{height: '29px'}}>
                     <button style={{ display: "flex", alignItems: 'center', justifyContent: "center" }} className="btn btn-primary" onClick={() => handleClickEdit()}><BsPencilFill fontSize={13} /> </button>
                     <button style={{ display: "flex", alignItems: 'center', justifyContent: "center" }} className="btn btn-danger" onClick={() => { }}><BsFillTrash3Fill fontSize={13} /></button>
                 </div>

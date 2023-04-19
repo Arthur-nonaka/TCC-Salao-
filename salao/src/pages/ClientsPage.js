@@ -8,8 +8,6 @@ function ClientsPage() {
     const navigate = useNavigate();
     const type = "client";
 
-    const [editShow, setEditShow] = useState(false);
-
     const [clients, setClients] = useState([
         { code: 1, name: 'Arthur', fone: '18997963229' },
         { code: 2, name: 'Pochita', fone: '69343882822' },
@@ -17,15 +15,6 @@ function ClientsPage() {
         { code: 4, name: 'Erick', fone: '15345433248' },
         { code: 5, name: 'Jonas', fone: '15423445368' },
     ]);
-
-    const showInput = (client) => {
-        if (editShow) {
-            return <input value={client.name} />
-
-        }
-        return client.name;
-
-    }
 
     const config = [
         {
@@ -42,10 +31,6 @@ function ClientsPage() {
             render: (value) => value
         },
     ];
-
-    const handleEdit = (code, type) => {
-        setEditShow(!editShow);
-    };
 
     const handleDelete = (code, type) => {
         console.log(code);

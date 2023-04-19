@@ -51,16 +51,16 @@ function LoginPage() {
           </div>
 
           <div className="form-floating">
-            <input type="email" className="form-control fs-6" id="floatingInput " placeholder="name@example.com" value={email} onChange={onChangeEmail} />
+            <input type="email" className="form-control fs-6 input-login" id="floatingInput " placeholder="name@example.com" value={email} onChange={onChangeEmail} />
             <label className="fs-5" htmlFor="floatingInput">Email </label>
           </div>
 
           <div className="form-floating">
-            <input type="password" className="form-control fs-6" id="floatingPassword " placeholder="senha" value={password} onChange={onChangePassordd} />
+            <input type="password" className="form-control fs-6 input-login" id="floatingPassword " placeholder="senha" value={password} onChange={onChangePassordd} />
             <label className="fs-5" htmlFor="floatingPassword">Senha </label>
           </div>
 
-          <Button css="w-100 btn btn-lg btn-primary mt-2 fs-5" type="submit" onClick={onSubmit}>Login</Button>
+          <Button css="w-100 btn btn-lg  mt-2 fs-5 button" type="submit" onClick={onSubmit}>Login</Button>
 
         </form>
 
