@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { BsFillTrash3Fill, BsPencilFill } from "react-icons/bs";
 
-function ShowRow({ index, row, config }) {
+function ShowRow({ index, row, config}) {
     const [showEdit, setShowEdit] = useState(false);
 
     const handleClickEdit = () => {
@@ -49,7 +49,7 @@ function ShowRow({ index, row, config }) {
             <tr>
                 {renderedRowEdit}
                 <td style={{ display: "flex", alignItems: 'center', justifyContent: 'center' }}>
-                    <div className='btn-group'>
+                    <div className='btn-group' style={{height: '29px'}}>
                         <button style={{ display: "flex", alignItems: 'center', justifyContent: "center" }} className="btn btn-success" onClick={() => handleClickEdit()}><BsPencilFill fontSize={13} /> </button>
                         <button style={{ display: "flex", alignItems: 'center', justifyContent: "center" }} className="btn btn-danger" onClick={() => { }}><BsFillTrash3Fill fontSize={13} /></button>
                     </div>

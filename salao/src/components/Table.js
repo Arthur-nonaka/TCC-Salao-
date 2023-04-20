@@ -2,11 +2,11 @@ import { useState } from 'react';
 
 import ShowRow from "./ShowRow";
 
-function Table({ data, config }) {
+function Table({ data, config, size }) {
 
 
     const renderedHeader = config.map((column, index) => {
-        return (<th scope="col" key={index}>{column.label}</th>);
+        return (<th style={{width: size}} scope="col" key={index}>{column.label}</th>);
     });
     const updatedHeader = [...renderedHeader, <th> </th>];
 

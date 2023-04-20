@@ -1,12 +1,13 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import Table from "../components/Table";
-import { useNavigate } from 'react-router-dom';
+import Title from '../components/Title';
 
 function ClientsPage() {
     const navigate = useNavigate();
-    const type = "client";
+    const type = "Clientes";
 
     const [clients, setClients] = useState([
         { code: 1, name: 'Arthur', fone: '18997963229' },
@@ -32,24 +33,25 @@ function ClientsPage() {
         },
     ];
 
-    const handleDelete = (code, type) => {
-        console.log(code);
-        axios.post("http://localhost:8000/delete", { code, type })
-            .then(res => {
-                console.log(res);
-                navigate('/beautyflow/clients');
-            })
-            .catch(err => {
-                console.log(err);
-            })
-    };
+    // const handleDelete = (code, type) => {
+    //     console.log(code);
+    //     axios.post("http://localhost:8000/delete", { code, type })
+    //         .then(res => {
+    //             console.log(res);
+    //             navigate('/beautyflow/clients');
+    //         })
+    //         .catch(err => {
+    //             console.log(err);
+    //         })
+    // };
 
 
 
     return (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100vw', height: '100vh' }}>
+        <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', flexDirection: "column", width: '100vw', height: '100vh' }}>
+            <Title type={type}></Title>
 
-            <Table data={clients} config={config} />
+            <Table data={clients} config={config} size={"10000px"}/>
 
 
         </div>

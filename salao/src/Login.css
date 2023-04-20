@@ -1,5 +1,6 @@
 body {
     height: 100vh;
+    overflow: hidden;
 }
 
 #root > div > div > div {
@@ -35,16 +36,14 @@ body {
 
 }
 
-.table {
-    width: 500px;
-}
+
 
 .button {
     background-color: #ecc2c6;
     color: white;
 }
 .button:hover {
-    background-color: #e5aaac;
+    background-color: #c07174;
     color: white;
 }
 
