@@ -40,11 +40,11 @@ body {
 }
 
 .button {
-    background-color: #f772d5;
+    background-color: #ecc2c6;
     color: white;
 }
 .button:hover {
-    background-color: #e63eca;
+    background-color: #e5aaac;
     color: white;
 }
 

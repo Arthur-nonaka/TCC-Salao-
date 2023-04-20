@@ -18,7 +18,7 @@ function Table({ data, config }) {
     
     return (
         <table className='table table-striped'>
-            <thead style={{backgroundColor: "#ed6fce"}}>
+            <thead style={{backgroundColor: "#ecc2c6"}}>
                 <tr>
                     {updatedHeader}
                 </tr>

@@ -4,7 +4,7 @@ function NavBar() {
     let currentLocation = useLocation();
 
     return (
-        <nav className='navbar navbar-expand-lg fixed-top' style={{ backgroundColor: "#ed6fce" }} >
+        <nav className='navbar navbar-expand-lg fixed-top' style={{ backgroundColor: "#e5aaac" }} >
             <div className="container-fluid">
                 <a className="navbar-brand" >Logo</a>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,6 +31,9 @@ function NavBar() {
                     </ul>
 
                     <div className='navbar-nav' >
+                        <div className='nav-item d-flex align-items-center justify-content-center'>
+                            User
+                        </div>
                         <div className='nav-item'>
                             <Link className='nav-link' to='/'> Sair </Link>
                         </div>
