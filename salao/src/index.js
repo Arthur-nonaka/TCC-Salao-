@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from './App'
 import './App.css'
+import axios from "axios";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -14,6 +15,8 @@ import ServicesPage from './pages/ServicesPage';
 import ExpensesPage from "./pages/ExpensesPage";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+axios.defaults.baseURL = 'http://localhost:8000';
 
 root.render(
     <BrowserRouter>

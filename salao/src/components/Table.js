@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import ShowRow from "./ShowRow";
 
 function Table({ data, config, size }) {
@@ -18,7 +16,7 @@ function Table({ data, config, size }) {
     
     return (
         <table className='table table-striped'>
-            <thead style={{backgroundColor: "#ecc2c6"}}>
+            <thead style={{backgroundColor: "#FBACC7"}}>
                 <tr>
                     {updatedHeader}
                 </tr>

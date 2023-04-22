@@ -4,6 +4,7 @@ import axios from 'axios';
 
 import Table from "../components/Table";
 import Title from '../components/Title';
+import FunctionsBar from '../components/FunctionsBar';
 
 function ClientsPage() {
     const navigate = useNavigate();
@@ -52,7 +53,7 @@ function ClientsPage() {
             <Title type={type}></Title>
 
             <Table data={clients} config={config} size={"10000px"}/>
-
+            <FunctionsBar />
 
         </div>
     );
