@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import PhoneInput from '../components/PhoneInput';
 import Table from "../components/Table";
@@ -6,9 +7,11 @@ import Title from '../components/Title';
 import FunctionsBar from '../components/FunctionsBar';
 
 function ClientsPage() {
-    const type = "Clientes";
     const [name, setName] = useState('');
     const [fone, setFone] = useState('');
+    const currentLocation = useLocation();
+    const email = currentLocation.state.email;
+    const type = "Clientes";
 
     const [clients, setClients] = useState([
         { code: 1, name: 'Arthur', fone: '18997963229' },
@@ -42,18 +45,6 @@ function ClientsPage() {
         setFone(event.target.value);
     };
 
-    // const handleClickRegister = () => {
-    //     axios.post('/register', { name, fone, type })
-    //         .then(res => {
-    //             console.log(res);
-    //             //fechar modal
-    //         })
-    //         .catch(err => {
-    //             console.log(err);
-    //             //decidindo oq fazer
-    //         })
-    // };
-
     // const handleDelete = (code, type) => {
     //     console.log(code);
     //     axios.post("http://localhost:8000/delete", { code, type })
@@ -73,18 +64,18 @@ function ClientsPage() {
         </div>
         <div className="form-group  m-2 w-auto me-1">
             <label className='fs-6 mb-1'  > Telefone </label>
-            <PhoneInput value={fone} onChange={handleChangeFone}/>
+            <PhoneInput value={fone} onChange={handleChangeFone} />
         </div>
     </div>;
 
 
-    const values = { name, fone };
+    const values = { name, fone, email};
     return (
         <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', flexDirection: "column", width: '100vw', height: '100vh' }}>
             <Title type={type}></Title>
 
             <Table data={clients} config={config} size={"10000px"} />
-            <FunctionsBar registerPage={registerPage} type={type} values={values} />
+            <FunctionsBar registerPage={registerPage} type={type} values={values} setName={setName} setFone={setFone} />
 
         </div>
     );

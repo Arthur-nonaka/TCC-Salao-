@@ -21,7 +21,11 @@ function LoginPage() {
       .then(res => {
         setText('');
         setErrorShow(false);
-        navigate('/beautyflow');
+        navigate('/beautyflow', {
+          state: {
+            email,
+          }
+        });
       })
       .catch(err => {
         if (err.response.status === 400) {

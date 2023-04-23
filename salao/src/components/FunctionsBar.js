@@ -2,28 +2,31 @@ import { useState } from 'react';
 import ReactDOM from "react-dom";
 import axios from 'axios';
 
-function FunctionsBar({ registerPage, type, values }) {
+function FunctionsBar({ registerPage, type, values, setName, setFone }) {
     const [showRegister, setShowRegister] = useState(false);
 
     const handleShowRegister = () => {
         setShowRegister(!showRegister);
+        setFone('');
+        setName('');
     };
 
     let doAnother;
 
     const register = () => {
+        console.log(doAnother)
         axios.post('/register', { values, type })
             .then(res => {
-                console.log(res);
                 if (doAnother === true) {
+                    setShowRegister(false);
                     setShowRegister(true);
                 } else {
-                    setShowRegister(false);
+                    handleShowRegister();
                 }
             })
             .catch(err => {
                 console.log(err);
-                setShowRegister(false);
+                handleShowRegister();
             })
     }
 
