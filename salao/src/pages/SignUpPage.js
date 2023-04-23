@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios';
 
-import ErrorMessage from '../components/ErrorMessage';
+import Message from '../components/Message';
 
 import '../Login.css';
 
@@ -69,7 +69,7 @@ function SignUpPage() {
         <div className='container-fluid d-flex  align-items-center h-100' >
             <main className=" m-auto" style={{ width: "500px"}}>
                 <div>
-                    {errorShow && <ErrorMessage setErrorShow={setErrorShow}>{text}</ErrorMessage>}
+                    {errorShow && <Message setErrorShow={setErrorShow}>{text}</Message>}
                 </div>
                 <form className="border p-4 rounded" style={{backgroundColor: "white"}}>
                     <div className="form-group  m-2 w-auto me-1" >

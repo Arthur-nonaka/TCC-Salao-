@@ -5,7 +5,7 @@ body {
 }
 
 .form-signin {
-    
+
     max-width: 400px;
     padding: 15px;
 }
@@ -26,7 +26,7 @@ body {
     border-top-right-radius: 0;
 }
 
-.content{
+.content {
     display: flex;
 
 }
@@ -37,11 +37,13 @@ body {
     background-color: #FBACC7;
     color: white;
 }
+
 .button:hover {
     background-color: #E68AA5;
     color: white;
 }
-.button:focus {     
+
+.button:focus {
     background-color: #E68AA5;
     color: white;
 }
@@ -57,7 +59,7 @@ body {
     border-color: #E68AA5;
 }
 
-.sidebar{
+.sidebar {
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -65,10 +67,11 @@ body {
     width: 100%;
     height: 7vh;
 }
+
 .options {
     padding: 2px;
     margin: 20px;
-    width: 7vw;
+    width: 125px;
     height: 5vh;
     border: 0;
     background-color: #E68AA5;
@@ -76,7 +79,39 @@ body {
     font-size: larger;
     border-radius: 10px;
 }
-.options:hover{
+
+.options:hover {
     transition: 0.2s ease-in-out;
     background-color: #cf738f;
+}
+
+.modal-page {
+    position: absolute;
+    width: auto;
+    height: auto;
+    top: 0;
+}
+
+.modal-container {
+    background-color: #d8d7d786;
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+}
+
+.register {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    height: 30vh;
+    width: auto;
+}
+
+.background-modal {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

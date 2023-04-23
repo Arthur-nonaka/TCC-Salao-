@@ -1,4 +1,4 @@
-function ErrorMessage({children, setErrorShow}) {
+function Message({children, setErrorShow}) {
 
     const handleCloseError = () => {
         setErrorShow(false);
@@ -14,4 +14,4 @@ function ErrorMessage({children, setErrorShow}) {
     );
 }
 
-export default ErrorMessage;
+export default Message;

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import axios from 'axios';
 
 import Button from '../components/Button'
-import ErrorMessage from "../components/ErrorMessage";
+import Message from "../components/Message";
 
 import logo from './yoshi.png';
 import '../Login.css';
@@ -43,7 +43,7 @@ function LoginPage() {
     <div className='container-fluid d-flex flex-column align-items-center h-100'>
       <main className="form-signin w-100 m-auto" >
         <div>
-          {errorShow && <ErrorMessage setErrorShow={setErrorShow}>{text}</ErrorMessage>}
+          {errorShow && <Message setErrorShow={setErrorShow}>{text}</Message>}
         </div>
         <form className="border p-5 w-100 rounded" style={{backgroundColor: "white"}}>
           <div className="d-flex justify-content-center">
