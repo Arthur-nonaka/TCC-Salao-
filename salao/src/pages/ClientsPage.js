@@ -10,11 +10,11 @@ import FunctionsBar from '../components/FunctionsBar';
 function ClientsPage() {
     const [name, setName] = useState('');
     const [fone, setFone] = useState('');
-    const [reset, setReset] = useState(false);
     const currentLocation = useLocation();
     const email = currentLocation.state.email;
     const type = "Clientes";
-
+    
+    const [reset, setReset] = useState(false);
     const handleReset = () => {
         setReset(!reset);
     }
@@ -50,18 +50,6 @@ function ClientsPage() {
         setFone(event.target.value);
     };
 
-    // const handleDelete = (code, type) => {
-    //     console.log(code);
-    //     axios.post("http://localhost:8000/delete", { code, type })
-    //         .then(res => {
-    //             console.log(res);
-    //             navigate('/beautyflow/clients');
-    //         })
-    //         .catch(err => {
-    //             console.log(err);
-    //         })
-    // };
-
     const registerPage = <div>
         <div className="form-group  m-2 w-auto me-1" >
             <label className='fs-6 mb-1' > Nome </label>
@@ -80,7 +68,7 @@ function ClientsPage() {
             <Title type={type}></Title>
 
             <Table data={clients} config={config} size={"10000px"} type={type} handleReset={handleReset}/>
-            <FunctionsBar registerPage={registerPage} type={type} values={values} setName={setName} setFone={setFone} handleReset={handleReset}/>
+            <FunctionsBar registerPage={registerPage} type={type} values={values} handleReset={handleReset}/>
 
         </div>
     );

@@ -2,13 +2,11 @@ import { useState } from 'react';
 import ReactDOM from "react-dom";
 import axios from 'axios';
 
-function FunctionsBar({ registerPage, type, values, setName, setFone, handleReset }) {
+function FunctionsBar({ registerPage, type, values, handleReset }) {
     const [showRegister, setShowRegister] = useState(false);
 
     const handleShowRegister = () => {
         setShowRegister(!showRegister);
-        setFone('');
-        setName('');
     };
 
     let doAnother;
