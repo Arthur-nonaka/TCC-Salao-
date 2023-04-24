@@ -29,27 +29,26 @@ app.post('/delete', async (req, res) => {
 			let result = await db.query("DELETE FROM servico WHERE ser_codigo = ?", [code]);
 		}
 		res.send("Deletado com sucesso");
-	} catch(error) {
+	} catch (error) {
 		res.status(500).send(error);
 	}
-	
+
 });
 
 app.post("/pull", async (req, res) => {
 	const type = req.body.type;
 	const email = req.body.email;
 	try {
-		let [userCode, userCodeFields] = await db.query("SELECT usu_codigo FROM usuario WHERE usu_email = ?", [email]);
 		if (type === "Clientes") {
-			var [rows, fields] = await db.query("SELECT cli_nome, cli_telefone, cli_codigo FROM cliente WHERE usu_codigo = ?", [userCode[0].usu_codigo]);
+			var [rows, fields] = await db.query("SELECT cli_nome, cli_telefone, cli_codigo FROM cliente WHERE usu_codigo = (SELECT usu_codigo FROM usuario WHERE usu_email = ?)", [email]);
 		} else if (type === "Agenda") {
-			var [rows, fields] = await db.query("SELECT * FROM agenda WHERE usu_codigo = ?", [userCode[0].usu_codigo]);
+			var [rows, fields] = await db.query("SELECT * FROM agenda WHERE usu_codigo = (SELECT usu_codigo FROM usuario WHERE usu_email = ?)", [email]);
 		} else if (type === "Despesas") {
-			var [rows, fields] = await db.query("SELECT * FROM despesa WHERE usu_codigo = ?", [userCode[0].usu_codigo]);
+			var [rows, fields] = await db.query("SELECT * FROM despesa WHERE usu_codigo = (SELECT usu_codigo FROM usuario WHERE usu_email = ?)", [email]);
 		} else if (type === "Produtos") {
-			var [rows, fields] = await db.query("SELECT * FROM produto WHERE usu_codigo = ?", [userCode[0].usu_codigo]);
+			var [rows, fields] = await db.query("SELECT * FROM produto WHERE usu_codigo = (SELECT usu_codigo FROM usuario WHERE usu_email = ?)", [email]);
 		} else if (type === "Servicos") {
-			var [rows, fields] = await db.query("SELECT * FROM servico WHERE usu_codigo = ?", [userCode[0].usu_codigo]);
+			var [rows, fields] = await db.query("SELECT * FROM servico WHERE usu_codigo = (SELECT usu_codigo FROM usuario WHERE usu_email = ?)", [email]);
 		}
 		res.send(rows);
 	} catch (error) {

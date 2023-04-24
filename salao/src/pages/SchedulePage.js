@@ -51,16 +51,22 @@ function SchedulePage() {
         }
     ];
     const registerPage = <div>
+        <div className='form-group m2 w-auto me-1'>
+            <label className='fs-6 mb-1' > Cliente </label>
+            <select className="form-control p-2 input" onInput={handleSelectDate}>
+                <option>A</option>
+                <option>B</option>
+            </select>
+        </div>
         <div className="form-group  m-2 w-auto me-1" >
             <label className='fs-6 mb-1' > Dia </label>
-            <input type="date" className="form-control p-2 input" onChange={handleSelectDate} />
+            <input type="date" className="form-control p-2 input" onInput={handleSelectDate} />
         </div>
         <div className="form-group  m-2 w-auto me-1">
             <label className='fs-6 mb-1'  > Horario </label>
-            <input type="time" className="form-control p-2 input" onChange={handleSelectTime} />
+            <input type="time" className="form-control p-2 input" onInput={handleSelectTime} />
         </div>
     </div>;
-
 
     const values = { date, time, client, email }
     return (
