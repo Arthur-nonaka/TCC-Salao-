@@ -1,6 +1,5 @@
 const express = require("express");
 const cors = require("cors");
-//const mysql = require("mysql");
 const mysql = require('mysql2/promise');
 const app = express();
 
@@ -13,6 +12,50 @@ const db = mysql.createPool(({
 	password: "",
 	database: "beautyflowdata",
 }));
+
+app.post('/delete', async (req, res) => {
+	const type = req.body.type;
+	const code = req.body.rowCode;
+	try {
+		if (type === "Clientes") {
+			let result = await db.query("DELETE FROM cliente WHERE cli_codigo = ?", [code]);
+		} else if (type === "Agenda") {
+			let result = await db.query("DELETE FROM agenda WHERE age_codigo = ?", [code]);
+		} else if (type === "Despesas") {
+			let result = await db.query("DELETE FROM despesa WHERE des_codigo = ?", [code]);
+		} else if (type === "Produtos") {
+			let result = await db.query("DELETE FROM produto WHERE pro_codigo = ?", [code]);
+		} else if (type === "Servicos") {
+			let result = await db.query("DELETE FROM servico WHERE ser_codigo = ?", [code]);
+		}
+		res.send("Deletado com sucesso");
+	} catch(error) {
+		res.status(500).send(error);
+	}
+	
+});
+
+app.post("/pull", async (req, res) => {
+	const type = req.body.type;
+	const email = req.body.email;
+	try {
+		let [userCode, userCodeFields] = await db.query("SELECT usu_codigo FROM usuario WHERE usu_email = ?", [email]);
+		if (type === "Clientes") {
+			var [rows, fields] = await db.query("SELECT cli_nome, cli_telefone, cli_codigo FROM cliente WHERE usu_codigo = ?", [userCode[0].usu_codigo]);
+		} else if (type === "Agenda") {
+			var [rows, fields] = await db.query("SELECT * FROM agenda WHERE usu_codigo = ?", [userCode[0].usu_codigo]);
+		} else if (type === "Despesas") {
+			var [rows, fields] = await db.query("SELECT * FROM despesa WHERE usu_codigo = ?", [userCode[0].usu_codigo]);
+		} else if (type === "Produtos") {
+			var [rows, fields] = await db.query("SELECT * FROM produto WHERE usu_codigo = ?", [userCode[0].usu_codigo]);
+		} else if (type === "Servicos") {
+			var [rows, fields] = await db.query("SELECT * FROM servico WHERE usu_codigo = ?", [userCode[0].usu_codigo]);
+		}
+		res.send(rows);
+	} catch (error) {
+		res.status(500).send(error);
+	}
+});
 
 app.post("/register", async (req, res) => {
 	const type = req.body.type;
@@ -36,7 +79,7 @@ app.post("/register", async (req, res) => {
 			console.log(error);
 			res.status(500).send(error);
 		}
-	}else if (type === "Clientes") {
+	} else if (type === "Clientes") {
 		try {
 			const test = req.body.values;
 			const name = test.name;

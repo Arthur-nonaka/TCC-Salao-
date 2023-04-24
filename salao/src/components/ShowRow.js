@@ -1,15 +1,33 @@
 import { useState } from 'react';
 import { BsFillTrash3Fill, BsPencilFill } from "react-icons/bs";
+import axios from 'axios';
 
-function ShowRow({ index, row, config}) {
+function ShowRow({ index, row, config, type, handleReset }) {
     const [showEdit, setShowEdit] = useState(false);
+    let values = Object.values(row);
+    let rowCode = values.pop();
+    let cells = Object.values(config);
 
     const handleClickEdit = () => {
         setShowEdit(!showEdit);
     };
 
-    let values = Object.values(row);
-    let cells = Object.values(config);
+    const handleClickDelete = () => {
+        let r = prompt("Digite '" + values[0] + "' para confirmar o DELETE");
+        if (r === values[0]){
+            axios.post('/delete', {rowCode, type})
+            .then(res => {
+                console.log(res);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+        } else{
+            alert("Nao ocorreu o DELETE");
+        }
+        handleReset();
+    };
+
 
     const renderedRow = values.map((value, index) => {
 
@@ -21,13 +39,9 @@ function ShowRow({ index, row, config}) {
     });
 
     const renderedRowEdit = values.map((value, index) => {
-
-        if (index === 0) {
-            return <td style={{height: "28px"}} key={index}>{cells[index].render(value)}</td>
-        }
         return (
             <td key={index}>
-                <input style={{height: '28px'}} value={cells[index].render(value)} />
+                <input style={{ height: '28px' }} value={cells[index].render(value)} />
             </td>
         );
     });
@@ -37,9 +51,9 @@ function ShowRow({ index, row, config}) {
         <tr>
             {renderedRow}
             <td style={{ display: "flex", alignItems: 'center', justifyContent: 'center' }}>
-                <div className='btn-group' style={{height: '29px'}}>
+                <div className='btn-group' style={{ height: '29px' }}>
                     <button style={{ display: "flex", alignItems: 'center', justifyContent: "center" }} className="btn btn-primary" onClick={() => handleClickEdit()}><BsPencilFill fontSize={13} /> </button>
-                    <button style={{ display: "flex", alignItems: 'center', justifyContent: "center" }} className="btn btn-danger" onClick={() => { }}><BsFillTrash3Fill fontSize={13} /></button>
+                    <button style={{ display: "flex", alignItems: 'center', justifyContent: "center" }} className="btn btn-danger" onClick={() => handleClickDelete()}><BsFillTrash3Fill fontSize={13} /></button>
                 </div>
             </td>
         </tr>
@@ -49,9 +63,9 @@ function ShowRow({ index, row, config}) {
             <tr>
                 {renderedRowEdit}
                 <td style={{ display: "flex", alignItems: 'center', justifyContent: 'center' }}>
-                    <div className='btn-group' style={{height: '29px'}}>
+                    <div className='btn-group' style={{ height: '29px' }}>
                         <button style={{ display: "flex", alignItems: 'center', justifyContent: "center" }} className="btn btn-success" onClick={() => handleClickEdit()}><BsPencilFill fontSize={13} /> </button>
-                        <button style={{ display: "flex", alignItems: 'center', justifyContent: "center" }} className="btn btn-danger" onClick={() => { }}><BsFillTrash3Fill fontSize={13} /></button>
+                        <button style={{ display: "flex", alignItems: 'center', justifyContent: "center" }} className="btn btn-danger" onClick={() =>  handleClickDelete()}><BsFillTrash3Fill fontSize={13} /></button>
                     </div>
                 </td>
             </tr>

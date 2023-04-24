@@ -2,7 +2,7 @@ import { useState } from 'react';
 import ReactDOM from "react-dom";
 import axios from 'axios';
 
-function FunctionsBar({ registerPage, type, values, setName, setFone }) {
+function FunctionsBar({ registerPage, type, values, setName, setFone, handleReset }) {
     const [showRegister, setShowRegister] = useState(false);
 
     const handleShowRegister = () => {
@@ -14,7 +14,6 @@ function FunctionsBar({ registerPage, type, values, setName, setFone }) {
     let doAnother;
 
     const register = () => {
-        console.log(doAnother)
         axios.post('/register', { values, type })
             .then(res => {
                 if (doAnother === true) {
@@ -27,7 +26,8 @@ function FunctionsBar({ registerPage, type, values, setName, setFone }) {
             .catch(err => {
                 console.log(err);
                 handleShowRegister();
-            })
+            });
+        handleReset();
     }
 
     const handleClickRegisterAgain = (event) => {
@@ -39,6 +39,12 @@ function FunctionsBar({ registerPage, type, values, setName, setFone }) {
     const handleClickRegister = (event) => {
         event.preventDefault();
         doAnother = false;
+        for(let x=0;x < Object.values(values).length; x++) {
+            if(Object.values(values)[x] === ""){
+                alert("informe todos os valores");
+                return;
+            }
+        }
         register();
     };
 
@@ -54,7 +60,7 @@ function FunctionsBar({ registerPage, type, values, setName, setFone }) {
                             <form className="border p-4 rounded" style={{ backgroundColor: "white", borderColor: "#E68AA5", width: "300px" }}>
                                 {registerPage}
                                 <div className="form-row d-flex justify-content-between" >
-                                    <button onClick={handleClickRegisterAgain} type='submit' className="btn p-2 fs-7 button ms-2">Cadastrar Outro</button>
+                                    <button onClick={handleClickRegisterAgain} type='submit' className="btn p-2 fs-7 button ms-2">Cadastrar Outro !Beta!</button>
                                     <button onClick={handleClickRegister} type='submit' className="btn p-2 fs-7 button me-1">Cadastrar</button>
                                 </div>
                             </form>

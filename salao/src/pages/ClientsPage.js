@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import axios from "axios";
 
 import PhoneInput from '../components/PhoneInput';
 import Table from "../components/Table";
@@ -9,23 +10,27 @@ import FunctionsBar from '../components/FunctionsBar';
 function ClientsPage() {
     const [name, setName] = useState('');
     const [fone, setFone] = useState('');
+    const [reset, setReset] = useState(false);
     const currentLocation = useLocation();
     const email = currentLocation.state.email;
     const type = "Clientes";
 
-    const [clients, setClients] = useState([
-        { code: 1, name: 'Arthur', fone: '18997963229' },
-        { code: 2, name: 'Pochita', fone: '69343882822' },
-        { code: 3, name: 'Jackson', fone: '10789565575' },
-        { code: 4, name: 'Erick', fone: '15345433248' },
-        { code: 5, name: 'Jonas', fone: '15423445368' },
-    ]);
+    const handleReset = () => {
+        setReset(!reset);
+    }
+
+    const [clients, setClients] = useState([]);
+
+    useEffect(() => {
+        axios.post('/pull', { email, type })
+            .then(res => {
+                setClients(res.data);
+            })
+            .catch(err => console.log(err));
+    }, [reset]);
+
 
     const config = [
-        {
-            label: "#",
-            render: (value) => value
-        },
         {
             label: "Nome",
             render: (value) => value
@@ -69,13 +74,13 @@ function ClientsPage() {
     </div>;
 
 
-    const values = { name, fone, email};
+    const values = { name, fone, email };
     return (
         <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', flexDirection: "column", width: '100vw', height: '100vh' }}>
             <Title type={type}></Title>
 
-            <Table data={clients} config={config} size={"10000px"} />
-            <FunctionsBar registerPage={registerPage} type={type} values={values} setName={setName} setFone={setFone} />
+            <Table data={clients} config={config} size={"10000px"} type={type} handleReset={handleReset}/>
+            <FunctionsBar registerPage={registerPage} type={type} values={values} setName={setName} setFone={setFone} handleReset={handleReset}/>
 
         </div>
     );
