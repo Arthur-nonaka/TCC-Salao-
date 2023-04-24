@@ -17,10 +17,9 @@ function ShowRow({ index, row, config, type, handleReset }) {
         if (r === values[0]){
             axios.post('/delete', {rowCode, type})
             .then(res => {
-                console.log(res);
+                handleReset();
             })
             .catch(err => {
-                console.log(err);
             });
         } else{
             alert("Nao ocorreu o DELETE");

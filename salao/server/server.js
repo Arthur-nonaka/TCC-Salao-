@@ -85,11 +85,16 @@ app.post("/register", async (req, res) => {
 			const fone = test.fone;
 			const email = test.email;
 
-			let [userCode, fields] = await db.query("SELECT usu_codigo FROM usuario WHERE usu_email = ?", [email]);
-
-			let insert = await db.query("INSERT INTO cliente (cli_nome, cli_telefone, usu_codigo) VALUES (?, ?, ?)", [name, fone, userCode[0].usu_codigo]);
-			res.send("Cliente cadastrado com sucesso");
-			return;
+			let [rows] = await db.query("SELECT * FROM cliente WHERE cli_nome = ?", [name]);
+			let [userCode] = await db.query("SELECT usu_codigo FROM usuario WHERE usu_email = ?", [email]);
+			if (rows.length === 0) {
+				let insert = await db.query("INSERT INTO cliente (cli_nome, cli_telefone, usu_codigo) VALUES (?, ?, ?)", [name, fone, userCode[0].usu_codigo]);
+				res.send("Cliente cadastrado com sucesso");
+				return;
+			} else {
+				res.status(400).send({ errorMessage: "Cliente Ja Cadastrado" });
+				return;
+			}
 		} catch (error) {
 			console.log(error);
 			res.status(500).send(error);

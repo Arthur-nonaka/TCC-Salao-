@@ -15,17 +15,17 @@ function FunctionsBar({ registerPage, type, values, handleReset }) {
         axios.post('/register', { values, type })
             .then(res => {
                 if (doAnother === true) {
-                    setShowRegister(false);
-                    setShowRegister(true);
                 } else {
                     handleShowRegister();
+                    handleReset();
                 }
             })
             .catch(err => {
-                console.log(err);
+                if(err.response.status === 400) {
+                    alert(err.response.data.errorMessage);
+                }
                 handleShowRegister();
             });
-        handleReset();
     }
 
     const handleClickRegisterAgain = (event) => {
@@ -37,8 +37,8 @@ function FunctionsBar({ registerPage, type, values, handleReset }) {
     const handleClickRegister = (event) => {
         event.preventDefault();
         doAnother = false;
-        for(let x=0;x < Object.values(values).length; x++) {
-            if(Object.values(values)[x] === ""){
+        for (let x = 0; x < Object.values(values).length; x++) {
+            if (Object.values(values)[x] === "") {
                 alert("informe todos os valores");
                 return;
             }

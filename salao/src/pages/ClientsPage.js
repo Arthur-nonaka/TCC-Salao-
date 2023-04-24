@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from "axios";
 
+import Message from '../components/Message';
 import PhoneInput from '../components/PhoneInput';
 import Table from "../components/Table";
 import Title from '../components/Title';
@@ -27,7 +28,7 @@ function ClientsPage() {
                 setClients(res.data);
             })
             .catch(err => console.log(err));
-    }, [reset]);
+    }, [reset, email]);
 
 
     const config = [
@@ -66,7 +67,6 @@ function ClientsPage() {
     return (
         <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', flexDirection: "column", width: '100vw', height: '100vh' }}>
             <Title type={type}></Title>
-
             <Table data={clients} config={config} size={"10000px"} type={type} handleReset={handleReset}/>
             <FunctionsBar registerPage={registerPage} type={type} values={values} handleReset={handleReset}/>
 
