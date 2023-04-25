@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from "axios";
 
-import Message from '../components/Message';
 import PhoneInput from '../components/PhoneInput';
 import Table from "../components/Table";
 import Title from '../components/Title';
@@ -25,6 +24,7 @@ function ClientsPage() {
     useEffect(() => {
         axios.post('/pull', { email, type })
             .then(res => {
+                console.log('pull');
                 setClients(res.data);
             })
             .catch(err => console.log(err));

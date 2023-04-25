@@ -33,7 +33,7 @@ function SchedulePage() {
                 setSchedule(res.data);
             })
             .catch(err => console.log(err));
-    }, [reset]);
+    }, [reset, email]);
 
 
     const config = [
