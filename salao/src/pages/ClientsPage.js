@@ -6,10 +6,14 @@ import PhoneInput from '../components/PhoneInput';
 import Table from "../components/Table";
 import Title from '../components/Title';
 import FunctionsBar from '../components/FunctionsBar';
+import Message from '../components/Message';
 
 function ClientsPage() {
     const [name, setName] = useState('');
     const [fone, setFone] = useState('');
+    const [messageShow, setMessageShow] = useState(false);
+    const [message, setMessage] = useState('');
+    const [messageType,setMessageType] = useState('');
     const currentLocation = useLocation();
     const email = currentLocation.state.email;
     const type = "Clientes";
@@ -24,10 +28,13 @@ function ClientsPage() {
     useEffect(() => {
         axios.post('/pull', { email, type })
             .then(res => {
-                console.log('pull');
                 setClients(res.data);
             })
-            .catch(err => console.log(err));
+            .catch(err => {
+                setMessageType('error');
+                setMessage(err);
+                setMessageShow(true);
+            });
     }, [reset, email]);
 
 
@@ -62,13 +69,14 @@ function ClientsPage() {
         </div>
     </div>;
 
-
     const values = { name, fone, email };
+    const valuesToReset = [setName, setFone];
     return (
         <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', flexDirection: "column", width: '100vw', height: '100vh' }}>
             <Title type={type}></Title>
+            <Message setMessageShow={setMessageShow} messageShow={messageShow} messageType={messageType} message={message} />
             <Table data={clients} config={config} size={"10000px"} type={type} handleReset={handleReset}/>
-            <FunctionsBar registerPage={registerPage} type={type} values={values} handleReset={handleReset}/>
+            <FunctionsBar valuesToReset={valuesToReset} registerPage={registerPage} type={type} values={values} handleReset={handleReset} setMessage={setMessage} setMessageShow={setMessageShow} setMessageType={setMessageType}/>
 
         </div>
     );

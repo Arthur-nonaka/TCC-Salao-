@@ -100,14 +100,14 @@ app.post("/register", async (req, res) => {
 			console.log(rows);
 			if (rows.length === 0) {
 				await db.query("INSERT INTO cliente (cli_nome, cli_telefone, usu_codigo) VALUES (?, ?, ?)", [name, fone, userCode[0].usu_codigo]);
-				res.send("Cliente cadastrado com sucesso");
+				res.send(name +" cadastrado com sucesso");
 				return;
 			} else {
 				res.status(400).send({ errorMessage: "Cliente Ja Cadastrado" });
 				return;
 			}
 		} catch (error) {
-			res.status(500).send(error);
+			res.status(500).send({ errorMessage: "Erro 500" });
 		}
 	}
 });

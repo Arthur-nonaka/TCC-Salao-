@@ -11,8 +11,9 @@ function SignUpPage() {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [email, setEmail] = useState('');
-    const [errorShow, setErrorShow] = useState(false);
-    const [text, setText] = useState('');
+    const [messageShow, setMessageShow] = useState(false);
+    const [message, setMessage] = useState('');
+    const [messageType, setMessageType] = useState('error');
     const navigate = useNavigate();
 
     const handleChangePassword = (event) => {
@@ -31,34 +32,31 @@ function SignUpPage() {
         setEmail(event.target.value);
     };
 
-
-
     const handleClick = (event) => {
         event.preventDefault();
         if (name === '' || email === '' || password === '' || confirmPassword === '') {
-            setErrorShow(true);
-            setText('Preencha todos os campos');
+            setMessageShow(true);
+            setMessage('Preencha todos os campos');
         } else if (password !== confirmPassword) {
-            setErrorShow(true);
-            setText('Valores invalidos na senha');
+            setMessageShow(true);
+            setMessage('Valores invalidos na senha');
         }
 
         else {
             const type = "user";
             axios.post('/register', {type, name, email, password})
                 .then(res => {
-                    setText('');
-                    setErrorShow(false);
+                    setMessage('');
+                    setMessageShow(false);
                     navigate('/');
                 })
                 .catch(err => {
                     if (err.response.status === 400) {
-                        setText(err.response.data.errorMessage);
-                        setErrorShow(true);
+                        setMessage(err.response.data.errorMessage);
+                        setMessageShow(true);
                     } else {
-
-                        setText(err.message);
-                        setErrorShow(true);
+                        setMessage(err.message);
+                        setMessageShow(true);
                     }
                 });
         }
@@ -69,7 +67,7 @@ function SignUpPage() {
         <div className='container-fluid d-flex  align-items-center h-100' >
             <main className=" m-auto" style={{ width: "500px"}}>
                 <div>
-                    {errorShow && <Message setErrorShow={setErrorShow}>{text}</Message>}
+                    <Message messageShow={messageShow} setMessageShow={setMessageShow} messageType={messageType} message={message} />
                 </div>
                 <form className="border p-4 rounded" style={{backgroundColor: "white"}}>
                     <div className="form-group  m-2 w-auto me-1" >

@@ -8,6 +8,7 @@
 
 .Xbutton {
     font-size: 23px;
+    margin-left: 20px;
 }
 
 .Xbutton:hover {
