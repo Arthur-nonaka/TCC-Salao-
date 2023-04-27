@@ -15,34 +15,34 @@ function LoginPage() {
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState('error');
   const navigate = useNavigate();
-  
-  // useEffect(() => {
-  //   if (response){
-  //     setMessageType('succes');
-  //     setMessage(response);
-  //     setMessageShow(true);
-  //   }
-  // },[]);
 
   const onSubmit = (event) => {
     event.preventDefault();
-    axios.post('/login', { email, password })
-      .then(res => {
-        setMessage('');
-        setMessageShow(false);
-        navigate('/beautyflow', {
-          state: {
-            email,
+    if (email !== '' && password !== '') {
+      axios.post('/login', { email, password })
+        .then(res => {
+          setMessage('');
+          setMessageShow(false);
+          navigate('/beautyflow', {
+            state: {
+              email,
+            }
+          });
+        })
+        .catch(err => {
+          if (err.response.status === 400) {
+            setMessageType('error');
+            setMessage(err.response.data.errorMessage);
+            console.log(err.response.data.errorMessage);
+            setMessageShow(true);
           }
-        });
-      })
-      .catch(err => {
-        if (err.response.status === 400) {
-          setMessageType('error');
-          setMessage(err.response.data.errorMessage);
-          setMessageShow(true);
-        }
-      })
+        })
+    } else {
+      setMessageType('error');
+      setMessageShow(true);
+      setMessage("Informe os valores");
+    }
+
   };
 
   const onChangeEmail = (event) => {
