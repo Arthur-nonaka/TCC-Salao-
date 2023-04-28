@@ -1,7 +1,10 @@
 const express = require("express");
 const cors = require("cors");
 const mysql = require('mysql2/promise');
+const bcrypt = require("bcrypt");
 const app = express();
+
+const saltRounds = 10;
 
 app.use(cors());
 app.use(express.json());
@@ -75,17 +78,19 @@ app.post("/register", async (req, res) => {
 			const password = req.body.password;
 
 			let [rows] = await db.query("SELECT * FROM usuario WHERE usu_email = ?", [email]);
-
+			
 			if (rows.length === 0) {
-				await db.query("INSERT INTO usuario (usu_nome, usu_email, usu_senha) VALUES (?, ?, ?)", [name, email, password]);
-				res.send("Usuário cadastrado com sucesso");
-				return;
+				bcrypt.hash(password, saltRounds, async (err, hash) => {
+					await db.query("INSERT INTO usuario (usu_nome, usu_email, usu_senha) VALUES (?, ?, ?)", [name, email, hash]);
+					res.send("Usuário cadastrado com sucesso");
+					return;
+				});
 			} else {
 				res.status(400).send({ errorMessage: "Usuário já cadastrado" })
 				return;
 			}
 		} catch (error) {
-			console.log(error);
+			//console.log(error);
 			res.status(500).send(error);
 		}
 	} else if (type === "Clientes") {
@@ -97,7 +102,6 @@ app.post("/register", async (req, res) => {
 
 			let [userCode] = await db.query("SELECT usu_codigo FROM usuario WHERE usu_email = ?", [email]);
 			let [rows] = await db.query("SELECT * FROM cliente WHERE cli_nome = ? && usu_codigo = ?", [name, userCode[0].usu_codigo]);
-			console.log(rows);
 			if (rows.length === 0) {
 				await db.query("INSERT INTO cliente (cli_nome, cli_telefone, usu_codigo) VALUES (?, ?, ?)", [name, fone, userCode[0].usu_codigo]);
 				res.send(name +" cadastrado com sucesso");
@@ -116,14 +120,14 @@ app.post("/login", async (req, res) => {
 	try {
 		const email = req.body.email;
 		const password = req.body.password;
-
-		let [rows] = await db.query("SELECT * FROM usuario WHERE  usu_email = ? AND usu_senha = ?", [email, password]);
-		if (rows.length > 0) {
+		let [cryptPassword] = await db.query("SELECT usu_senha FROM usuario WHERE usu_email = ?", [email]);
+		bcrypt.compare(password, cryptPassword[0].usu_senha, async (err, result) => {
+		if (result) {
 			res.send({ msg: "Usuário Logado" })
 		} else {
 			res.status(400).send({ errorMessage: "Email ou Senha Invalido" })
 		}
-
+		})
 	} catch (error) {
 		res.status(500).send(error);
 	}

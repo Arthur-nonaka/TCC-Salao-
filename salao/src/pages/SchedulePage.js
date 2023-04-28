@@ -62,8 +62,11 @@ function SchedulePage() {
             <label className='fs-6 mb-1' > Dia </label>
             <input type="date" className="form-control p-2 input" onInput={handleSelectDate} />
         </div>
+        <label className='fs-6 mb-1'  > Horario </label>
         <div className="form-group  m-2 w-auto me-1">
-            <label className='fs-6 mb-1'  > Horario </label>
+            <label className='fs-6 mb-1'  > Começo </label>
+            <input type="time" className="form-control p-2 input" onInput={handleSelectTime} />
+            <label className='fs-6 mb-1'  > Termino </label>
             <input type="time" className="form-control p-2 input" onInput={handleSelectTime} />
         </div>
     </div>;
