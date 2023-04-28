@@ -4,7 +4,7 @@ import Table from "../components/Table";
 import Title from '../components/Title';
 
 function ServicesPage () {
-    const [services,setExpenses] = useState([]);
+    const [services,setServices] = useState([]);
     const config = [];
     const type= "Serviços";
 

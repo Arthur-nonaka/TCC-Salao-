@@ -4,7 +4,7 @@ import Table from "../components/Table";
 import Title from '../components/Title';
 
 function ProductsPage() {
-    const [products,setExpenses] = useState([]);
+    const [products,setProducts] = useState([]);
     const config = [];
     const type= "Produtos";
 

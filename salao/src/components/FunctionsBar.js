@@ -12,7 +12,7 @@ function FunctionsBar({ registerPage, type, values, handleReset, setMessage, set
         });
     };
 
-    let doAnother;
+    // let doAnother;
 
     const register = () => {
         axios.post('/register', { values, type })
@@ -41,7 +41,7 @@ function FunctionsBar({ registerPage, type, values, handleReset, setMessage, set
 
     const handleClickRegister = (event) => {
         event.preventDefault();
-        doAnother = false;
+        // doAnother = false;
         for (let x = 0; x < Object.values(values).length; x++) {
             if (Object.values(values)[x] === "") {
                 setMessageType("error");

@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 
-function NavBar({}) {
+function NavBar() {
     let currentLocation = useLocation();
     const email = currentLocation.state.email;
 
