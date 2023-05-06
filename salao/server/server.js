@@ -121,13 +121,13 @@ app.post("/login", async (req, res) => {
 		const email = req.body.email;
 		const password = req.body.password;
 		let [cryptPassword] = await db.query("SELECT usu_senha FROM usuario WHERE usu_email = ?", [email]);
-		bcrypt.compare(password, cryptPassword[0].usu_senha, async (err, result) => {
+		const result = bcrypt.compareSync(password, cryptPassword[0].usu_senha)
+		console.log(result);
 		if (result) {
 			res.send({ msg: "Usuário Logado" })
 		} else {
 			res.status(400).send({ errorMessage: "Email ou Senha Invalido" })
-		}
-		})
+		};
 	} catch (error) {
 		res.status(500).send(error);
 	}

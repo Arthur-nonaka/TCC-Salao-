@@ -16,7 +16,7 @@ import ExpensesPage from "./pages/ExpensesPage";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-axios.defaults.baseURL = 'http://localhost:8000';
+axios.defaults.baseURL = 'https://9cd4-177-124-65-251.ngrok-free.app';
 
 root.render(
     <BrowserRouter>
