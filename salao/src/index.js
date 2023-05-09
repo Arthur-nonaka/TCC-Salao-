@@ -16,24 +16,20 @@ import ExpensesPage from "./pages/ExpensesPage";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-axios.defaults.baseURL = 'https://9cd4-177-124-65-251.ngrok-free.app';
+axios.defaults.baseURL = 'http://localhost:8000';
 
 root.render(
     <BrowserRouter>
         <Routes>
             <Route path="/" element={<LoginPage />} />
             <Route path="signup" element={<SignUpPage />} />
-                <Route path="beautyflow/" element={<App />}>
-                    <Route path="schedule" element={<SchedulePage />} />
-                    <Route path="clients" element={<ClientsPage />} />
-                    <Route path="products" element={<ProductsPage />} />
-                    <Route path="services" element={<ServicesPage />} />
-                    <Route path="expenses" element={<ExpensesPage />} />
-                </Route>
-
-
-
-
+            <Route path="beautyflow/" element={<App />}>
+                <Route path="schedule" element={<SchedulePage />} />
+                <Route path="clients" element={<ClientsPage />} />
+                <Route path="products" element={<ProductsPage />} />
+                <Route path="services" element={<ServicesPage />} />
+                <Route path="expenses" element={<ExpensesPage />} />
+            </Route>
         </Routes>
     </BrowserRouter>
 

@@ -1,22 +1,29 @@
 import ShowRow from "./ShowRow";
 
-function Table({ data, config, size, type, handleReset }) {
+function Table({ data, config, type, handleReset, size }) {
 
+    const renderedHeader = config.map((column) => {
+        if (column.header) {
+            return <th style={{ width: size, padding: '0' }} key={column.label}>{column.header()}</th>
+        }
 
-    const renderedHeader = config.map((column, index) => {
-        return (<th style={{width: size}} scope="col" key={index}>{column.label}</th>);
+        return (
+            <th style={{width: size}} key={column.label}>
+                {column.label}
+            </th>
+        );
     });
-    const updatedHeader = [...renderedHeader, <th> </th>];
+    const updatedHeader = [...renderedHeader, <th key={"opcoes"}> </th>];
 
 
     const renderedRows = data.map((row, index) => {
         return (
-            <ShowRow key={index} row={row} index={index} config={config} type={type} handleReset={handleReset}/>);
+            <ShowRow key={index} row={row} index={index} config={config} type={type} handleReset={handleReset} />);
     });
-    
+
     return (
         <table className='table table-striped'>
-            <thead style={{backgroundColor: "#FBACC7"}}>
+            <thead style={{ backgroundColor: "#FBACC7" }}>
                 <tr>
                     {updatedHeader}
                 </tr>

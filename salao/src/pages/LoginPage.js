@@ -1,4 +1,4 @@
-import { Link, useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from 'react';
 import axios from 'axios';
 
@@ -59,7 +59,7 @@ function LoginPage() {
         <div>
           <Message setMessageShow={setMessageShow} messageType={messageType} messageShow={messageShow} message={message} />
         </div>
-        <form className="border p-5 w-100 rounded" style={{ backgroundColor: "white" }}>
+        <form className="border p-5 w-100 rounded" style={{ backgroundColor: "white" }} onSubmit={onSubmit}>
           <div className="d-flex justify-content-center">
             <img className="mb-4" src={logo} alt="" width="72" height="57" />
           </div>
@@ -74,7 +74,7 @@ function LoginPage() {
             <label className="fs-5" htmlFor="floatingPassword">Senha </label>
           </div>
 
-          <Button css="w-100 btn btn-lg  mt-2 fs-5 button" type="submit" onClick={onSubmit}>Login</Button>
+          <Button css="w-100 btn btn-lg  mt-2 fs-5 button" type="submit">Login</Button>
 
         </form>
 

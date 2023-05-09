@@ -3,11 +3,27 @@ body {
     overflow: hidden;
     background-color: #F2F2F2;
 }
+.sort {
+    background-color: #fc7dbc;
+    display: flex;
+    height: 40px;
+    padding-left: 10px;
+    align-items: center;
+}
+.sort:hover{
+    cursor: pointer;
+}
 
 .form-signin {
 
     max-width: 400px;
     padding: 15px;
+}
+th {
+    padding: 0;
+}
+tbody, td, tfoot, th, thead, tr {
+    border-style: none;
 }
 
 .form-signin .form-floating:focus-within {

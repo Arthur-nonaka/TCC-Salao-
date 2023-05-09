@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import axios from "axios";
 
 import PhoneInput from '../components/PhoneInput';
-import Table from "../components/Table";
+import SortableTable from '../components/SortableTable';
 import Title from '../components/Title';
 import FunctionsBar from '../components/FunctionsBar';
 import Message from '../components/Message';
@@ -13,11 +13,11 @@ function ClientsPage() {
     const [fone, setFone] = useState('');
     const [messageShow, setMessageShow] = useState(false);
     const [message, setMessage] = useState('');
-    const [messageType,setMessageType] = useState('');
+    const [messageType, setMessageType] = useState('');
     const currentLocation = useLocation();
     const email = currentLocation.state.email;
     const type = "Clientes";
-    
+
     const [reset, setReset] = useState(false);
     const handleReset = () => {
         setReset(!reset);
@@ -41,7 +41,8 @@ function ClientsPage() {
     const config = [
         {
             label: "Nome",
-            render: (value) => value
+            render: (value) => value,
+            sortValue: (value) => value.cli_nome
 
         },
         {
@@ -75,8 +76,8 @@ function ClientsPage() {
         <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', flexDirection: "column", width: '100vw', height: '100vh' }}>
             <Title type={type}></Title>
             <Message setMessageShow={setMessageShow} messageShow={messageShow} messageType={messageType} message={message} />
-            <Table data={clients} config={config} size={"10000px"} type={type} handleReset={handleReset}/>
-            <FunctionsBar valuesToReset={valuesToReset} registerPage={registerPage} type={type} values={values} handleReset={handleReset} setMessage={setMessage} setMessageShow={setMessageShow} setMessageType={setMessageType}/>
+            <SortableTable data={clients} config={config} size={"10000px"} type={type} handleReset={handleReset} />
+            <FunctionsBar valuesToReset={valuesToReset} registerPage={registerPage} type={type} values={values} handleReset={handleReset} setMessage={setMessage} setMessageShow={setMessageShow} setMessageType={setMessageType} />
 
         </div>
     );
