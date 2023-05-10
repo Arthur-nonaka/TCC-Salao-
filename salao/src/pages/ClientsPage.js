@@ -3,10 +3,10 @@ import { useLocation } from 'react-router-dom';
 import axios from "axios";
 
 import PhoneInput from '../components/PhoneInput';
-import SortableTable from '../components/SortableTable';
 import Title from '../components/Title';
 import FunctionsBar from '../components/FunctionsBar';
 import Message from '../components/Message';
+import SearchTerm from '../components/SearchTerm';
 
 function ClientsPage() {
     const [name, setName] = useState('');
@@ -42,7 +42,8 @@ function ClientsPage() {
         {
             label: "Nome",
             render: (value) => value,
-            sortValue: (value) => value.cli_nome
+            sortValue: (value) => value.cli_nome,
+            searchValue: (value) => value.cli_nome
 
         },
         {
@@ -76,7 +77,7 @@ function ClientsPage() {
         <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', flexDirection: "column", width: '100vw', height: '100vh' }}>
             <Title type={type}></Title>
             <Message setMessageShow={setMessageShow} messageShow={messageShow} messageType={messageType} message={message} />
-            <SortableTable data={clients} config={config} size={"10000px"} type={type} handleReset={handleReset} />
+            <SearchTerm data={clients} setClients={setClients} config={config} size={"10000px"} type={type} handleReset={handleReset} />
             <FunctionsBar valuesToReset={valuesToReset} registerPage={registerPage} type={type} values={values} handleReset={handleReset} setMessage={setMessage} setMessageShow={setMessageShow} setMessageType={setMessageType} />
 
         </div>

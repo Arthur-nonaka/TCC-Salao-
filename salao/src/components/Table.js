@@ -1,6 +1,6 @@
 import ShowRow from "./ShowRow";
 
-function Table({ data, config, type, handleReset, size }) {
+function Table({ data, config, type, handleReset, size, editButtonFocus }) {
 
     const renderedHeader = config.map((column) => {
         if (column.header) {
@@ -18,7 +18,7 @@ function Table({ data, config, type, handleReset, size }) {
 
     const renderedRows = data.map((row, index) => {
         return (
-            <ShowRow key={index} row={row} index={index} config={config} type={type} handleReset={handleReset} />);
+            <ShowRow key={index} row={row} config={config} type={type} handleReset={handleReset} editButtonFocus={editButtonFocus}/>);
     });
 
     return (

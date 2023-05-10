@@ -5,8 +5,13 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 function SortableTable(props) {
     const [sortOrder, setSortOrder] = useState(null);
-    const [sortBy, setSortBy] = useState('Nome');
+    const [sortBy, setSortBy] = useState(null);
+    const [buttonFocus, setButtonFocus] = useState(false);
     const { data, config } = props;
+
+    const editButtonFocus = () => {
+        setButtonFocus(!buttonFocus);
+    };
 
     const handleClickSortOrder = (label) => {
         if (sortBy && label !== sortBy) {
@@ -50,17 +55,18 @@ function SortableTable(props) {
                     return valueB - valueA;
                 }
             }
+            return '';
         });
     }
     const getIcons = (label) => {
         if (label !== sortBy) {
-            return <div style={{display: 'flex', flexDirection: 'column'}}>
-                <IoIosArrowDown style={{margin: '0px'}}/>
-                <IoIosArrowUp  style={{margin: '0px'}} />
+            return <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <IoIosArrowDown style={{ margin: '0px' }} />
+                <IoIosArrowUp style={{ margin: '0px' }} />
             </div>;
         }
         if (sortOrder === null) {
-            return ;
+            return;
         } else if (sortOrder === 'asc') {
             return <div>
                 <IoIosArrowUp />
@@ -80,16 +86,18 @@ function SortableTable(props) {
         }
         return {
             ...column,
-            header: () => <div className="sort" onClick={() => handleClickSortOrder(column.label)}>
-                <div style={{ display: 'flex', alignItems: "center"}}>
+            header: () => <div className="sort">
+                <div style={{ display: 'flex', alignItems: "center" }}>
                     {column.label}
-                    {getIcons(column.label)}
+                    <button disabled={buttonFocus} onClick={() => handleClickSortOrder(column.label)} style={{ display: 'flex', alignItems: 'center' }}>
+                        {getIcons(column.label)}
+                    </button>
                 </div>
             </div>
         }
     });
 
-    return <Table {...props} data={updatedData} config={updatedConfig} />
+    return <Table {...props} data={updatedData} config={updatedConfig} editButtonFocus={editButtonFocus} />
 
 
 

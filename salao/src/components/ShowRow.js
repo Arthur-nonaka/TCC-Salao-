@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { BsFillTrash3Fill, BsPencilFill } from "react-icons/bs";
 import axios from 'axios';
 
-function ShowRow({ index, row, config, type, handleReset }) {
+function ShowRow({ row, config, type, handleReset, editButtonFocus }) {
     const [showEdit, setShowEdit] = useState(false);
     let values = Object.values(row);
     let rowCode = values.pop();
@@ -10,6 +10,7 @@ function ShowRow({ index, row, config, type, handleReset }) {
 
     const handleClickEdit = () => {
         setShowEdit(!showEdit);
+        editButtonFocus();
     };
 
     const handleClickDelete = () => {
