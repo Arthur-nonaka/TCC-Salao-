@@ -8,10 +8,14 @@ function SearchTerm({ data, config, size, type, handleReset }) {
     const handleInputChange = (event) => {
         setSearchTerm(event.target.value);
     };
-    // let updatedData = data;
-    // config.forEach((column) => {
-    // });
-    const updatedData = data.filter(value => value.cli_nome.toLowerCase().includes(SearchTerm.toLowerCase()));
+    let updatedData = data;
+    config.forEach((column) => {
+        if (!column.searchValue)
+            return;
+        updatedData = data.filter(value => column.searchValue(value).toLowerCase().includes(SearchTerm.toLowerCase()));
+    });
+
+
 
     return (
         <div>

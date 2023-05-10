@@ -1,4 +1,7 @@
+import {useState} from 'react';
+
 import ShowRow from "./ShowRow";
+
 
 function Table({ data, config, type, handleReset, size, editButtonFocus }) {
 
