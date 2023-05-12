@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Table from "./Table";
 
-import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { BsCaretUpFill,BsCaretDownFill } from "react-icons/bs";
 
 function SortableTable(props) {
     const [sortOrder, setSortOrder] = useState(null);
@@ -61,20 +61,20 @@ function SortableTable(props) {
     const getIcons = (label) => {
         if (label !== sortBy) {
             return <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <IoIosArrowDown style={{ margin: '0px' }} />
-                <IoIosArrowUp style={{ margin: '0px' }} />
+                <BsCaretDownFill style={{ margin: '0px' }} />
+                <BsCaretUpFill style={{ margin: '0px' }} />
             </div>;
         }
         if (sortOrder === null) {
             return;
         } else if (sortOrder === 'asc') {
             return <div>
-                <IoIosArrowUp />
+                <BsCaretUpFill />
             </div>;
         }
         else if (sortOrder === 'des') {
             return <div>
-                <IoIosArrowDown />
+                <BsCaretDownFill />
             </div>;
         }
 
@@ -89,7 +89,7 @@ function SortableTable(props) {
             header: () => <div className="sort">
                 <div style={{ display: 'flex', alignItems: "center" }}>
                     {column.label}
-                    <button disabled={buttonFocus} onClick={() => handleClickSortOrder(column.label)} style={{ display: 'flex', alignItems: 'center' }}>
+                    <button disabled={buttonFocus} onClick={() => handleClickSortOrder(column.label)} className="buttonWithSymbol" style={{ display: 'flex', alignItems: 'center', padding: '10px' }}>
                         {getIcons(column.label)}
                     </button>
                 </div>

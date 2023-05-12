@@ -1,6 +1,21 @@
+import { useState } from "react";
+import { BsCaretRightFill, BsCaretLeftFill } from "react-icons/bs";
 import ShowRow from "./ShowRow";
 
 function Table({ data, config, type, handleReset, size, editButtonFocus }) {
+    const [pageNumber, setPageNumber] = useState(1);
+
+    const handleLeftClick = () => {
+        setPageNumber(pageNumber - 1);
+    };
+    const handleRightClick = () => {
+        setPageNumber(pageNumber + 1);
+    };
+
+    const handleInputChange = (event) => {
+            setPageNumber(event.target.value);
+
+    };
 
     const renderedHeader = config.map((column) => {
         if (column.header) {
@@ -8,7 +23,7 @@ function Table({ data, config, type, handleReset, size, editButtonFocus }) {
         }
 
         return (
-            <th style={{width: size}} key={column.label}>
+            <th style={{ width: size }} key={column.label}>
                 {column.label}
             </th>
         );
@@ -17,21 +32,33 @@ function Table({ data, config, type, handleReset, size, editButtonFocus }) {
 
 
     const renderedRows = data.map((row, index) => {
-        return (
-            <ShowRow key={index} row={row} config={config} type={type} handleReset={handleReset} editButtonFocus={editButtonFocus}/>);
+        let content = <ShowRow key={index} row={row} config={config} type={type} handleReset={handleReset} editButtonFocus={editButtonFocus} />;
+        return content;
     });
 
     return (
-        <table className='table table-striped'>
-            <thead style={{ backgroundColor: "#FBACC7" }}>
-                <tr>
-                    {updatedHeader}
-                </tr>
-            </thead>
-            <tbody>
-                {renderedRows}
-            </tbody>
-        </table >
+        <div>
+            <table className='table table-striped' style={{ margin: '0' }}>
+                <thead style={{ backgroundColor: "#FBACC7" }}>
+                    <tr>
+                        {updatedHeader}
+                    </tr>
+                </thead>
+                <tbody>
+                    {renderedRows}
+                </tbody>
+            </table >
+            <div className="page">
+                <button onClick={handleLeftClick} className="buttonWithSymbol">
+                    <BsCaretLeftFill size={19}/>
+                </button>
+                <input type="number" onChange={handleInputChange} style={{ width: '47px', height: '25px', fontSize: '20px',margin: '2px'}} value={pageNumber} />
+                <button onClick={handleRightClick} className="buttonWithSymbol">
+                    <BsCaretRightFill size={19}/>
+
+                </button>
+            </div>
+        </div>
     );
 }
 
