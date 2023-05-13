@@ -63,7 +63,7 @@ function FunctionsBar({ registerPage, type, values, handleReset, setMessage, set
                         <div className="modal-container" onClick={handleShowRegister}>
                         </div>
                         <div className="register">
-                            <form className="border p-4 rounded" style={{ backgroundColor: "white", borderColor: "#E68AA5", width: "300px" }}>
+                            <form className="border p-4 rounded" style={{ backgroundColor: "white", borderColor: "#E68AA5", width: "330px" }}>
                                 {registerPage}
                                 <div className="form-row d-flex justify-content-between" >
                                     {/* <button onClick={{}} type='submit' className="btn p-2 fs-7 button ms-2">Cadastrar Outro !Beta!</button> */}

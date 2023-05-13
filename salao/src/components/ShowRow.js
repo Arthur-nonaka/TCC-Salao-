@@ -27,9 +27,7 @@ function ShowRow({ row, config, type, handleReset, editButtonFocus }) {
         }
     };
 
-    const renderedRow = values.map((value, index) => {
-    console.log(cells[index]);
-    console.log(cells[index].render(value))        
+    const renderedRow = values.map((value, index) => {  
         return (
             <td key={index}>
                 {cells[index].render(value)}

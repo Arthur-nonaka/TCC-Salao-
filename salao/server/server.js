@@ -60,7 +60,7 @@ app.post("/pull", async (req, res) => {
 			res.send(rows);
 			return;
 		} else if (type === "Serviços") {
-			const [rows] = await db.query("SELECT ser_descricao,ser_preco,ser_tipo,ser_codigo FROM servico WHERE usu_codigo = (SELECT usu_codigo FROM usuario WHERE usu_email = ?)", [email]);
+			const [rows] = await db.query("SELECT ser_nome,ser_preco,ser_descricao,ser_codigo FROM servico WHERE usu_codigo = (SELECT usu_codigo FROM usuario WHERE usu_email = ?)", [email]);
 			res.send(rows);
 			return;
 		}
@@ -91,7 +91,6 @@ app.post("/register", async (req, res) => {
 				return;
 			}
 		} catch (error) {
-			//console.log(error);
 			res.status(500).send(error);
 		}
 	} else if (type === "Clientes") {
@@ -117,12 +116,12 @@ app.post("/register", async (req, res) => {
 	} else if (type === "Serviços") {
 		try {
 			const values = req.body.values;
+			const nome = values.nome;
 			const desc = values.desc;
-			const tipo = values.tipo;
 			const price = values.price;
 			const email = values.email;
 
-			await db.query("INSERT INTO servico (ser_descricao,ser_preco,ser_tipo,usu_codigo) VALUES (?, ?, ?, (SELECT usu_codigo FROM usuario WHERE usu_email = ?)) ", [desc, price, tipo, email]);
+			await db.query("INSERT INTO servico (ser_nome,ser_preco,ser_descricao,usu_codigo) VALUES (?, ?, ?, (SELECT usu_codigo FROM usuario WHERE usu_email = ?)) ", [nome, price, desc, email]);
 			res.send("Cadastrado com sucesso");
 			return;
 		} catch (error) {
@@ -138,7 +137,6 @@ app.post("/login", async (req, res) => {
 		const password = req.body.password;
 		let [cryptPassword] = await db.query("SELECT usu_senha FROM usuario WHERE usu_email = ?", [email]);
 		const result = bcrypt.compareSync(password, cryptPassword[0].usu_senha)
-		console.log(result);
 		if (result) {
 			res.send({ msg: "Usuário Logado" })
 		} else {

@@ -11,7 +11,7 @@ import SearchTerm from '../components/SearchTerm';
 function ServicesPage() {
     const [desc, setDesc] = useState('');
     const [price, setPrice] = useState(0);
-    const [tipo, setTipo] = useState('');
+    const [nome, setNome] = useState('');
     const [messageShow, setMessageShow] = useState(false);
     const [message, setMessage] = useState('');
     const [messageType, setMessageType] = useState('');
@@ -40,10 +40,10 @@ function ServicesPage() {
 
     const config = [
         {
-            label: "Descricao",
+            label: "Nome",
             render: (value) => value,
-            sortValue: (value) => value.ser_descricao,
-            searchValue: (value) => value.ser_descricao
+            sortValue: (value) => value.ser_nome,
+            searchValue: (value) => value.ser_nome
         },
         {
             label: "Preço",
@@ -51,9 +51,8 @@ function ServicesPage() {
             sortValue: (value) => value.ser_preco,
         },
         {
-            label: "Tipo",
+            label: "Descrição",
             render: (value) => value,
-            equal: (value) => value.ser_tipo.toLowerCase(),
         }
     ];
 
@@ -63,32 +62,30 @@ function ServicesPage() {
     const handleChangePrice = (event) => {
         setPrice(event.target.value);
     };
-    const handleChangeTipo = (event) => {
-        setTipo(event.target.value);
+    const handleChangeNome = (event) => {
+        setNome(event.target.value);
     }
 
 
     const registerPage = <div>
-        <div className="form-group m-2me-1 " >
-            <div>
-                <label className='fs-6 mb-1' > Descricao </label>
-                <input type="text" className="form-control p-2 input" placeholder="Descricao" onChange={handleChangeDesc} value={desc} />
-            </div>
-        </div>
-        <div className="form-group mb-2 w-auto me-1 d-flex flex-row">
-            <div className='me-1 '>
-                <label className='fs-6 mb-1' > Tipo </label>
-                <input type="text" className="form-control p-2 input" placeholder="Tipo" onChange={handleChangeTipo} value={tipo} />
+        <div className="form-group mb-2 w-auto me-1 d-flex flex-row" >
+            <div className='me-1'>
+                <label className='fs-6 mb-1 me' > Nome </label>
+                <input type="text" className="form-control p-2 input" placeholder="Nome" onChange={handleChangeNome} value={nome} />
             </div>
             <div>
                 <label className='fs-6 mb-1' > Preco </label>
                 <input type="number" className="form-control p-2 input" onChange={handleChangePrice} value={price} />
             </div>
         </div>
+        <div className="form-group mb-2 w-auto me-1" >
+            <label className='fs-6 mb-1' > Descricao </label>
+            <textarea className="form-control p-2 input" placeholder="Descricao" onChange={handleChangeDesc} value={desc} />
+        </div>
     </div>;
 
-    const values = { desc, price, tipo, email };
-    const valuesToReset = [setDesc, setTipo, setPrice];
+    const values = { desc, price, nome, email };
+    const valuesToReset = [setDesc, setNome, setPrice];
     return (
         <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', flexDirection: "column", width: '100vw', height: '100vh' }}>
             <Title type={type}></Title>
