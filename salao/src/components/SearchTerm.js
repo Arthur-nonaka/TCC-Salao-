@@ -8,9 +8,6 @@ function SearchTerm({ data, config, size, type, handleReset }) {
     const handleInputChange = (event) => {
         setSearchTerm(event.target.value);
     };
-    // let updatedData = data;
-    // config.forEach((column) => {
-    // });
     const updatedData = data.filter(value => value.cli_nome.toLowerCase().includes(SearchTerm.toLowerCase()));
 
     return (

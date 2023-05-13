@@ -11,6 +11,7 @@ function SignUpPage() {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [email, setEmail] = useState('');
+    const [salonName, setSalonName] = useState('');
     const [messageShow, setMessageShow] = useState(false);
     const [message, setMessage] = useState('');
     const [messageType, setMessageType] = useState('error');
@@ -18,6 +19,9 @@ function SignUpPage() {
 
     const handleChangePassword = (event) => {
         setPassword(event.target.value);
+    };
+    const handleChangeSalonName= (event) => {
+        setSalonName(event.target.value);
     };
 
     const handleChangeConfirmPassword = (event) => {
@@ -44,7 +48,7 @@ function SignUpPage() {
 
         else {
             const type = "user";
-            axios.post('/register', { type, name, email, password })
+            axios.post('/register', { type, name, email, password, salonName })
                 .then(res => {
                     setMessage('');
                     setMessageShow(false);
@@ -73,6 +77,10 @@ function SignUpPage() {
                     <div className="form-group  m-2 w-auto me-1" >
                         <label className='fs-6 mb-1' > Nome </label>
                         <input type="text" className="form-control p-2 input" placeholder="Nome" onChange={handleChangeName} value={name} />
+                    </div>
+                    <div className="form-group  m-2 w-auto me-1" >
+                        <label className='fs-6 mb-1' > Nome do Estabelecimento </label>
+                        <input type="text" className="form-control p-2 input" placeholder="Nome do Estabelecimento" onChange={handleChangeSalonName} value={salonName} />
                     </div>
                     <div className="form-row d-flex">
                         <div className="form-group ms-2 w-50">

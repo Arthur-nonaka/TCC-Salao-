@@ -44,7 +44,6 @@ function ClientsPage() {
             render: (value) => value,
             sortValue: (value) => value.cli_nome,
             searchValue: (value) => value.cli_nome
-
         },
         {
             label: "Telefone",

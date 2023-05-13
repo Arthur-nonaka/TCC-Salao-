@@ -12,7 +12,7 @@ app.use(express.json());
 const db = mysql.createPool(({
 	host: "127.0.0.1",
 	user: "root",
-	password: "",
+	password: "batata",
 	database: "beautyflowdata",
 }));
 
@@ -59,7 +59,7 @@ app.post("/pull", async (req, res) => {
 			const [rows] = await db.query("SELECT * FROM produto WHERE usu_codigo = (SELECT usu_codigo FROM usuario WHERE usu_email = ?)", [email]);
 			res.send(rows);
 			return;
-		} else if (type === "Servicos") {
+		} else if (type === "Serviços") {
 			const [rows] = await db.query("SELECT * FROM servico WHERE usu_codigo = (SELECT usu_codigo FROM usuario WHERE usu_email = ?)", [email]);
 			res.send(rows);
 			return;
@@ -76,12 +76,13 @@ app.post("/register", async (req, res) => {
 			const name = req.body.name;
 			const email = req.body.email;
 			const password = req.body.password;
+			const salonName = req.body.salonName;
 
 			let [rows] = await db.query("SELECT * FROM usuario WHERE usu_email = ?", [email]);
-			
+
 			if (rows.length === 0) {
 				bcrypt.hash(password, saltRounds, async (err, hash) => {
-					await db.query("INSERT INTO usuario (usu_nome, usu_email, usu_senha) VALUES (?, ?, ?)", [name, email, hash]);
+					await db.query("INSERT INTO usuario (usu_nome, usu_email, usu_senha, usu_nomeSalao) VALUES (?, ?, ?,?)", [name, email, hash, salonName]);
 					res.send("Usuário cadastrado com sucesso");
 					return;
 				});
@@ -95,16 +96,16 @@ app.post("/register", async (req, res) => {
 		}
 	} else if (type === "Clientes") {
 		try {
-			const test = req.body.values;
-			const name = test.name;
-			const fone = test.fone;
-			const email = test.email;
+			const values = req.body.values;
+			const name = values.name;
+			const fone = values.fone;
+			const email = values.email;
 
 			let [userCode] = await db.query("SELECT usu_codigo FROM usuario WHERE usu_email = ?", [email]);
 			let [rows] = await db.query("SELECT * FROM cliente WHERE cli_nome = ? && usu_codigo = ?", [name, userCode[0].usu_codigo]);
 			if (rows.length === 0) {
 				await db.query("INSERT INTO cliente (cli_nome, cli_telefone, usu_codigo) VALUES (?, ?, ?)", [name, fone, userCode[0].usu_codigo]);
-				res.send(name +" cadastrado com sucesso");
+				res.send(name + " cadastrado com sucesso");
 				return;
 			} else {
 				res.status(400).send({ errorMessage: "Cliente Ja Cadastrado" });
@@ -113,6 +114,21 @@ app.post("/register", async (req, res) => {
 		} catch (error) {
 			res.status(500).send({ errorMessage: "Erro 500" });
 		}
+	} else if (type === "Serviços") {
+		try {
+			const values = req.body.values;
+			const desc = values.desc;
+			const tipo = values.tipo;
+			const price = values.price;
+			const email = values.email;
+
+			await db.query("INSERT INTO servico (ser_descricao,ser_preco,ser_tipo,usu_codigo) VALUES (?, ?, ?, (SELECT usu_codigo FROM usuario WHERE usu_email = ?)) ", [desc, price, tipo, email]);
+			res.send("Cadastrado com sucesso");
+			return;
+		} catch (error) {
+			res.status(500).send({ errorMessage: "Erro 500" });
+		}
+
 	}
 });
 
