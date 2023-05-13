@@ -2,6 +2,7 @@ import { useState } from "react";
 import { BsCaretRightFill, BsCaretLeftFill } from "react-icons/bs";
 import ShowRow from "./ShowRow";
 
+
 function Table({ data, config, type, handleReset, size, editButtonFocus }) {
     const [pageNumber, setPageNumber] = useState(1);
 
