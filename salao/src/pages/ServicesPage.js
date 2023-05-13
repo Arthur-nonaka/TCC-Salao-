@@ -42,15 +42,18 @@ function ServicesPage() {
         {
             label: "Descricao",
             render: (value) => value,
+            sortValue: (value) => value.ser_descricao,
             searchValue: (value) => value.ser_descricao
-        },
-        {
-            label: "Tipo",
-            render: (value) => value,
         },
         {
             label: "Preço",
             render: (value) => <div>R$ {value}</div>,
+            sortValue: (value) => value.ser_preco,
+        },
+        {
+            label: "Tipo",
+            render: (value) => value,
+            equal: (value) => value.ser_tipo.toLowerCase(),
         }
     ];
 
@@ -85,7 +88,7 @@ function ServicesPage() {
     </div>;
 
     const values = { desc, price, tipo, email };
-    const valuesToReset = [setDesc, setPrice, setTipo];
+    const valuesToReset = [setDesc, setTipo, setPrice];
     return (
         <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', flexDirection: "column", width: '100vw', height: '100vh' }}>
             <Title type={type}></Title>

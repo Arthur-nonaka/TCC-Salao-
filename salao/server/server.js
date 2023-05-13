@@ -28,7 +28,7 @@ app.post('/delete', async (req, res) => {
 			await db.query("DELETE FROM despesa WHERE des_codigo = ?", [code]);
 		} else if (type === "Produtos") {
 			await db.query("DELETE FROM produto WHERE pro_codigo = ?", [code]);
-		} else if (type === "Servicos") {
+		} else if (type === "Serviços") {
 			await db.query("DELETE FROM servico WHERE ser_codigo = ?", [code]);
 		}
 		res.send("Deletado com sucesso");
@@ -60,7 +60,7 @@ app.post("/pull", async (req, res) => {
 			res.send(rows);
 			return;
 		} else if (type === "Serviços") {
-			const [rows] = await db.query("SELECT * FROM servico WHERE usu_codigo = (SELECT usu_codigo FROM usuario WHERE usu_email = ?)", [email]);
+			const [rows] = await db.query("SELECT ser_descricao,ser_preco,ser_tipo,ser_codigo FROM servico WHERE usu_codigo = (SELECT usu_codigo FROM usuario WHERE usu_email = ?)", [email]);
 			res.send(rows);
 			return;
 		}

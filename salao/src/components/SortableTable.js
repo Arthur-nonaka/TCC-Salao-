@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Table from "./Table";
 
-import { BsCaretUpFill,BsCaretDownFill } from "react-icons/bs";
+import { BsCaretUpFill, BsCaretDownFill } from "react-icons/bs";
 
 function SortableTable(props) {
     const [sortOrder, setSortOrder] = useState(null);
@@ -81,6 +81,13 @@ function SortableTable(props) {
     }
 
     const updatedConfig = config.map((column, index) => {
+        if (sortBy === null && column.equal) {
+            updatedData = [...data].sort((a, b) => {
+                const valueA = column.equal(a);
+                const valueB = column.equal(b);
+                return valueA > valueB ? 1 : -1;
+            });
+        }
         if (!column.sortValue) {
             return column;
         }
