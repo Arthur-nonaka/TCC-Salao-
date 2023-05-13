@@ -68,7 +68,7 @@ function ServicesPage() {
 
 
     const registerPage = <div>
-        <div className="form-group mb-2 w-auto me-1 d-flex flex-row" >
+        <div className="form-group mb-2 m-2 w-auto me-1 d-flex flex-row" >
             <div className='me-1'>
                 <label className='fs-6 mb-1 me' > Nome </label>
                 <input type="text" className="form-control p-2 input" placeholder="Nome" onChange={handleChangeNome} value={nome} />
@@ -78,7 +78,7 @@ function ServicesPage() {
                 <input type="number" className="form-control p-2 input" onChange={handleChangePrice} value={price} />
             </div>
         </div>
-        <div className="form-group mb-2 w-auto me-1" >
+        <div className="form-group mb-2 w-auto me-1 m-2" >
             <label className='fs-6 mb-1' > Descricao </label>
             <textarea className="form-control p-2 input" placeholder="Descricao" onChange={handleChangeDesc} value={desc} />
         </div>
@@ -90,8 +90,8 @@ function ServicesPage() {
         <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', flexDirection: "column", width: '100vw', height: '100vh' }}>
             <Title type={type}></Title>
             <Message setMessageShow={setMessageShow} messageShow={messageShow} messageType={messageType} message={message} />
-            <SearchTerm data={services} setClients={setServices} config={config} size={"10000px"} type={type} handleReset={handleReset} />
-            <FunctionsBar valuesToReset={valuesToReset} registerPage={registerPage} type={type} values={values} handleReset={handleReset} setMessage={setMessage} setMessageShow={setMessageShow} setMessageType={setMessageType} />
+            <SearchTerm data={services} config={config} size={"10000px"} type={type} handleReset={handleReset} />
+            <FunctionsBar width={'340px'} valuesToReset={valuesToReset} registerPage={registerPage} type={type} values={values} handleReset={handleReset} setMessage={setMessage} setMessageShow={setMessageShow} setMessageType={setMessageType} />
 
         </div>
     );

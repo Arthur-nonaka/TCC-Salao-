@@ -2,14 +2,12 @@ import { useState } from 'react';
 import ReactDOM from "react-dom";
 import axios from 'axios';
 
-function FunctionsBar({ registerPage, type, values, handleReset, setMessage, setMessageShow, setMessageType, valuesToReset }) {
+function FunctionsBar({ registerPage, type, values, handleReset, setMessage, setMessageShow, setMessageType, valuesToReset, width }) {
     const [showRegister, setShowRegister] = useState(false);
 
     const handleShowRegister = () => {
         setShowRegister(!showRegister);
-        valuesToReset.forEach(valueToReset => {
-            valueToReset('');
-        });
+        valuesToReset.forEach(valueToReset => valueToReset(''));
     };
 
     // let doAnother;
@@ -63,11 +61,11 @@ function FunctionsBar({ registerPage, type, values, handleReset, setMessage, set
                         <div className="modal-container" onClick={handleShowRegister}>
                         </div>
                         <div className="register">
-                            <form className="border p-4 rounded" style={{ backgroundColor: "white", borderColor: "#E68AA5", width: "330px" }}>
+                            <form className="border p-4 rounded" style={{ backgroundColor: "white", borderColor: "#E68AA5", width: width }}>
                                 {registerPage}
                                 <div className="form-row d-flex justify-content-between" >
                                     {/* <button onClick={{}} type='submit' className="btn p-2 fs-7 button ms-2">Cadastrar Outro !Beta!</button> */}
-                                    <button onClick={handleClickRegister} type='submit' className="btn p-2 fs-7 button me-1">Cadastrar</button>
+                                    <button onClick={handleClickRegister} type='submit' className="btn p-2 fs-7 button me-1 m-2">Cadastrar</button>
                                 </div>
                             </form>
                         </div>

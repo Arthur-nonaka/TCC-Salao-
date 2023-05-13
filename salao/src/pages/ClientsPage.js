@@ -76,8 +76,8 @@ function ClientsPage() {
         <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', flexDirection: "column", width: '100vw', height: '100vh' }}>
             <Title type={type}></Title>
             <Message setMessageShow={setMessageShow} messageShow={messageShow} messageType={messageType} message={message} />
-            <SearchTerm data={clients} setClients={setClients} config={config} size={"10000px"} type={type} handleReset={handleReset} />
-            <FunctionsBar valuesToReset={valuesToReset} registerPage={registerPage} type={type} values={values} handleReset={handleReset} setMessage={setMessage} setMessageShow={setMessageShow} setMessageType={setMessageType} />
+            <SearchTerm data={clients} config={config} size={"10000px"} type={type} handleReset={handleReset} />
+            <FunctionsBar width={'300px'} valuesToReset={valuesToReset} registerPage={registerPage} type={type} values={values} handleReset={handleReset} setMessage={setMessage} setMessageShow={setMessageShow} setMessageType={setMessageType} />
 
         </div>
     );
