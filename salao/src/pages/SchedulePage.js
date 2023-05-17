@@ -14,7 +14,7 @@ function SchedulePage() {
     const [timeStart, setTimeStart] = useState('');
     const [timeEnd, setTimeEnd] = useState('');
     const [clientSelected, setClientSelected] = useState('');
-    const [servicesSelected, setServicesSelected] = useState([{}]);
+    const [servicesSelected, setServicesSelected] = useState([]);
     const [clients, setClients] = useState([]);
     const [services, setServices] = useState([]);
     // const [servicesQuantity, setServicesQuantity] = useState(0);
@@ -38,13 +38,23 @@ function SchedulePage() {
     const handleSelectClient = (event) => {
         setClientSelected(event.target.value);
     };
-    const handleSelectService = (event) => {
-        setServicesSelected([...servicesSelected, { code: event.target.value }]);
+    const handleSelectService = (event,index) => {
+        const updatedServicesSelected = servicesSelected.map((serviceSelected, i) => {
+            if (index === i) {
+                return { code: event.target.value };
+            }
+            else {
+                return serviceSelected;
+            }
+        });
+        console.log(updatedServicesSelected);
+
+        setServicesSelected(updatedServicesSelected);
     };
-    // const handleNewClick = (event) => {
-    //     event.preventDefault();
-    //     setServicesSelected([...servicesSelected, {}]);
-    // };
+    const handleNewClick = (event) => {
+        event.preventDefault();
+        setServicesSelected([...servicesSelected, {}]);
+    };
 
     const [reset, setReset] = useState(false);
     const handleReset = () => {
@@ -102,7 +112,7 @@ function SchedulePage() {
         </option>
     });
 
-    const listServices = servicesSelected.map((serviceSelected) => {
+    const listServices = servicesSelected.map((serviceSelected, index) => {
         const teste = services.map((service) => {
             return (
                 <option key={service.ser_codigo} value={service.ser_codigo}>
@@ -111,7 +121,7 @@ function SchedulePage() {
             );
         });
         return (
-            <select className="form-control p-2 input" onInput={handleSelectService}>
+            <select key={index} className="form-control p-2 input" onInput={event => handleSelectService(event, index)}>
                 {teste}
             </select>
         );
@@ -141,11 +151,12 @@ function SchedulePage() {
         <div className='form-group m-2 w-auto me-1'>
             <label className='fs-6 mb-1' > Serviços </label>
             {listServices}
-            {/* <button className="btn mt-2" style={{ color: "#FBACC7" }} onClick={handleNewClick}> <BsFillPlusCircleFill /> </button> */}
+            <button className="btn mt-2" style={{ color: "#FBACC7" }} onClick={handleNewClick}> <BsFillPlusCircleFill /> </button>
         </div>
     </div>;
 
     const values = { date, timeStart, timeEnd, clientSelected, servicesSelected, email };
+    console.log(values);
     const valuesToReset = { setDate, setTimeStart, setTimeEnd, setClientSelected, setServicesSelected };
     return (
         <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', flexDirection: "column", width: '100vw', height: '100vh' }}>
