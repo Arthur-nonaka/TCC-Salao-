@@ -36,26 +36,38 @@ function SchedulePage() {
     const handleSelectTimeEnd = (event) => {
         setTimeEnd(event.target.value);
     };
-    const handleSelectClient = (event) => {
-        setClientSelected(event.target.value);
-    };
-    const handleSelectService = (event, index) => {
-        const updatedServicesSelected = servicesSelected.map((serviceSelected, i) => {
-            if (index === i) {
-                return { code: event.target.value };
+    // const handleSelectClient = (event) => {
+    //     setClientSelected(event.target.value);
+    // };
+
+    // const handleSelectService = (event, index) => {
+    //     const updatedServicesSelected = servicesSelected.map((serviceSelected, i) => {
+    //         if (index === i) {
+    //             return { code: event.target.value };
+    //         }
+    //         else {
+    //             return serviceSelected;
+    //         }
+    //     });
+    //     console.log(updatedServicesSelected);
+
+    //     setServicesSelected(updatedServicesSelected);
+    // };
+    // const handleNewClick = (event) => {
+    //     event.preventDefault();
+    //     setServicesSelected([...servicesSelected, {}]);
+    // };
+    const handleDeleteClick = (index) => {
+        const updatedServices = servicesSelected.map((service,i) => {
+            if(index === i){
+                return;
             }
             else {
-                return serviceSelected;
+                return service;
             }
         });
-        console.log(updatedServicesSelected);
-
-        setServicesSelected(updatedServicesSelected);
-    };
-    const handleNewClick = (event) => {
-        event.preventDefault();
-        setServicesSelected([...servicesSelected, {}]);
-    };
+        setServicesSelected(updatedServices);
+    }; 
 
     const [reset, setReset] = useState(false);
     const handleReset = () => {
@@ -113,23 +125,15 @@ function SchedulePage() {
         </option>
     });
 
-    const listServices = servicesSelected.map((serviceSelected, index) => {
-        const teste = services.map((service) => {
-            return (
-                <option key={service.ser_codigo} value={service.ser_codigo}>
-                    {service.ser_nome}
-                </option>
-            );
-        });
+    const listServices = services.map((service,index) => {
         return (
-            <select key={index} className="form-control p-2 input" onInput={event => handleSelectService(event, index)}>
-                {teste}
-            </select>
+            <div onClick={() => handleDeleteClick(index)} className="option-selected" key={service.ser_codigo}>
+                {service.ser_nome} <label>X</label>
+            </div>
         );
     });
 
     let client = <ComboBox data={clients} columnToTake={"cli_nome"} setData={setClientSelected} />;
-
     if (clientSelected !== '') {
         client = <div onClick={() => setClientSelected('')} className="option-selected"> {clientSelected} <label>X</label></div>;
     }
@@ -155,9 +159,9 @@ function SchedulePage() {
         </div>
         <div className='form-group m-2 w-auto me-1'>
             <label className='fs-6 mb-1' > Serviços </label>
-            <ComboBox data={services} columnToTake={"ser_nome"} setData={setClientSelected} />
+            <ComboBox data={services} columnToTake={"ser_nome"} setData={setServicesSelected} />
             {listServices}
-            <button className="btn mt-2" style={{ color: "#FBACC7" }} onClick={handleNewClick}> <BsFillPlusCircleFill /> </button>
+            {/* <button className="btn mt-2" style={{ color: "#FBACC7" }} onClick={handleNewClick}> <BsFillPlusCircleFill /> </button> */}
         </div>
     </div>;
 
