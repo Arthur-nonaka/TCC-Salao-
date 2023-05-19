@@ -8,6 +8,7 @@ import Title from '../components/Title';
 import FunctionsBar from '../components/FunctionsBar';
 import Message from '../components/Message';
 import SearchTerm from '../components/SearchTerm';
+import ComboBox from "../components/ComboBox";
 
 function SchedulePage() {
     const [date, setDate] = useState('');
@@ -38,7 +39,7 @@ function SchedulePage() {
     const handleSelectClient = (event) => {
         setClientSelected(event.target.value);
     };
-    const handleSelectService = (event,index) => {
+    const handleSelectService = (event, index) => {
         const updatedServicesSelected = servicesSelected.map((serviceSelected, i) => {
             if (index === i) {
                 return { code: event.target.value };
@@ -127,12 +128,16 @@ function SchedulePage() {
         );
     });
 
+    let client = <ComboBox data={clients} columnToTake={"cli_nome"} setData={setClientSelected} />;
+
+    if (clientSelected !== '') {
+        client = <div onClick={() => setClientSelected('')} className="option-selected"> {clientSelected} <label>X</label></div>;
+    }
+
     const registerPage = <div>
         <div className='form-group m-2 w-auto me-1'>
             <label className='fs-6 mb-1' > Cliente </label>
-            <select className="form-control p-2 input" onInput={handleSelectClient}>
-                {optionsClient}
-            </select>
+            {client}
         </div>
         <div className="form-group w-auto d-flex flex-row justify-content-between m-2">
             <div className="form-group w-auto me-1" >
@@ -150,13 +155,13 @@ function SchedulePage() {
         </div>
         <div className='form-group m-2 w-auto me-1'>
             <label className='fs-6 mb-1' > Serviços </label>
+            <ComboBox data={services} columnToTake={"ser_nome"} setData={setClientSelected} />
             {listServices}
             <button className="btn mt-2" style={{ color: "#FBACC7" }} onClick={handleNewClick}> <BsFillPlusCircleFill /> </button>
         </div>
     </div>;
 
     const values = { date, timeStart, timeEnd, clientSelected, servicesSelected, email };
-    console.log(values);
     const valuesToReset = { setDate, setTimeStart, setTimeEnd, setClientSelected, setServicesSelected };
     return (
         <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', flexDirection: "column", width: '100vw', height: '100vh' }}>
