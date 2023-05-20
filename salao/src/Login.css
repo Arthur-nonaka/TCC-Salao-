@@ -189,6 +189,7 @@ input::-webkit-inner-spin-button {
     justify-content: space-between;
     border-radius: 10px;
     width: auto;
+    margin-top: 7px;
     padding: 4px;
     padding-left: 10px;
     padding-right: 10px;

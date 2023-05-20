@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function ComboBox({ data, columnToTake, setData }) {
+function ComboBox({ data, columnToTake, setDataSelected, dataSelected }) {
     const [input, setInput] = useState('');
     const [isFocused, setIsFocused] = useState(false);
 
@@ -8,11 +8,21 @@ function ComboBox({ data, columnToTake, setData }) {
         setInput(event.target.value);
     };
 
+    const handleValueClick = (value) => {
+        const x = dataSelected.find(data => data === value);
+        if (x) {
+            setDataSelected([...dataSelected]);
+        } else {
+            setDataSelected([...dataSelected,value]);
+        }
+        setInput('');
+    };
+
     let content = <div></div>;
     if (input.length >= 1 && isFocused === true) {
         const updatedData = data.filter(value => value[columnToTake].toLowerCase().includes(input.toLowerCase()));
         const values = updatedData.map((value, index) => {
-            return <div onClick={() => setData(value[columnToTake])} key={index} className="value">
+            return <div onClick={() => handleValueClick(value[columnToTake])} key={index} className="value">
                 {value[columnToTake]}
             </div>
         });
