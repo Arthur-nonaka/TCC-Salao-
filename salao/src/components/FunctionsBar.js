@@ -2,12 +2,12 @@ import { useState } from 'react';
 import ReactDOM from "react-dom";
 import axios from 'axios';
 
-function FunctionsBar({ registerPage, type, values, handleReset, setMessage, setMessageShow, setMessageType, valuesToReset, width }) {
+function FunctionsBar({ registerPage, type, values, handleReset, setMessage, setMessageShow, setMessageType, resetValues, width }) {
     const [showRegister, setShowRegister] = useState(false);
 
     const handleShowRegister = () => {
         setShowRegister(!showRegister);
-        valuesToReset.forEach(valueToReset => valueToReset(''));
+        resetValues();
     };
 
     // let doAnother;

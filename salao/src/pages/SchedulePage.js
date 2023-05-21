@@ -134,13 +134,21 @@ function SchedulePage() {
     </div>;
 
     const values = { date, timeStart, timeEnd, clientSelected, servicesSelected, email };
-    const valuesToReset = { setDate, setTimeStart, setTimeEnd, setClientSelected, setServicesSelected };
+
+    const resetValues = () => {
+        setDate('');
+        setTimeEnd('');
+        setTimeStart('');
+        setClientSelected([]);
+        setServicesSelected([]);
+    };
+
     return (
         <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', flexDirection: "column", width: '100vw', height: '100vh' }}>
             <Title type={type}></Title>
             <Message setMessageShow={setMessageShow} messageShow={messageShow} messageType={messageType} message={message} />
             <SearchTerm data={schedule} config={config} size={"10000px"} type={type} handleReset={handleReset} />
-            <FunctionsBar width={'420px'} valuesToReset={valuesToReset} registerPage={registerPage} type={type} values={values} handleReset={handleReset} setMessage={setMessage} setMessageShow={setMessageShow} setMessageType={setMessageType} />
+            <FunctionsBar width={'420px'} resetValues={resetValues} registerPage={registerPage} type={type} values={values} handleReset={handleReset} setMessage={setMessage} setMessageShow={setMessageShow} setMessageType={setMessageType} />
         </div>
     );
 };

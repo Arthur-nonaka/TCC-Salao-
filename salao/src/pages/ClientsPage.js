@@ -71,13 +71,16 @@ function ClientsPage() {
     </div>;
 
     const values = { name, fone, email };
-    const valuesToReset = [setName, setFone];
+    const resetValues = () => {
+        setName('');
+        setFone('');
+    };
     return (
         <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', flexDirection: "column", width: '100vw', height: '100vh' }}>
             <Title type={type}></Title>
             <Message setMessageShow={setMessageShow} messageShow={messageShow} messageType={messageType} message={message} />
             <SearchTerm data={clients} config={config} size={"10000px"} type={type} handleReset={handleReset} />
-            <FunctionsBar width={'300px'} valuesToReset={valuesToReset} registerPage={registerPage} type={type} values={values} handleReset={handleReset} setMessage={setMessage} setMessageShow={setMessageShow} setMessageType={setMessageType} />
+            <FunctionsBar width={'300px'} resetValues={resetValues} registerPage={registerPage} type={type} values={values} handleReset={handleReset} setMessage={setMessage} setMessageShow={setMessageShow} setMessageType={setMessageType} />
 
         </div>
     );

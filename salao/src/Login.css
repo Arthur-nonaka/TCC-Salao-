@@ -209,3 +209,7 @@ input::-webkit-inner-spin-button {
     background-color: #FBC8DB;
     cursor: pointer;
 }
+
+label:hover {
+    cursor: pointer;
+} 

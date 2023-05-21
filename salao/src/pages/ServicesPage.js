@@ -85,13 +85,17 @@ function ServicesPage() {
     </div>;
 
     const values = { desc, price, nome, email };
-    const valuesToReset = [setDesc, setNome, setPrice];
+    const resetValues = () => {
+        setDesc('');
+        setNome('');
+        setPrice('');
+    };
     return (
         <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', flexDirection: "column", width: '100vw', height: '100vh' }}>
             <Title type={type}></Title>
             <Message setMessageShow={setMessageShow} messageShow={messageShow} messageType={messageType} message={message} />
             <SearchTerm data={services} config={config} size={"10000px"} type={type} handleReset={handleReset} />
-            <FunctionsBar width={'340px'} valuesToReset={valuesToReset} registerPage={registerPage} type={type} values={values} handleReset={handleReset} setMessage={setMessage} setMessageShow={setMessageShow} setMessageType={setMessageType} />
+            <FunctionsBar width={'340px'} resetValues={resetValues} registerPage={registerPage} type={type} values={values} handleReset={handleReset} setMessage={setMessage} setMessageShow={setMessageShow} setMessageType={setMessageType} />
 
         </div>
     );

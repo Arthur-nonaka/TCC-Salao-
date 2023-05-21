@@ -9,12 +9,15 @@ function ComboBox({ data, columnToTake, setDataSelected, dataSelected }) {
     };
 
     const handleValueClick = (value) => {
-        const x = dataSelected.find(data => data === value);
-        if (x) {
-            setDataSelected([...dataSelected]);
-        } else {
-            setDataSelected([...dataSelected,value]);
+        if (typeof (dataSelected) !== "string") {
+            const x = dataSelected.find(data => data === value);
+            if (x)
+                setDataSelected([...dataSelected]);
+            else
+                setDataSelected([...dataSelected, value]);
         }
+        else 
+            setDataSelected(value);
         setInput('');
     };
 
