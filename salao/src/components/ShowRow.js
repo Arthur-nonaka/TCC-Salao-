@@ -5,7 +5,7 @@ import axios from 'axios';
 function ShowRow({ row, config, type, handleReset, editButtonFocus }) {
     const [showEdit, setShowEdit] = useState(false);
     let values = Object.values(row);
-    let rowCode = values.pop();
+    let rowCode = values.shift();
     let cells = Object.values(config);
 
     const handleClickEdit = () => {
@@ -26,7 +26,6 @@ function ShowRow({ row, config, type, handleReset, editButtonFocus }) {
             alert("Nao ocorreu o DELETE");
         }
     };
-
     const renderedRow = values.map((value, index) => {  
         return (
             <td key={index}>

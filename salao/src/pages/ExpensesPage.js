@@ -10,7 +10,7 @@ function ExpensesPage() {
 
 
     return(
-        <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', flexDirection: "column", width: '100vw', height: '100vh' }}>
+        <div className='main'>
             <Title type={type}></Title>
             <Table data={expenses} config={config}/>
         </div>

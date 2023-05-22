@@ -60,7 +60,12 @@ function ServicesPage() {
         setDesc(event.target.value);
     };
     const handleChangePrice = (event) => {
-        setPrice(event.target.value);
+        if (event.target.value >= 0) {
+            setPrice(event.target.value);
+        }
+        else {
+            setPrice(price);
+        }
     };
     const handleChangeNome = (event) => {
         setNome(event.target.value);
@@ -74,8 +79,8 @@ function ServicesPage() {
                 <input type="text" className="form-control p-2 input" placeholder="Nome" onChange={handleChangeNome} value={nome} />
             </div>
             <div>
-                <label className='fs-6 mb-1' > Preco </label>
-                <input type="number" className="form-control p-2 input" onChange={handleChangePrice} value={price} />
+                <label className='fs-6 mb-1' > Preço </label>
+                <input type="number" className="form-control p-2 input" placeholder='Preço' onChange={handleChangePrice} value={price} />
             </div>
         </div>
         <div className="form-group mb-2 w-auto me-1 m-2" >
@@ -91,7 +96,7 @@ function ServicesPage() {
         setPrice('');
     };
     return (
-        <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', flexDirection: "column", width: '100vw', height: '100vh' }}>
+        <div className='main'>
             <Title type={type}></Title>
             <Message setMessageShow={setMessageShow} messageShow={messageShow} messageType={messageType} message={message} />
             <SearchTerm data={services} config={config} size={"10000px"} type={type} handleReset={handleReset} />

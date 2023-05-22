@@ -36,7 +36,6 @@ function Table({ data, config, type, handleReset, size, editButtonFocus }) {
         let content = <ShowRow key={index} row={row} config={config} type={type} handleReset={handleReset} editButtonFocus={editButtonFocus} />;
         return content;
     });
-
     return (
         <div>
             <table className='table table-striped' style={{ margin: '0' }}>

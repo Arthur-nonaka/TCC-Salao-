@@ -44,7 +44,7 @@ app.post("/pull", async (req, res) => {
 	const email = req.body.email;
 	try {
 		if (type === "Clientes") {
-			const [rows] = await db.query("SELECT cli_nome, cli_telefone, cli_codigo FROM cliente WHERE usu_codigo = (SELECT usu_codigo FROM usuario WHERE usu_email = ?)", [email]);
+			const [rows] = await db.query("SELECT cli_codigo,cli_nome,cli_telefone FROM cliente C, usuario U WHERE C.usu_codigo = U.usu_codigo AND usu_email = ?", [email]);
 			res.send(rows);
 			return;
 		} else if (type === "Agenda") {
@@ -56,11 +56,11 @@ app.post("/pull", async (req, res) => {
 			res.send(rows);
 			return;
 		} else if (type === "Produtos") {
-			const [rows] = await db.query("SELECT * FROM produto WHERE usu_codigo = (SELECT usu_codigo FROM usuario WHERE usu_email = ?)", [email]);
+			const [rows] = await db.query("SELECT pro_codigo,pro_nome,pro_preco,pro_quantidade,pro_descricao FROM produto P, usuario U WHERE P.usu_codigo = U.usu_codigo AND usu_email = ?", [email]);
 			res.send(rows);
 			return;
 		} else if (type === "Serviços") {
-			const [rows] = await db.query("SELECT ser_nome,ser_preco,ser_descricao,ser_codigo FROM servico WHERE usu_codigo = (SELECT usu_codigo FROM usuario WHERE usu_email = ?)", [email]);
+			const [rows] = await db.query("SELECT ser_codigo,ser_nome,ser_preco,ser_descricao FROM servico S, usuario U WHERE S.usu_codigo = U.usu_codigo AND usu_email = ?", [email]);
 			res.send(rows);
 			return;
 		}

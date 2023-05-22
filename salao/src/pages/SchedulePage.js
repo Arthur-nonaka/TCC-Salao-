@@ -1,5 +1,3 @@
-import { BsFillPlusCircleFill } from "react-icons/bs";
-
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
@@ -16,12 +14,15 @@ function SchedulePage() {
     const [timeEnd, setTimeEnd] = useState('');
     const [clientSelected, setClientSelected] = useState('');
     const [servicesSelected, setServicesSelected] = useState([]);
+
     const [clients, setClients] = useState([]);
     const [services, setServices] = useState([]);
     const [schedule, setSchedule] = useState([]);
+
     const [messageShow, setMessageShow] = useState(false);
     const [message, setMessage] = useState('');
     const [messageType, setMessageType] = useState('');
+    
     const currentLocation = useLocation();
     const email = currentLocation.state.email;
     const type = "Agenda";
@@ -134,17 +135,16 @@ function SchedulePage() {
     </div>;
 
     const values = { date, timeStart, timeEnd, clientSelected, servicesSelected, email };
-
     const resetValues = () => {
         setDate('');
         setTimeEnd('');
         setTimeStart('');
-        setClientSelected([]);
+        setClientSelected('');
         setServicesSelected([]);
     };
 
     return (
-        <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', flexDirection: "column", width: '100vw', height: '100vh' }}>
+        <div className='main'>
             <Title type={type}></Title>
             <Message setMessageShow={setMessageShow} messageShow={messageShow} messageType={messageType} message={message} />
             <SearchTerm data={schedule} config={config} size={"10000px"} type={type} handleReset={handleReset} />

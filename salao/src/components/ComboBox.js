@@ -36,7 +36,7 @@ function ComboBox({ data, columnToTake, setDataSelected, dataSelected }) {
     }
     return (
         <div className="comboBox">
-            <input onFocus={() => setIsFocused(true)} onBlur={() => setTimeout(() => { setIsFocused(false) }, 200)} onChange={handleInputChange} value={input} className="form-control p-2 input" id="input" />
+            <input onFocus={() => setIsFocused(true)} onBlur={() => setTimeout(() => { setIsFocused(false) }, 200)} onChange={handleInputChange} value={input} className="form-control p-2 input" id="input" autoComplete="off"/>
             <div>
                 {content}
             </div>
