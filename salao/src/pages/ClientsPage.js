@@ -11,9 +11,11 @@ import SearchTerm from '../components/SearchTerm';
 function ClientsPage() {
     const [name, setName] = useState('');
     const [fone, setFone] = useState('');
+
     const [messageShow, setMessageShow] = useState(false);
     const [message, setMessage] = useState('');
     const [messageType, setMessageType] = useState('');
+    
     const currentLocation = useLocation();
     const email = currentLocation.state.email;
     const type = "Clientes";

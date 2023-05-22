@@ -101,7 +101,7 @@ app.post("/register", async (req, res) => {
 			const email = values.email;
 
 			let [userCode] = await db.query("SELECT usu_codigo FROM usuario WHERE usu_email = ?", [email]);
-			let [rows] = await db.query("SELECT * FROM cliente WHERE cli_nome = ? && usu_codigo = ?", [name, userCode[0].usu_codigo]);
+			let [rows] = await db.query("SELECT * FROM cliente C, usuario U WHERE C.usu_codigo = U.usu_codigo && cli_nome = ? && usu_email = ?", [name, email]);
 			if (rows.length === 0) {
 				await db.query("INSERT INTO cliente (cli_nome, cli_telefone, usu_codigo) VALUES (?, ?, ?)", [name, fone, userCode[0].usu_codigo]);
 				res.send(name + " cadastrado com sucesso");
@@ -127,7 +127,21 @@ app.post("/register", async (req, res) => {
 		} catch (error) {
 			res.status(500).send({ errorMessage: "Erro 500" });
 		}
+	} else if (type === "Produtos") {
+		try {
+			const values = req.body.values;
+			const name = values.name;
+			const price = values.price;
+			const amount = values.amount;
+			const desc = values.desc;
+			const email = values.email;
 
+			await db.query("INSERT INTO produto (pro_nome,pro_preco,pro_quantidade,pro_descricao,usu_codigo) VALUES (?, ?, ?, ?, (SELECT usu_codigo FROM usuario WHERE usu_email = ?))", [name, price, amount, desc, email]);
+			res.send("Cadastrado com sucesso");
+			return;
+		} catch (error) {
+			res.status(500).send({ errorMessage: "Erro 500" });
+		}
 	}
 });
 

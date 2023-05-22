@@ -1,21 +1,17 @@
 import { useState, useEffect } from 'react';
-import { useLocation, useSearchParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 
 import Title from '../components/Title';
 import FunctionsBar from '../components/FunctionsBar';
 import Message from '../components/Message';
 import SearchTerm from '../components/SearchTerm';
-import ComboBox from "../components/ComboBox";
 
 function ProductsPage() {
     const [name, setName] = useState('');
     const [price, setPrice] = useState('');
     const [amount, setAmount] = useState('');
     const [desc, setDesc] = useState('');
-
-
-    const [products, setProducts] = useState([]);
 
     const [messageShow, setMessageShow] = useState(false);
     const [message, setMessage] = useState('');
@@ -28,9 +24,10 @@ function ProductsPage() {
 
     const [reset, setReset] = useState(false);
     const handleReset = () => {
-        setReset(!reset);
-    };
-
+        setReset(!reset)
+    }
+    const [products, setProducts] = useState([]);
+    
     useEffect(() => {
         axios.post('/pull', { email, type })
             .then(res => {
@@ -48,7 +45,7 @@ function ProductsPage() {
             label: "Nome",
             render: (value) => value,
             sortValue: (value) => value.pro_nome,
-            SearchTerm: (value) => value.pro_nome
+            searchValue: (value) => value.pro_nome
         },
         {
             label: "Preço",
@@ -59,6 +56,10 @@ function ProductsPage() {
             label: "Quantidade",
             render: (value) => value,
             sortValue: (value) => value.pro_quantidade
+        },
+        {
+            label: "Descrição",
+            render: (value) => value
         }
     ];
 
@@ -100,7 +101,7 @@ function ProductsPage() {
         </div>
     </div>;
 
-    const values = { name, price, amount, desc }
+    const values = { name, price, amount, desc, email }
     const resetValues = () => {
         setName('');
         setPrice('');
@@ -112,7 +113,7 @@ function ProductsPage() {
             <Title type={type}></Title>
             <Message setMessageShow={setMessageShow} messageShow={messageShow} messageType={messageType} message={message} />
             <SearchTerm data={products} config={config} size={"10000px"} type={type} handleReset={handleReset} />
-            <FunctionsBar width={""} registerPage={registerPage} resetValues={resetValues} values={values} type={type} handleReset={handleReset} setMessageType={setMessageType} />
+            <FunctionsBar width={"340px"} registerPage={registerPage} resetValues={resetValues} values={values} type={type} setMessage={setMessage} setMessageShow={setMessageShow} setMessageType={setMessageType} handleReset={handleReset} />
         </div>
     );
 };

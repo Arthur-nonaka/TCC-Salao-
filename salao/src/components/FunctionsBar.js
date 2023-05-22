@@ -10,16 +10,14 @@ function FunctionsBar({ registerPage, type, values, handleReset, setMessage, set
         resetValues();
     };
 
-    // let doAnother;
-
     const register = () => {
         axios.post('/register', { values, type })
             .then(res => {
-                handleShowRegister();
                 setMessageType("success");
                 setMessage(res.data);
                 setMessageShow(true);
                 handleReset();
+                resetValues();
             })
             .catch(err => {
                 if (err.response.status === 400) {
@@ -27,19 +25,11 @@ function FunctionsBar({ registerPage, type, values, handleReset, setMessage, set
                     setMessage(err.response.data.errorMessage);
                     setMessageShow(true);
                 }
-                handleShowRegister();
             });
     }
 
-    // const handleClickRegisterAgain = (event) => {
-    //     event.preventDefault();
-    //     doAnother = true;
-    //     register();
-    // };
-
     const handleClickRegister = (event) => {
         event.preventDefault();
-        // doAnother = false;
         for (let x = 0; x < Object.values(values).length; x++) {
             if (Object.values(values)[x] === "") {
                 setMessageType("error");
@@ -50,6 +40,7 @@ function FunctionsBar({ registerPage, type, values, handleReset, setMessage, set
             }
         }
         register();
+        handleShowRegister();
     };
 
     return (
@@ -64,7 +55,6 @@ function FunctionsBar({ registerPage, type, values, handleReset, setMessage, set
                             <form className="border p-4 rounded" style={{ backgroundColor: "white", borderColor: "#E68AA5", width: width }}>
                                 {registerPage}
                                 <div className="form-row d-flex justify-content-between" >
-                                    {/* <button onClick={{}} type='submit' className="btn p-2 fs-7 button ms-2">Cadastrar Outro !Beta!</button> */}
                                     <button onClick={handleClickRegister} type='submit' className="btn p-2 fs-7 button me-1 m-2">Cadastrar</button>
                                 </div>
                             </form>
