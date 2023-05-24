@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const mysql = require('mysql2/promise');
 const bcrypt = require("bcrypt");
+const { BsBack } = require("react-icons/bs");
 const app = express();
 
 const saltRounds = 10;
@@ -48,8 +49,14 @@ app.post("/pull", async (req, res) => {
 			res.send(rows);
 			return;
 		} else if (type === "Agenda") {
-			const [rows] = await db.query("SELECT age_codigo, cli_nome, age_data, age_horario, age_horarioTermino FROM agenda A, usuario U, cliente C WHERE A.usu_codigo = U.usu_codigo AND usu_email = ? AND A.cli_codigo = C.cli_codigo", [email]);
-			res.send(rows);
+			const [rows] = await db.query("SELECT A.age_codigo, C.cli_nome, TIME(A.age_horario)As age_horario, TIME(A.age_horarioTermino)As age_horarioTermino, DATE(A.age_horario)As age_date FROM agenda A, usuario U, cliente C WHERE A.usu_codigo = U.usu_codigo AND usu_email = ? AND A.cli_codigo = C.cli_codigo", [email]);
+
+			const updatedRows = rows.map(row => {
+				const date = row.age_date;
+				row.age_date = date.toISOString().slice(0, 10);
+				return row;
+			});
+			res.send(updatedRows);
 			return;
 		} else if (type === "Despesas") {
 			const [rows] = await db.query("SELECT * FROM despesa WHERE usu_codigo = (SELECT usu_codigo FROM usuario WHERE usu_email = ?)", [email]);
@@ -65,7 +72,7 @@ app.post("/pull", async (req, res) => {
 			return;
 		}
 	} catch (error) {
-		res.status(500).send(error);
+		res.status(500).send({ errorMessage: "Erro 500" });
 	}
 });
 
@@ -155,13 +162,16 @@ app.post("/register", async (req, res) => {
 			const dateTimeEnd = date + " " + timeEnd + ":00";
 
 			let [rows] = await db.query("SELECT * FROM agenda WHERE ? >= NOW() AND ? < ?", [dateTime, dateTime, dateTimeEnd]);
-			
-			let[between] = await db.query("SELECT * FROM agenda WHERE ? between age_horario and age_horarioTermino or ? between age_horario and age_horarioTermino", [dateTime, dateTimeEnd])
-			console.log(rows)
 
+			let [between] = await db.query("SELECT * FROM agenda A,usuario U WHERE ? between age_horario and age_horarioTermino or ? between age_horario and age_horarioTermino AND A.usu_codigo = U.usu_codigo AND usu_email = ?", [dateTime, dateTimeEnd, email])
+			// console.log(between);
+
+			// SE TIVER ENRTE USUARIOS DIFERETES ESTA BUGADO !!!!!! ARRUMAR
+			// let [test] = await db.query("SELECT A.* FROM agenda A,usuario U WHERE ? between age_horario and age_horarioTermino or ? between age_horario and age_horarioTermino AND A.usu_codigo = U.usu_codigo AND usu_email = ?", [dateTime, dateTimeEnd, email]);
+			// console.log(test);
 			if (rows.length !== 0 && between.length === 0) {
 				await db.query("INSERT INTO agenda (age_horario,age_horarioTermino,usu_codigo,cli_codigo) VALUES (?, ?, (SELECT usu_codigo FROM usuario WHERE usu_email = ?), (SELECT cli_codigo FROM cliente WHERE cli_nome = ?))", [dateTime, dateTimeEnd, email, clientSelected])
-				servicesSelected.forEach(async (service) => 
+				servicesSelected.forEach(async (service) =>
 					await db.query("INSERT INTO agenda_servico (age_codigo, ser_codigo) VALUES ((SELECT age_codigo FROM agenda A, usuario U WHERE A.usu_codigo = U.usu_codigo and usu_email = ? GROUP BY age_codigo DESC LIMIT 1), (SELECT ser_codigo FROM servico WHERE ser_nome = ?))", [email, service]))
 				res.send("Cadastrado com sucesso")
 				return;
@@ -169,8 +179,8 @@ app.post("/register", async (req, res) => {
 				res.status(400).send({ errorMessage: "Selecione uma data valida" });
 				return;
 			}
-			}  catch (error) {
-				res.status(500).send({ errorMessage: "Erro 500" });
+		} catch (error) {
+			res.status(500).send({ errorMessage: "Erro 500" });
 		}
 	}
 });

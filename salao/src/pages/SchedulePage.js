@@ -22,7 +22,7 @@ function SchedulePage() {
     const [messageShow, setMessageShow] = useState(false);
     const [message, setMessage] = useState('');
     const [messageType, setMessageType] = useState('');
-    
+
     const currentLocation = useLocation();
     const email = currentLocation.state.email;
     const type = "Agenda";
@@ -49,15 +49,13 @@ function SchedulePage() {
     }
 
     useEffect(() => {
-        // axios.post('/pull', { email, type })
-        //     .then(res => {
-        //         setSchedule(res.data);
-        //     })
-        //     .catch(err => {
-        //         setMessageType('error');
-        //         setMessage(err);
-        //         setMessageShow(true);
-        //     });
+        axios.post('/pull', { email, type })
+            .then(res => {
+                setSchedule(res.data);
+            })
+            .catch(err => {
+                console.log(err);
+            });
         axios.post('/pull', { email, type: "Clientes" })
             .then(res => {
                 setClients(res.data);
@@ -85,15 +83,15 @@ function SchedulePage() {
             render: (value) => value,
         },
         {
-            label: "Data",
-            render: (value) => value,
-        },
-        {
             label: "Horario (Inicio)",
             render: (value) => value,
         },
         {
             label: "Horario (Fim)",
+            render: (value) => value,
+        },
+        {
+            label: "Data",
             render: (value) => value,
         },
     ];
@@ -151,7 +149,7 @@ function SchedulePage() {
         <div className='main'>
             <Title type={type}></Title>
             <Message setMessageShow={setMessageShow} messageShow={messageShow} messageType={messageType} message={message} />
-            {/* <SearchTerm data={schedule} config={config} size={"10000px"} type={type} handleReset={handleReset} /> */}
+            <SearchTerm data={schedule} config={config} size={"10000px"} type={type} handleReset={handleReset} />
             <FunctionsBar width={'420px'} resetValues={resetValues} registerPage={registerPage} type={type} values={values} handleReset={handleReset} setMessage={setMessage} setMessageShow={setMessageShow} setMessageType={setMessageType} />
         </div>
     );
