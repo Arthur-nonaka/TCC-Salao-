@@ -89,8 +89,12 @@ function SchedulePage() {
             render: (value) => value,
         },
         {
-            label: "Horario",
-            render: (value) => <div>{value.age_horario} : {value.age_horarioTermino}</div>,
+            label: "Horario (Inicio)",
+            render: (value) => value,
+        },
+        {
+            label: "Horario (Fim)",
+            render: (value) => value,
         },
     ];
 
