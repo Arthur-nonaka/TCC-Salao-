@@ -12,7 +12,7 @@ app.use(express.json());
 const db = mysql.createPool(({
 	host: "127.0.0.1",
 	user: "root",
-	password: "batata",
+	password: "",
 	database: "beautyflowdata",
 }));
 
@@ -48,7 +48,7 @@ app.post("/pull", async (req, res) => {
 			res.send(rows);
 			return;
 		} else if (type === "Agenda") {
-			const [rows] = await db.query("SELECT * FROM agenda WHERE usu_codigo = (SELECT usu_codigo FROM usuario WHERE usu_email = ?)", [email]);
+			const [rows] = await db.query("SELECT age_codigo, age_data, age_horario, age_horarioTermino FROM agenda A, usuario U WHERE A.usu_codigo = U.usu_codigo AND usu_email = ?", [email]);
 			res.send(rows);
 			return;
 		} else if (type === "Despesas") {
@@ -142,8 +142,38 @@ app.post("/register", async (req, res) => {
 		} catch (error) {
 			res.status(500).send({ errorMessage: "Erro 500" });
 		}
+	} else if (type === "Agenda") {
+		try {
+			const values = req.body.values;
+			const date = values.date;
+			const timeStart = values.timeStart;
+			const timeEnd = values.timeEnd;
+			const clientSelected = values.clientSelected;
+			const servicesSelected = values.servicesSelected;
+			const email = values.email;
+
+			console.log(date);
+
+			let [rows] = await db.query("SELECT * FROM agenda WHERE ? >= CURDATE() and ? >= CURTIME() and ? > ? and (? between age_horario and age_horarioTermino or ? between age_horario and age_horarioTermino)", [date, timeStart, timeStart, timeEnd, timeStart, timeEnd]);
+
+			console.log(rows)
+
+			if (rows.length === 0) {
+				await db.query("INSERT INTO agenda (age_horario,age_horarioTermino,age_data,usu_codigo,cli_codigo) VALUES (?, ?, ?, (SELECT usu_codigo FROM usuario WHERE usu_email = ?), (SELECT cli_codigo FROM cliente WHERE cli_nome = ?))", [timeStart, timeEnd, date, email, clientSelected])
+				servicesSelected.forEach(async (service) => 
+					await db.query("INSERT INTO agenda_servico (age_codigo, ser_codigo) VALUES ((SELECT age_codigo FROM agenda A, usuario U WHERE A.usu_codigo = U.usu_codigo and usu_email = ? GROUP BY age_codigo DESC LIMIT 1), (SELECT ser_codigo FROM servico WHERE ser_nome = ?))", [email, service]))
+				res.send("Cadastrado com sucesso")
+				return;
+			} else {
+				res.status(400).send({ errorMessage: "Selecione uma data valida" });
+				return;
+			}
+			}  catch (error) {
+				res.status(500).send({ errorMessage: "Erro 500" });
+		}
 	}
 });
+
 
 app.post("/login", async (req, res) => {
 	try {
