@@ -48,7 +48,7 @@ app.post("/pull", async (req, res) => {
 			res.send(rows);
 			return;
 		} else if (type === "Agenda") {
-			const [rows] = await db.query("SELECT age_codigo, age_data, age_horario, age_horarioTermino FROM agenda A, usuario U WHERE A.usu_codigo = U.usu_codigo AND usu_email = ?", [email]);
+			const [rows] = await db.query("SELECT age_codigo, cli_nome, age_data, age_horario, age_horarioTermino FROM agenda A, usuario U, cliente C WHERE A.usu_codigo = U.usu_codigo AND usu_email = ? AND A.cli_codigo = C.cli_codigo", [email]);
 			res.send(rows);
 			return;
 		} else if (type === "Despesas") {
@@ -151,15 +151,16 @@ app.post("/register", async (req, res) => {
 			const clientSelected = values.clientSelected;
 			const servicesSelected = values.servicesSelected;
 			const email = values.email;
+			const dateTime = date + " " + timeStart + ":00";
+			const dateTimeEnd = date + " " + timeEnd + ":00";
 
-			console.log(date);
-
-			let [rows] = await db.query("SELECT * FROM agenda WHERE ? >= CURDATE() and ? >= CURTIME() and ? > ? and (? between age_horario and age_horarioTermino or ? between age_horario and age_horarioTermino)", [date, timeStart, timeStart, timeEnd, timeStart, timeEnd]);
-
+			let [rows] = await db.query("SELECT * FROM agenda WHERE ? >= NOW() AND ? < ?", [dateTime, dateTime, dateTimeEnd]);
+			
+			let[between] = await db.query("SELECT * FROM agenda WHERE ? between age_horario and age_horarioTermino or ? between age_horario and age_horarioTermino", [dateTime, dateTimeEnd])
 			console.log(rows)
 
-			if (rows.length === 0) {
-				await db.query("INSERT INTO agenda (age_horario,age_horarioTermino,age_data,usu_codigo,cli_codigo) VALUES (?, ?, ?, (SELECT usu_codigo FROM usuario WHERE usu_email = ?), (SELECT cli_codigo FROM cliente WHERE cli_nome = ?))", [timeStart, timeEnd, date, email, clientSelected])
+			if (rows.length !== 0 && between.length === 0) {
+				await db.query("INSERT INTO agenda (age_horario,age_horarioTermino,usu_codigo,cli_codigo) VALUES (?, ?, (SELECT usu_codigo FROM usuario WHERE usu_email = ?), (SELECT cli_codigo FROM cliente WHERE cli_nome = ?))", [dateTime, dateTimeEnd, email, clientSelected])
 				servicesSelected.forEach(async (service) => 
 					await db.query("INSERT INTO agenda_servico (age_codigo, ser_codigo) VALUES ((SELECT age_codigo FROM agenda A, usuario U WHERE A.usu_codigo = U.usu_codigo and usu_email = ? GROUP BY age_codigo DESC LIMIT 1), (SELECT ser_codigo FROM servico WHERE ser_nome = ?))", [email, service]))
 				res.send("Cadastrado com sucesso")
