@@ -22,7 +22,7 @@ function ComboBox({ data, columnToTake, setDataSelected, dataSelected }) {
     };
 
     let content = <div></div>;
-    if (input.length >= 1 && isFocused === true) {
+    if (isFocused === true) {
         const updatedData = data.filter(value => value[columnToTake].toLowerCase().includes(input.toLowerCase()));
         const values = updatedData.map((value, index) => {
             return <div onClick={() => handleValueClick(value[columnToTake])} key={index} className="value">
