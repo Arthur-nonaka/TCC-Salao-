@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import SortableTable from './SortableTable';
 
-function SearchTerm({ data, config, size, type, handleReset }) {
+function SearchTerm({ data, config, size, type, handleReset, accordion}) {
     const [SearchTerm, setSearchTerm] = useState('');
 
     const handleInputChange = (event) => {
@@ -19,7 +19,8 @@ function SearchTerm({ data, config, size, type, handleReset }) {
         <div>
             Search:
             <input value={SearchTerm} onChange={handleInputChange}></input>
-            <SortableTable data={updatedData} config={config} size={size} type={type} handleReset={handleReset} />
+            <SortableTable data={updatedData} config={config} size={size} type={type} handleReset={handleReset} accordion={accordion}
+            />
         </div>
     );
 };

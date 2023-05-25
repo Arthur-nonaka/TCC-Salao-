@@ -1,8 +1,21 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { BsFillTrash3Fill, BsPencilFill } from "react-icons/bs";
 import axios from 'axios';
 
-function ShowRow({ row, config, type, handleReset, editButtonFocus }) {
+function ShowRow({ row, config, type, handleReset, editButtonFocus, accordion }) {
+    // const [isOpen, setIsOpen] = useState(false);
+    // const [items, setItems] = useState([]);
+
+    // useEffect(() => {
+    //     axios.post('/pullService')
+    //         .then(res => {
+    //             setItems(res.data);
+    //         })
+    //         .catch(err => {
+    //             console.log(err);
+    //         });
+    // }, []);
+
     const [showEdit, setShowEdit] = useState(false);
     let values = Object.values(row);
     let rowCode = values.shift();
@@ -12,6 +25,9 @@ function ShowRow({ row, config, type, handleReset, editButtonFocus }) {
         setShowEdit(!showEdit);
         editButtonFocus();
     };
+    // const handleClickAccordion = () => {
+    //     setIsOpen(!isOpen);
+    // }
 
     const handleClickDelete = () => {
         let r = prompt("Digite '" + values[0] + "' para confirmar o DELETE");
@@ -26,7 +42,16 @@ function ShowRow({ row, config, type, handleReset, editButtonFocus }) {
             alert("Nao ocorreu o DELETE");
         }
     };
-    const renderedRow = values.map((value, index) => {  
+    // const renderedItems = items.map((item, index) => {
+
+    //     return (
+    //         <td key={index}>
+
+    //         </td>
+    //     );
+    // });
+
+    const renderedRow = values.map((value, index) => {
         return (
             <td key={index}>
                 {cells[index].render(value)}
@@ -42,11 +67,10 @@ function ShowRow({ row, config, type, handleReset, editButtonFocus }) {
         );
     });
 
-
     let content =
         <tr>
             {renderedRow}
-            <td style={{ display: "flex", alignItems: 'center', justifyContent: 'center'}}>
+            <td style={{ display: "flex", alignItems: 'center', justifyContent: 'center' }}>
                 <div className='btn-group' style={{ height: '29px' }}>
                     <button style={{ display: "flex", alignItems: 'center', justifyContent: "center" }} className="btn btn-primary" onClick={() => handleClickEdit()}><BsPencilFill fontSize={13} /> </button>
                     <button style={{ display: "flex", alignItems: 'center', justifyContent: "center" }} className="btn btn-danger" onClick={() => handleClickDelete()}><BsFillTrash3Fill fontSize={13} /></button>
@@ -64,8 +88,16 @@ function ShowRow({ row, config, type, handleReset, editButtonFocus }) {
                     </div>
                 </td>
             </tr>
-
     }
+    // if (accordion) {
+    //     content =
+    //         <tr onClick={handleClickAccordion}>
+    //             {renderedRow}
+    //             <div>
+    //                 {isOpen && renderedItems}
+    //             </div>
+    //         </tr>
+    // }
 
 
 

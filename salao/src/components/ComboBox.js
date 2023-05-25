@@ -16,7 +16,7 @@ function ComboBox({ data, columnToTake, setDataSelected, dataSelected }) {
             else
                 setDataSelected([...dataSelected, value]);
         }
-        else 
+        else
             setDataSelected(value);
         setInput('');
     };
@@ -24,7 +24,11 @@ function ComboBox({ data, columnToTake, setDataSelected, dataSelected }) {
     let content = <div></div>;
     if (isFocused === true) {
         const updatedData = data.filter(value => value[columnToTake].toLowerCase().includes(input.toLowerCase()));
-        const values = updatedData.map((value, index) => {
+        const sortedData = [...updatedData].sort((a, b) => {
+
+            return a[columnToTake] > b[columnToTake] ? 1 : -1;
+        });
+        const values = sortedData.map((value, index) => {
             return <div onClick={() => handleValueClick(value[columnToTake])} key={index} className="value">
                 {value[columnToTake]}
             </div>
@@ -36,7 +40,7 @@ function ComboBox({ data, columnToTake, setDataSelected, dataSelected }) {
     }
     return (
         <div className="comboBox">
-            <input onFocus={() => setIsFocused(true)} onBlur={() => setTimeout(() => { setIsFocused(false) }, 200)} onChange={handleInputChange} value={input} className="form-control p-2 input" id="input" autoComplete="off"/>
+            <input onFocus={() => setIsFocused(true)} onBlur={() => setTimeout(() => { setIsFocused(false) }, 200)} onChange={handleInputChange} value={input} className="form-control p-2 input" id="input" autoComplete="off" />
             <div>
                 {content}
             </div>

@@ -2,7 +2,6 @@ const express = require("express");
 const cors = require("cors");
 const mysql = require('mysql2/promise');
 const bcrypt = require("bcrypt");
-const { BsBack } = require("react-icons/bs");
 const app = express();
 
 const saltRounds = 10;
@@ -13,7 +12,7 @@ app.use(express.json());
 const db = mysql.createPool(({
 	host: "127.0.0.1",
 	user: "root",
-	password: "",
+	password: "batata",
 	database: "beautyflowdata",
 }));
 
@@ -39,6 +38,17 @@ app.post('/delete', async (req, res) => {
 	}
 
 });
+
+app.post("/pullService", async (req, res) => {
+	try {
+		const [rows] = await db.query("SELECT ser_nome, A.age_codigo FROM servico S, agenda A, agenda_servico ASV WHERE S.ser_codigo = ASV.ser_codigo AND A.age_codigo = ASV.age_codigo");
+
+		res.send(rows);
+		return;
+	} catch (error) {
+		res.status(500).send({ errorMessage: "Erro 500" });
+	}
+})
 
 app.post("/pull", async (req, res) => {
 	const type = req.body.type;
@@ -163,16 +173,12 @@ app.post("/register", async (req, res) => {
 
 			let [rows] = await db.query("SELECT * FROM agenda WHERE ? >= NOW() AND ? < ?", [dateTime, dateTime, dateTimeEnd]);
 
-			let [between] = await db.query("SELECT * FROM agenda A,usuario U WHERE ? between age_horario and age_horarioTermino or ? between age_horario and age_horarioTermino AND A.usu_codigo = U.usu_codigo AND usu_email = ?", [dateTime, dateTimeEnd, email])
-			// console.log(between);
+			let [between] = await db.query("SELECT A.* FROM agenda A JOIN usuario U ON A.usu_codigo = U.usu_codigo AND usu_email = ? WHERE (? between age_horario AND age_horarioTermino) OR (? BETWEEN age_horario AND age_horarioTermino)", [email, dateTime, dateTimeEnd])
 
-			// SE TIVER ENRTE USUARIOS DIFERETES ESTA BUGADO !!!!!! ARRUMAR
-			// let [test] = await db.query("SELECT A.* FROM agenda A,usuario U WHERE ? between age_horario and age_horarioTermino or ? between age_horario and age_horarioTermino AND A.usu_codigo = U.usu_codigo AND usu_email = ?", [dateTime, dateTimeEnd, email]);
-			// console.log(test);
 			if (rows.length !== 0 && between.length === 0) {
-				await db.query("INSERT INTO agenda (age_horario,age_horarioTermino,usu_codigo,cli_codigo) VALUES (?, ?, (SELECT usu_codigo FROM usuario WHERE usu_email = ?), (SELECT cli_codigo FROM cliente WHERE cli_nome = ?))", [dateTime, dateTimeEnd, email, clientSelected])
+				await db.query("INSERT INTO agenda (age_horario,age_horarioTermino,usu_codigo,cli_codigo) VALUES (?, ?, (SELECT usu_codigo FROM usuario WHERE usu_email = ? LIMIT 1), (SELECT cli_codigo FROM cliente WHERE cli_nome = ? LIMIT 1))", [dateTime, dateTimeEnd, email, clientSelected])
 				servicesSelected.forEach(async (service) =>
-					await db.query("INSERT INTO agenda_servico (age_codigo, ser_codigo) VALUES ((SELECT age_codigo FROM agenda A, usuario U WHERE A.usu_codigo = U.usu_codigo and usu_email = ? GROUP BY age_codigo DESC LIMIT 1), (SELECT ser_codigo FROM servico WHERE ser_nome = ?))", [email, service]))
+					await db.query("INSERT INTO agenda_servico (age_codigo, ser_codigo) VALUES ((SELECT age_codigo FROM agenda A, usuario U WHERE A.usu_codigo = U.usu_codigo and usu_email = ? ORDER BY age_codigo DESC LIMIT 1), (SELECT ser_codigo FROM servico WHERE ser_nome = ?))", [email, service]))
 				res.send("Cadastrado com sucesso")
 				return;
 			} else {

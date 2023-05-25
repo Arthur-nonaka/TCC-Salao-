@@ -14,6 +14,7 @@ function SchedulePage() {
     const [timeEnd, setTimeEnd] = useState('');
     const [clientSelected, setClientSelected] = useState('');
     const [servicesSelected, setServicesSelected] = useState([]);
+    const [items, setItems] = useState([]);
 
     const [clients, setClients] = useState([]);
     const [services, setServices] = useState([]);
@@ -76,11 +77,11 @@ function SchedulePage() {
             });
     }, [reset, email]);
 
-
     const config = [
         {
             label: "Cliente",
             render: (value) => value,
+            searchValue: (value) => value.cli_nome
         },
         {
             label: "Horario (Inicio)",
@@ -93,6 +94,7 @@ function SchedulePage() {
         {
             label: "Data",
             render: (value) => value,
+            equal: (value) => value.age_date
         },
     ];
 
@@ -149,7 +151,7 @@ function SchedulePage() {
         <div className='main'>
             <Title type={type}></Title>
             <Message setMessageShow={setMessageShow} messageShow={messageShow} messageType={messageType} message={message} />
-            <SearchTerm data={schedule} config={config} size={"10000px"} type={type} handleReset={handleReset} />
+            <SearchTerm data={schedule} config={config} size={"10000px"} type={type} handleReset={handleReset} accordion={true}/>
             <FunctionsBar width={'420px'} resetValues={resetValues} registerPage={registerPage} type={type} values={values} handleReset={handleReset} setMessage={setMessage} setMessageShow={setMessageShow} setMessageType={setMessageType} />
         </div>
     );
