@@ -151,7 +151,7 @@ function SchedulePage() {
         <div className='main'>
             <Title type={type}></Title>
             <Message setMessageShow={setMessageShow} messageShow={messageShow} messageType={messageType} message={message} />
-            <SearchTerm data={schedule} config={config} size={"10000px"} type={type} handleReset={handleReset} accordion={true}/>
+            <SearchTerm data={schedule} config={config} size={"10000px"} type={type} handleReset={handleReset}/>
             <FunctionsBar width={'420px'} resetValues={resetValues} registerPage={registerPage} type={type} values={values} handleReset={handleReset} setMessage={setMessage} setMessageShow={setMessageShow} setMessageType={setMessageType} />
         </div>
     );

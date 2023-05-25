@@ -3,7 +3,7 @@ import { BsCaretRightFill, BsCaretLeftFill } from "react-icons/bs";
 import ShowRow from "./ShowRow";
 
 
-function Table({ data, config, type, handleReset, size, editButtonFocus, accordion }) {
+function Table({ data, config, type, handleReset, size, editButtonFocus}) {
     const [pageNumber, setPageNumber] = useState(1);
 
     const handleLeftClick = () => {
@@ -33,7 +33,7 @@ function Table({ data, config, type, handleReset, size, editButtonFocus, accordi
 
 
     const renderedRows = data.map((row, index) => {
-        let content = <ShowRow key={index} row={row} config={config} type={type} handleReset={handleReset} editButtonFocus={editButtonFocus} accordion={accordion}/>;
+        let content = <ShowRow key={index} row={row} config={config} type={type} handleReset={handleReset} editButtonFocus={editButtonFocus}/>;
         return content;
     });
     return (

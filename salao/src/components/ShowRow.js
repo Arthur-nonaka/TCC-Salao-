@@ -2,32 +2,17 @@ import { useState, useEffect } from 'react';
 import { BsFillTrash3Fill, BsPencilFill } from "react-icons/bs";
 import axios from 'axios';
 
-function ShowRow({ row, config, type, handleReset, editButtonFocus, accordion }) {
-    // const [isOpen, setIsOpen] = useState(false);
-    // const [items, setItems] = useState([]);
+function ShowRow({ row, config, type, handleReset, editButtonFocus }) {
 
-    // useEffect(() => {
-    //     axios.post('/pullService')
-    //         .then(res => {
-    //             setItems(res.data);
-    //         })
-    //         .catch(err => {
-    //             console.log(err);
-    //         });
-    // }, []);
 
     const [showEdit, setShowEdit] = useState(false);
     let values = Object.values(row);
     let rowCode = values.shift();
-    let cells = Object.values(config);
 
     const handleClickEdit = () => {
         setShowEdit(!showEdit);
         editButtonFocus();
     };
-    // const handleClickAccordion = () => {
-    //     setIsOpen(!isOpen);
-    // }
 
     const handleClickDelete = () => {
         let r = prompt("Digite '" + values[0] + "' para confirmar o DELETE");
@@ -42,29 +27,25 @@ function ShowRow({ row, config, type, handleReset, editButtonFocus, accordion })
             alert("Nao ocorreu o DELETE");
         }
     };
-    // const renderedItems = items.map((item, index) => {
 
-    //     return (
-    //         <td key={index}>
-
-    //         </td>
-    //     );
-    // });
-
-    const renderedRow = values.map((value, index) => {
-        return (
-            <td key={index}>
-                {cells[index].render(value)}
+    const renderedRow = values.map((value) => {
+        let x = <div></div>
+        config.forEach((column, index) => {
+            x = <td key={index}>
+                {column.render(value)}
             </td>
-        );
+        });
+        return x;
     });
 
     const renderedRowEdit = values.map((value, index) => {
-        return (
-            <td key={index}>
-                <input style={{ height: '29px', width: '140px' }} value={cells[index].render(value)} />
+        let x = <div></div>
+        config.forEach((column, index) => {
+            x = <td key={index}>
+                <input style={{ height: '29px', width: '140px' }} value={column.render(value)} />
             </td>
-        );
+        });
+        return x;
     });
 
     let content =
@@ -89,15 +70,6 @@ function ShowRow({ row, config, type, handleReset, editButtonFocus, accordion })
                 </td>
             </tr>
     }
-    // if (accordion) {
-    //     content =
-    //         <tr onClick={handleClickAccordion}>
-    //             {renderedRow}
-    //             <div>
-    //                 {isOpen && renderedItems}
-    //             </div>
-    //         </tr>
-    // }
 
 
 

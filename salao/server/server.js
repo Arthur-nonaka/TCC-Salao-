@@ -39,17 +39,6 @@ app.post('/delete', async (req, res) => {
 
 });
 
-app.post("/pullService", async (req, res) => {
-	try {
-		const [rows] = await db.query("SELECT ser_nome, A.age_codigo FROM servico S, agenda A, agenda_servico ASV WHERE S.ser_codigo = ASV.ser_codigo AND A.age_codigo = ASV.age_codigo");
-
-		res.send(rows);
-		return;
-	} catch (error) {
-		res.status(500).send({ errorMessage: "Erro 500" });
-	}
-})
-
 app.post("/pull", async (req, res) => {
 	const type = req.body.type;
 	const email = req.body.email;
@@ -60,7 +49,7 @@ app.post("/pull", async (req, res) => {
 			return;
 		} else if (type === "Agenda") {
 			const [rows] = await db.query("SELECT A.age_codigo, C.cli_nome, TIME(A.age_horario)As age_horario, TIME(A.age_horarioTermino)As age_horarioTermino, DATE(A.age_horario)As age_date FROM agenda A, usuario U, cliente C WHERE A.usu_codigo = U.usu_codigo AND usu_email = ? AND A.cli_codigo = C.cli_codigo", [email]);
-
+			console.log(rows);
 			const updatedRows = rows.map(row => {
 				const date = row.age_date;
 				row.age_date = date.toISOString().slice(0, 10);
