@@ -41,18 +41,14 @@ function ServicesPage() {
     const config = [
         {
             label: "Nome",
-            render: (value) => value,
+            render: (value) => value.ser_nome,
             sortValue: (value) => value.ser_nome,
             searchValue: (value) => value.ser_nome
         },
         {
             label: "Preço",
-            render: (value) => <div>R$ {value}</div>,
+            render: (value) => <div>R${value.ser_preco}</div>,
             sortValue: (value) => value.ser_preco,
-        },
-        {
-            label: "Descrição",
-            render: (value) => value,
         }
     ];
 
@@ -99,7 +95,7 @@ function ServicesPage() {
         <div className='main'>
             <Title type={type}></Title>
             <Message setMessageShow={setMessageShow} messageShow={messageShow} messageType={messageType} message={message} />
-            <SearchTerm data={services} config={config} size={"10000px"} type={type} handleReset={handleReset} />
+            <SearchTerm data={services} config={config} size={"10000px"} type={type} handleReset={handleReset} accordion={type} />
             <FunctionsBar width={'340px'} resetValues={resetValues} registerPage={registerPage} type={type} values={values} handleReset={handleReset} setMessage={setMessage} setMessageShow={setMessageShow} setMessageType={setMessageType} />
 
         </div>

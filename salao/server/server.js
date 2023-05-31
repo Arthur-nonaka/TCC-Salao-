@@ -23,6 +23,7 @@ app.post('/delete', async (req, res) => {
 		if (type === "Clientes") {
 			await db.query("DELETE FROM cliente WHERE cli_codigo = ?", [code]);
 		} else if (type === "Agenda") {
+			await db.query("DELETE FROM agenda_servico WHERE age_codigo = ?", [code]);
 			await db.query("DELETE FROM agenda WHERE age_codigo = ?", [code]);
 		} else if (type === "Despesas") {
 			await db.query("DELETE FROM despesa WHERE des_codigo = ?", [code]);
@@ -34,9 +35,36 @@ app.post('/delete', async (req, res) => {
 		res.send("Deletado com sucesso");
 		return;
 	} catch (error) {
+		console.log(error);
 		res.status(500).send(error);
 	}
 
+});
+
+app.post("/pullAccordion", async (req, res) => {
+	const rowCode = req.body.rowCode;
+	const accordion = req.body.accordion;
+	try {
+		if (accordion === "Agenda") {
+			const [rows] = await db.query("SELECT ser_nome FROM servico S, agenda_servico AGS WHERE S.ser_codigo = AGS.ser_codigo AND AGS.age_codigo = ?", [rowCode]);
+			res.send(rows);
+			return;
+		} else if (accordion === "Clientes") {
+
+			return;
+		} else if (accordion === "Produtos") {
+			const [rows] = await db.query("SELECT pro_descricao FROM produto P, usuario U WHERE P.usu_codigo = U.usu_codigo AND pro_codigo = ?", [rowCode]);
+			res.send(rows);
+			return;
+		} else if (accordion === "Serviços") {
+			const [rows] = await db.query("SELECT ser_descricao FROM servico S, usuario U WHERE S.usu_codigo = U.usu_codigo AND ser_codigo = ?", [rowCode]);
+			res.send(rows);
+			return;
+		}
+	}
+	catch (error) {
+		res.status(500).send(error);
+	}
 });
 
 app.post("/pull", async (req, res) => {
@@ -49,12 +77,12 @@ app.post("/pull", async (req, res) => {
 			return;
 		} else if (type === "Agenda") {
 			const [rows] = await db.query("SELECT A.age_codigo, C.cli_nome, TIME(A.age_horario)As age_horario, TIME(A.age_horarioTermino)As age_horarioTermino, DATE(A.age_horario)As age_date FROM agenda A, usuario U, cliente C WHERE A.usu_codigo = U.usu_codigo AND usu_email = ? AND A.cli_codigo = C.cli_codigo", [email]);
-			console.log(rows);
 			const updatedRows = rows.map(row => {
 				const date = row.age_date;
 				row.age_date = date.toISOString().slice(0, 10);
 				return row;
 			});
+
 			res.send(updatedRows);
 			return;
 		} else if (type === "Despesas") {
@@ -62,11 +90,11 @@ app.post("/pull", async (req, res) => {
 			res.send(rows);
 			return;
 		} else if (type === "Produtos") {
-			const [rows] = await db.query("SELECT pro_codigo,pro_nome,pro_preco,pro_quantidade,pro_descricao FROM produto P, usuario U WHERE P.usu_codigo = U.usu_codigo AND usu_email = ?", [email]);
+			const [rows] = await db.query("SELECT pro_codigo,pro_nome,pro_preco,pro_quantidade FROM produto P, usuario U WHERE P.usu_codigo = U.usu_codigo AND usu_email = ?", [email]);
 			res.send(rows);
 			return;
 		} else if (type === "Serviços") {
-			const [rows] = await db.query("SELECT ser_codigo,ser_nome,ser_preco,ser_descricao FROM servico S, usuario U WHERE S.usu_codigo = U.usu_codigo AND usu_email = ?", [email]);
+			const [rows] = await db.query("SELECT ser_codigo,ser_nome,ser_preco FROM servico S, usuario U WHERE S.usu_codigo = U.usu_codigo AND usu_email = ?", [email]);
 			res.send(rows);
 			return;
 		}

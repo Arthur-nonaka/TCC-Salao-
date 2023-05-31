@@ -27,7 +27,7 @@ function ProductsPage() {
         setReset(!reset)
     }
     const [products, setProducts] = useState([]);
-    
+
     useEffect(() => {
         axios.post('/pull', { email, type })
             .then(res => {
@@ -43,23 +43,19 @@ function ProductsPage() {
     const config = [
         {
             label: "Nome",
-            render: (value) => value,
+            render: (value) => value.pro_nome,
             sortValue: (value) => value.pro_nome,
             searchValue: (value) => value.pro_nome
         },
         {
             label: "Preço",
-            render: (value) => value,
+            render: (value) => <div>R$ {value.pro_preco}</div>,
             sortValue: (value) => value.pro_preco
         },
         {
             label: "Quantidade",
-            render: (value) => value,
+            render: (value) => value.pro_quantidade,
             sortValue: (value) => value.pro_quantidade
-        },
-        {
-            label: "Descrição",
-            render: (value) => value
         }
     ];
 
@@ -112,7 +108,7 @@ function ProductsPage() {
         <div className='main'>
             <Title type={type}></Title>
             <Message setMessageShow={setMessageShow} messageShow={messageShow} messageType={messageType} message={message} />
-            <SearchTerm data={products} config={config} size={"10000px"} type={type} handleReset={handleReset} />
+            <SearchTerm data={products} config={config} size={"10000px"} type={type} handleReset={handleReset} accordion={type} />
             <FunctionsBar width={"340px"} registerPage={registerPage} resetValues={resetValues} values={values} type={type} setMessage={setMessage} setMessageShow={setMessageShow} setMessageType={setMessageType} handleReset={handleReset} />
         </div>
     );

@@ -80,20 +80,20 @@ function SchedulePage() {
     const config = [
         {
             label: "Cliente",
-            render: (value) => value,
+            render: (value) => value.cli_nome,
             searchValue: (value) => value.cli_nome
         },
         {
             label: "Horario (Inicio)",
-            render: (value) => value,
+            render: (value) => value.age_horario,
         },
         {
             label: "Horario (Fim)",
-            render: (value) => value,
+            render: (value) => value.age_horarioTermino
         },
         {
             label: "Data",
-            render: (value) => value,
+            render: (value) => value.age_date,
             equal: (value) => value.age_date
         },
     ];
@@ -151,7 +151,7 @@ function SchedulePage() {
         <div className='main'>
             <Title type={type}></Title>
             <Message setMessageShow={setMessageShow} messageShow={messageShow} messageType={messageType} message={message} />
-            <SearchTerm data={schedule} config={config} size={"10000px"} type={type} handleReset={handleReset}/>
+            <SearchTerm data={schedule} config={config} size={"10000px"} type={type} handleReset={handleReset} accordion={type}/>
             <FunctionsBar width={'420px'} resetValues={resetValues} registerPage={registerPage} type={type} values={values} handleReset={handleReset} setMessage={setMessage} setMessageShow={setMessageShow} setMessageType={setMessageType} />
         </div>
     );

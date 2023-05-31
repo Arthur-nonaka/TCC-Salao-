@@ -3,7 +3,7 @@ import { BsCaretRightFill, BsCaretLeftFill } from "react-icons/bs";
 import ShowRow from "./ShowRow";
 
 
-function Table({ data, config, type, handleReset, size, editButtonFocus}) {
+function Table({ data, config, type, handleReset, size, editButtonFocus, accordion}) {
     const [pageNumber, setPageNumber] = useState(1);
 
     const handleLeftClick = () => {
@@ -31,14 +31,13 @@ function Table({ data, config, type, handleReset, size, editButtonFocus}) {
     });
     const updatedHeader = [...renderedHeader, <th key={"opcoes"}> </th>];
 
-
     const renderedRows = data.map((row, index) => {
-        let content = <ShowRow key={index} row={row} config={config} type={type} handleReset={handleReset} editButtonFocus={editButtonFocus}/>;
+        let content = <ShowRow key={index} row={row} config={config} type={type} handleReset={handleReset} editButtonFocus={editButtonFocus} accordion={accordion}/>;
         return content;
     });
     return (
         <div>
-            <table className='table table-striped' style={{ margin: '0' }}>
+            <table className='table table-striped table-border' style={{ margin: '0' }}>
                 <thead style={{ backgroundColor: "#FBACC7" }}>
                     <tr>
                         {updatedHeader}
