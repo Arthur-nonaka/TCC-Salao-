@@ -190,13 +190,29 @@ app.post("/register", async (req, res) => {
 
 			let [rows] = await db.query("SELECT * FROM agenda WHERE ? >= NOW() AND ? < ?", [dateTime, dateTime, dateTimeEnd]);
 
-			let [between] = await db.query("SELECT A.* FROM agenda A JOIN usuario U ON A.usu_codigo = U.usu_codigo AND usu_email = ? WHERE (? between age_horario AND age_horarioTermino) OR (? BETWEEN age_horario AND age_horarioTermino)", [email, dateTime, dateTimeEnd])
+			let [between] = await db.query(`
+			SELECT cli_nome
+			FROM agenda A 
+			JOIN usuario U ON A.usu_codigo = U.usu_codigo AND usu_email = ? 
+			JOIN cliente C ON C.cli_codigo = A.cli_codigo
+			WHERE (? between age_horario AND age_horarioTermino) OR (? BETWEEN age_horario AND age_horarioTermino)`
+			
+			
+			, [email, dateTime, dateTimeEnd])
 
-			if (rows.length !== 0 && between.length === 0) {
+			console.log(between);
+			let a = "";
+			if(between.length !== 0) {
+				let names = between.map(x => {
+					return x.cli_nome;
+				});
+				a = "! Mesmo Horario: " + names + " ! ";
+			}
+			if (rows.length !== 0) {
 				await db.query("INSERT INTO agenda (age_horario,age_horarioTermino,usu_codigo,cli_codigo) VALUES (?, ?, (SELECT usu_codigo FROM usuario WHERE usu_email = ? LIMIT 1), (SELECT cli_codigo FROM cliente WHERE cli_nome = ? LIMIT 1))", [dateTime, dateTimeEnd, email, clientSelected])
 				servicesSelected.forEach(async (service) =>
 					await db.query("INSERT INTO agenda_servico (age_codigo, ser_codigo) VALUES ((SELECT age_codigo FROM agenda A, usuario U WHERE A.usu_codigo = U.usu_codigo and usu_email = ? ORDER BY age_codigo DESC LIMIT 1), (SELECT ser_codigo FROM servico WHERE ser_nome = ?))", [email, service]))
-				res.send("Cadastrado com sucesso")
+				res.send("Cadastrado com sucesso" + a)
 				return;
 			} else {
 				res.status(400).send({ errorMessage: "Selecione uma data valida" });
