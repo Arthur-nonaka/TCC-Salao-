@@ -16,11 +16,13 @@ function ShowRow({ row, config, type, handleReset, editButtonFocus, accordion })
         editButtonFocus();
     };
     const handleClickOpen = () => {
-        setIsOpen(!isOpen);
-        axios.post('/pullAccordion/' + accordion, { rowCode })
-            .then(res => {
-                setAccordionContent(res.data);
-            })
+        if (accordion) {
+            setIsOpen(!isOpen);
+            axios.post('/pullAccordion/' + accordion, { rowCode })
+                .then(res => {
+                    setAccordionContent(res.data);
+                })
+        };
     }
 
     const handleClickDelete = () => {
@@ -52,7 +54,7 @@ function ShowRow({ row, config, type, handleReset, editButtonFocus, accordion })
     });
     const renderedCellsEdit = config.map((column, index) => {
         return (
-            <td key={index} onClick={handleClickOpen}>
+            <td key={index}>
                 <input value={column.render(row)} />
             </td>
         );

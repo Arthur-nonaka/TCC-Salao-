@@ -159,12 +159,32 @@ async function verifyScheduleEqual(dateTime, dateTimeEnd, email) {
 
         , [email, dateTime, dateTimeEnd]);
     return between;
-}
+};
+
+//DESPESAS QUERY
+
+
+async function getExpenses(email) {
+    const [rows] = await db.query("SELECT des_codigo,des_descricao,des_valor,des_data FROM despesa D, usuario U WHERE D.usu_codigo = U.usu_codigo AND usu_email = ?", [email]);
+    return rows;
+};
+
+async function deleteExpense(code) {
+    await db.query("DELETE FROM despesa WHERE des_codigo = ?", [code]);
+};
+
+async function registerExpense(desc, price, date, email) {
+    await db.query(`INSERT INTO 
+    despesa (des_descricao,des_valor,des_data,usu_codigo) 
+    VALUES (?, ?, ?, (SELECT usu_codigo FROM usuario WHERE usu_email = ?)) 
+    `, [desc, price, date, email]);
+};
 
 module.exports = {
     getUserPassword, verifyUserEqual, registerUser, getUserCode,
     getClients, deleteClient, verifyClientEqual, registerClient,
     getProducts, getProductAccordion, deleteProduct, registerProduct,
     getServices, getServiceAccordion, deleteService, registerService,
-    getSchedule, getScheduleAccordion, deleteSchedule, registerSchedule, verifyScheduleTime, verifyScheduleEqual
+    getSchedule, getScheduleAccordion, deleteSchedule, registerSchedule, verifyScheduleTime, verifyScheduleEqual,
+    getExpenses, deleteExpense, registerExpense
 };
