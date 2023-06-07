@@ -29,7 +29,7 @@ function ProductsPage() {
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
-        axios.post('/pull', { email, type })
+        axios.post('/pull/Produtos', { email, type })
             .then(res => {
                 setProducts(res.data);
             })

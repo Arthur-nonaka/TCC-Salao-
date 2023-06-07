@@ -17,7 +17,7 @@ function ShowRow({ row, config, type, handleReset, editButtonFocus, accordion })
     };
     const handleClickOpen = () => {
         setIsOpen(!isOpen);
-        axios.post('/pullAccordion', { rowCode, accordion })
+        axios.post('/pullAccordion/' + accordion, { rowCode })
             .then(res => {
                 setAccordionContent(res.data);
             })
@@ -26,12 +26,12 @@ function ShowRow({ row, config, type, handleReset, editButtonFocus, accordion })
     const handleClickDelete = () => {
         let r = prompt("Digite '" + values[0] + "' para confirmar o DELETE");
         if (r === values[0]) {
-            axios.post('/delete', { rowCode, type })
+            axios.post('/delete/' + type, { rowCode, type })
                 .then(res => {
                     handleReset();
                 })
                 .catch(err => {
-                    console.log(err);
+                    alert("DELETE o agendamento PRIMEIRO");
                 });
         } else {
             alert("Nao ocorreu o DELETE");
@@ -85,91 +85,6 @@ function ShowRow({ row, config, type, handleReset, editButtonFocus, accordion })
                 </div>
             </td>
         </tr>;
-
-
-    // const renderedRow = row.map((value, index) => {
-    //     const renderedCells = config.map((column, index) => {
-    //         return (
-    //             <td key={index} onClick={handleClickOpen}>
-    //                 {column.render(value)}
-    //             </td>
-    //         );
-    //     });
-
-    //     return (
-    //         <tr key={index} className='accordion'>
-    //             {renderedCells}
-    //             <td style={{ display: "flex", alignItems: 'center', justifyContent: 'center' }}>
-    //                 <div className='btn-group' style={{ height: '29px' }}>
-    //                     <button style={{ display: "flex", alignItems: 'center', justifyContent: "center" }} className="btn btn-primary" onClick={() => handleClickEdit()}><BsPencilFill fontSize={13} /> </button>
-    //                     <button style={{ display: "flex", alignItems: 'center', justifyContent: "center" }} className="btn btn-danger" onClick={() => handleClickDelete()}><BsFillTrash3Fill fontSize={13} /></button>
-    //                 </div>
-    //             </td>
-    //             {isOpen && <td className='accordion-content'>{renderedAccordionContent}</td>}
-    //         </tr>
-    //     );
-    // });
-
-
-
-    // const renderedRowEdit = row.map((value, index) => {
-    //     const renderedCells = config.map((column, index) => {
-    //         return (
-    //             <td key={index} onClick={handleClickOpen}>
-    //                 <input style={{ height: '29px', width: '140px' }} value={column.render(value)} />
-    //             </td>
-    //         );
-    //     })
-    //     return (
-    //         <tr key={index}>
-    //             {renderedCells}
-    //             <td style={{ display: "flex", alignItems: 'center', justifyContent: 'center' }}>
-    //                 <div className='btn-group' style={{ height: '29px' }}>
-    //                     <button style={{ display: "flex", alignItems: 'center', justifyContent: "center" }} className="btn btn-primary" onClick={() => handleClickEdit()}><BsPencilFill fontSize={13} /> </button>
-    //                     <button style={{ display: "flex", alignItems: 'center', justifyContent: "center" }} className="btn btn-danger" onClick={() => handleClickDelete()}><BsFillTrash3Fill fontSize={13} /></button>
-    //                 </div>
-    //             </td>
-    //         </tr>
-    //     );
-
-    // });
-    //-----------------------------------------------------------------------------------------------------------------
-
-    // const renderedRowEdit = values.map((value, index) => {
-    //     let x = <div></div>
-    //     config.forEach((column) => {
-    //         x = <td key={index}>
-    //             <input style={{ height: '29px', width: '140px' }} value={column.render(value)} />
-    //         </td>
-    //     });
-    //     return x;
-    // });
-
-
-
-    // let content =
-    //     <tr className='accordion'>
-    //         {renderedRow}
-    //         <td style={{ display: "flex", alignItems: 'center', justifyContent: 'center' }}>
-    //             <div className='btn-group' style={{ height: '29px' }}>
-    //                 <button style={{ display: "flex", alignItems: 'center', justifyContent: "center" }} className="btn btn-primary" onClick={() => handleClickEdit()}><BsPencilFill fontSize={13} /> </button>
-    //                 <button style={{ display: "flex", alignItems: 'center', justifyContent: "center" }} className="btn btn-danger" onClick={() => handleClickDelete()}><BsFillTrash3Fill fontSize={13} /></button>
-    //             </div>
-    //         </td>
-    //         {isOpen && <td className='accordion-content'>{renderedAccordionContent}</td>}
-    //     </tr>
-    // if (showEdit) {
-    //     content =
-    //         <tr>
-    //             {renderedRowEdit}
-    //             <td style={{ display: "flex", alignItems: 'center', justifyContent: 'center' }}>
-    //                 <div className='btn-group' style={{ height: '29px' }}>
-    //                     <button style={{ display: "flex", alignItems: 'center', justifyContent: "center" }} className="btn btn-success" onClick={() => handleClickEdit()}><BsPencilFill fontSize={13} /> </button>
-    //                     <button style={{ display: "flex", alignItems: 'center', justifyContent: "center" }} className="btn btn-danger" onClick={() => handleClickDelete()}><BsFillTrash3Fill fontSize={13} /></button>
-    //                 </div>
-    //             </td>
-    //         </tr>
-    // }
 
 
     return showEdit ? renderedRowEdit : renderedRow;

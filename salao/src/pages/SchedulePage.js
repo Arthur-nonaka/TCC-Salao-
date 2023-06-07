@@ -50,14 +50,14 @@ function SchedulePage() {
     }
 
     useEffect(() => {
-        axios.post('/pull', { email, type })
+        axios.post('/pull/Agenda', { email })
             .then(res => {
                 setSchedule(res.data);
             })
             .catch(err => {
                 console.log(err);
             });
-        axios.post('/pull', { email, type: "Clientes" })
+        axios.post('/pull/Clientes', { email, type: "Clientes" })
             .then(res => {
                 setClients(res.data);
             })
@@ -66,7 +66,7 @@ function SchedulePage() {
                 setMessage(err);
                 setMessageShow(true);
             });
-        axios.post('/pull', { email, type: "Serviços" })
+        axios.post('/pull/Servicos', { email, type: "Serviços" })
             .then(res => {
                 setServices(res.data);
             })
@@ -151,7 +151,7 @@ function SchedulePage() {
         <div className='main'>
             <Title type={type}></Title>
             <Message setMessageShow={setMessageShow} messageShow={messageShow} messageType={messageType} message={message} />
-            <SearchTerm data={schedule} config={config} size={"10000px"} type={type} handleReset={handleReset} accordion={type}/>
+            <SearchTerm data={schedule} config={config} size={"10000px"} type={type} handleReset={handleReset} accordion={type} />
             <FunctionsBar width={'420px'} resetValues={resetValues} registerPage={registerPage} type={type} values={values} handleReset={handleReset} setMessage={setMessage} setMessageShow={setMessageShow} setMessageType={setMessageType} />
         </div>
     );

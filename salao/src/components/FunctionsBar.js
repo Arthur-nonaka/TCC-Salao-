@@ -11,7 +11,7 @@ function FunctionsBar({ registerPage, type, values, handleReset, setMessage, set
     };
 
     const register = () => {
-        axios.post('/register', { values, type })
+        axios.post('/register/' + type, { values, type })
             .then(res => {
                 setMessageType("success");
                 setMessage(res.data);

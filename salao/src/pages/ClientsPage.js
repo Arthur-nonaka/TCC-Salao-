@@ -15,7 +15,7 @@ function ClientsPage() {
     const [messageShow, setMessageShow] = useState(false);
     const [message, setMessage] = useState('');
     const [messageType, setMessageType] = useState('');
-    
+
     const currentLocation = useLocation();
     const email = currentLocation.state.email;
     const type = "Clientes";
@@ -28,7 +28,7 @@ function ClientsPage() {
     const [clients, setClients] = useState([]);
 
     useEffect(() => {
-        axios.post('/pull', { email, type })
+        axios.post('/pull/Clientes' , { email})
             .then(res => {
                 setClients(res.data);
             })
@@ -38,7 +38,7 @@ function ClientsPage() {
                 setMessageShow(true);
             });
     }, [reset, email]);
-    
+
     const config = [
         {
             label: "Nome",
@@ -80,8 +80,8 @@ function ClientsPage() {
         <div className='main'>
             <Title type={type}></Title>
             <Message setMessageShow={setMessageShow} messageShow={messageShow} messageType={messageType} message={message} />
-            <SearchTerm data={clients} config={config} size={"10000px"} type={type} handleReset={handleReset} accordion={type}/>
-            <FunctionsBar width={'300px'} resetValues={resetValues} registerPage={registerPage} values={values} type={type} handleReset={handleReset} setMessage={setMessage} setMessageShow={setMessageShow} setMessageType={setMessageType}/>
+            <SearchTerm data={clients} config={config} size={"10000px"} type={type} handleReset={handleReset} accordion={type} />
+            <FunctionsBar width={'300px'} resetValues={resetValues} registerPage={registerPage} values={values} type={type} handleReset={handleReset} setMessage={setMessage} setMessageShow={setMessageShow} setMessageType={setMessageType} />
 
         </div>
     );

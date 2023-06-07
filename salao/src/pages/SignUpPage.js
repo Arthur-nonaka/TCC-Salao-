@@ -20,7 +20,7 @@ function SignUpPage() {
     const handleChangePassword = (event) => {
         setPassword(event.target.value);
     };
-    const handleChangeSalonName= (event) => {
+    const handleChangeSalonName = (event) => {
         setSalonName(event.target.value);
     };
 
@@ -48,7 +48,7 @@ function SignUpPage() {
 
         else {
             const type = "user";
-            axios.post('/register', { type, name, email, password, salonName })
+            axios.post('/register/' + type, { type, name, email, password, salonName })
                 .then(res => {
                     setMessage('');
                     setMessageShow(false);

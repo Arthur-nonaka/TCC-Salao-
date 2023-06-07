@@ -18,7 +18,7 @@ function ServicesPage() {
     const currentLocation = useLocation();
     const email = currentLocation.state.email;
 
-    const type = "Serviços";
+    const type = "Servicos";
 
     const [reset, setReset] = useState(false);
     const handleReset = () => {
@@ -27,7 +27,7 @@ function ServicesPage() {
 
     const [services, setServices] = useState([]);
     useEffect(() => {
-        axios.post('/pull', { email, type })
+        axios.post('/pull/Servicos', { email, type })
             .then(res => {
                 setServices(res.data);
             })
