@@ -28,7 +28,7 @@ function ClientsPage() {
     const [clients, setClients] = useState([]);
 
     useEffect(() => {
-        axios.post('/pull/Clientes' , { email})
+        axios.post('/pull/Clientes', { email })
             .then(res => {
                 setClients(res.data);
             })
@@ -44,11 +44,13 @@ function ClientsPage() {
             label: "Nome",
             render: (value) => value.cli_nome,
             sortValue: (value) => value.cli_nome,
-            searchValue: (value) => value.cli_nome
+            searchValue: (value) => value.cli_nome,
+            value: (value) => value.cli_nome,
         },
         {
             label: "Telefone",
-            render: (value) => value.cli_telefone
+            render: (value) => value.cli_telefone,
+            value: (value) => value.cli_telefone,
         },
     ];
 
@@ -80,7 +82,7 @@ function ClientsPage() {
         <div className='main'>
             <Title type={type}></Title>
             <Message setMessageShow={setMessageShow} messageShow={messageShow} messageType={messageType} message={message} />
-            <SearchTerm data={clients} config={config} size={"10000px"} type={type} handleReset={handleReset} accordion={type} />
+            <SearchTerm data={clients} config={config} size={"10000px"} type={type} handleReset={handleReset} />
             <FunctionsBar width={'300px'} resetValues={resetValues} registerPage={registerPage} values={values} type={type} handleReset={handleReset} setMessage={setMessage} setMessageShow={setMessageShow} setMessageType={setMessageType} />
 
         </div>

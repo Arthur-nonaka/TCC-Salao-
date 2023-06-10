@@ -81,7 +81,7 @@ function SchedulePage() {
         {
             label: "Cliente",
             render: (value) => value.cli_nome,
-            searchValue: (value) => value.cli_nome
+            searchValue: (value) => value.cli_nome,
         },
         {
             label: "Horario (Inicio)",

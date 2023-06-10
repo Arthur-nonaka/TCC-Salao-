@@ -25,6 +25,8 @@ body {
     height: 40px;
     justify-content: center;
     align-items: center;
+    border-left: 3px solid #FBACC7;
+    border-right: 2px solid #FBACC7;
 }
 
 .buttonWithSymbol {

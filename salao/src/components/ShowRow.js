@@ -2,7 +2,7 @@ import { useState, Fragment } from 'react';
 import { BsFillTrash3Fill, BsPencilFill } from "react-icons/bs";
 import axios from 'axios';
 
-function ShowRow({ row, config, type, handleReset, editButtonFocus, accordion }) {
+function ShowRow({ row, config, type, handleReset, editButtonFocus, accordion, handleSetEditId }) {
     const [isOpen, setIsOpen] = useState(false);
     const [accordionContent, setAccordionContent] = useState([]);
 
@@ -48,14 +48,18 @@ function ShowRow({ row, config, type, handleReset, editButtonFocus, accordion })
     const renderedCells = config.map((column, index) => {
         return (
             <td key={index} onClick={handleClickOpen}>
-                {column.render(row)}
-            </td>
+                <label style={{ width: '180px' }}>
+                    {column.render(row)}
+                </label>
+            </td >
         );
     });
+
+
     const renderedCellsEdit = config.map((column, index) => {
         return (
             <td key={index}>
-                <input value={column.render(row)} />
+                <input value={column.value(row)} className='form-control input' style={{ width: '180px', padding: '1px' }} />
             </td>
         );
     });
@@ -82,7 +86,7 @@ function ShowRow({ row, config, type, handleReset, editButtonFocus, accordion })
             {renderedCellsEdit}
             <td style={{ display: "flex", alignItems: 'center', justifyContent: 'center' }}>
                 <div className='btn-group' style={{ height: '29px' }}>
-                    <button style={{ display: "flex", alignItems: 'center', justifyContent: "center" }} className="btn btn-primary" onClick={() => handleClickEdit()}><BsPencilFill fontSize={13} /> </button>
+                    <button style={{ display: "flex", alignItems: 'center', justifyContent: "center" }} className="btn btn-success" onClick={() => handleClickEdit()}><BsPencilFill fontSize={13} /> </button>
                     <button style={{ display: "flex", alignItems: 'center', justifyContent: "center" }} className="btn btn-danger" onClick={() => handleClickDelete()}><BsFillTrash3Fill fontSize={13} /></button>
                 </div>
             </td>

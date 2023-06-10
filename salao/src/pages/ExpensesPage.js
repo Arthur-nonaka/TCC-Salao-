@@ -43,15 +43,18 @@ function ExpensesPage() {
         {
             label: "Descrição",
             render: (value) => value.des_descricao,
+            value: (value) => value.des_descricao,
         },
         {
             label: "Preço",
             render: (value) => value.des_valor,
+            value: (value) => value.des_valor,
         },
         {
             label: "Data",
             render: (value) => value.des_data,
-            equal: (value) => value.des_data
+            equal: (value) => value.des_data,
+            value: (value) => value.des_data,
         },
     ];
 

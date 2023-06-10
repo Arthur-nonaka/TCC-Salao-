@@ -45,17 +45,20 @@ function ProductsPage() {
             label: "Nome",
             render: (value) => value.pro_nome,
             sortValue: (value) => value.pro_nome,
-            searchValue: (value) => value.pro_nome
+            searchValue: (value) => value.pro_nome,
+            value: (value) => value.pro_nome,
         },
         {
             label: "Preço",
             render: (value) => <div>R$ {value.pro_preco}</div>,
-            sortValue: (value) => value.pro_preco
+            sortValue: (value) => value.pro_preco,
+            value: (value) => value.pro_preco,
         },
         {
             label: "Quantidade",
             render: (value) => value.pro_quantidade,
-            sortValue: (value) => value.pro_quantidade
+            sortValue: (value) => value.pro_quantidade,
+            value: (value) => value.pro_quantidade,
         }
     ];
 

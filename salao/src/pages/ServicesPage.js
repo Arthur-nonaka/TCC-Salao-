@@ -43,12 +43,14 @@ function ServicesPage() {
             label: "Nome",
             render: (value) => value.ser_nome,
             sortValue: (value) => value.ser_nome,
-            searchValue: (value) => value.ser_nome
+            searchValue: (value) => value.ser_nome,
+            value: (value) => value.ser_nome,
         },
         {
             label: "Preço",
             render: (value) => <div>R${value.ser_preco}</div>,
             sortValue: (value) => value.ser_preco,
+            value: (value) => value.ser_preco,
         }
     ];
 

@@ -10,7 +10,7 @@ async function getUserCode(email) {
 //CLIENTES QUERY
 
 async function getClients(email) {
-    const [rows] = await db.query("SELECT cli_codigo,cli_nome,cli_telefone FROM cliente C, usuario U WHERE C.usu_codigo = U.usu_codigo AND usu_email = ?", [email]);
+    const [rows] = await db.query("SELECT cli_codigo As id,cli_nome,cli_telefone FROM cliente C, usuario U WHERE C.usu_codigo = U.usu_codigo AND usu_email = ?", [email]);
     return rows;
 };
 async function deleteClient(code) {
@@ -54,7 +54,7 @@ async function registerUser(name, email, hash, salonName) {
 //PRODUTOS QUERY
 
 async function getProducts(email) {
-    const [rows] = await db.query("SELECT pro_codigo,pro_nome,pro_preco,pro_quantidade FROM produto P, usuario U WHERE P.usu_codigo = U.usu_codigo AND usu_email = ?", [email]);
+    const [rows] = await db.query("SELECT pro_codigo As id,pro_nome,pro_preco,pro_quantidade FROM produto P, usuario U WHERE P.usu_codigo = U.usu_codigo AND usu_email = ?", [email]);
     return rows;
 };
 
@@ -78,7 +78,7 @@ async function registerProduct(name, price, amount, desc, email) {
 //SERVIÇOS QUERY
 
 async function getServices(email) {
-    const [rows] = await db.query("SELECT ser_codigo,ser_nome,ser_preco FROM servico S, usuario U WHERE S.usu_codigo = U.usu_codigo AND usu_email = ?", [email]);
+    const [rows] = await db.query("SELECT ser_codigo As id,ser_nome,ser_preco FROM servico S, usuario U WHERE S.usu_codigo = U.usu_codigo AND usu_email = ?", [email]);
     return rows;
 };
 
@@ -165,7 +165,7 @@ async function verifyScheduleEqual(dateTime, dateTimeEnd, email) {
 
 
 async function getExpenses(email) {
-    const [rows] = await db.query("SELECT des_codigo,des_descricao,des_valor,des_data FROM despesa D, usuario U WHERE D.usu_codigo = U.usu_codigo AND usu_email = ?", [email]);
+    const [rows] = await db.query("SELECT des_codigo As id,des_descricao,des_valor,des_data FROM despesa D, usuario U WHERE D.usu_codigo = U.usu_codigo AND usu_email = ?", [email]);
     return rows;
 };
 

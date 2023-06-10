@@ -1,10 +1,16 @@
 import { useState } from "react";
 import { BsCaretRightFill, BsCaretLeftFill } from "react-icons/bs";
 import ShowRow from "./ShowRow";
+import ShowRowEdit from "./ShowRowEdit";
 
 
 function Table({ data, config, type, handleReset, size, editButtonFocus, accordion }) {
     const [pageNumber, setPageNumber] = useState(1);
+    const [editId, setEditId] = useState(null);
+
+    const handleSetEditId = (id) => {
+        setEditId(id);
+    };
 
     const handleLeftClick = () => {
         if (pageNumber > 1)
@@ -31,7 +37,8 @@ function Table({ data, config, type, handleReset, size, editButtonFocus, accordi
     const updatedHeader = [...renderedHeader, <th key={"opcoes"}> </th>];
 
     const renderedRows = updatedData.map((row, index) => {
-        let content = <ShowRow key={index} row={row} config={config} type={type} handleReset={handleReset} editButtonFocus={editButtonFocus} accordion={accordion} />;
+        let content = <ShowRow key={row.id} row={row} config={config} type={type} handleReset={handleReset} editButtonFocus={editButtonFocus} accordion={accordion} handleSetEditId={handleSetEditId} />;
+        // content = {editId ===}
         return content;
     });
     return (
