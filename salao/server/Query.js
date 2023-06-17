@@ -160,20 +160,16 @@ async function registerService(nome, price, desc, email) {
 async function getSchedule(email) {
   const [rows] = await db.query(
     `
-    SELECT A.age_codigo, C.cli_nome, TIME(A.age_horario)As age_horario, TIME(A.age_horarioTermino)As age_horarioTermino, DATE(A.age_horario)As age_date 
+    SELECT A.age_codigo, C.cli_nome, DATE_FORMAT(A.age_horario, '%H:%i') As age_horario, DATE_FORMAT(A.age_horarioTermino, '%H:%i')As age_horarioTermino, DATE_FORMAT(A.age_horario, '%d-%m-%Y')As age_date 
     FROM agenda A, usuario U, cliente C 
     WHERE A.usu_codigo = U.usu_codigo 
     AND usu_email = ? 
     AND A.cli_codigo = C.cli_codigo
+    ORDER BY A.age_horario
     `,
     [email]
   );
-  const updatedRows = rows.map((row) => {
-    const date = row.age_date;
-    row.age_date = date.toISOString().slice(0, 10);
-    return row;
-  });
-  return updatedRows;
+  return rows;
 }
 
 async function getScheduleAccordion(code) {
@@ -238,6 +234,7 @@ async function verifyScheduleEqual(dateTime, dateTimeEnd, email) {
   );
   return between;
 }
+
 
 //DESPESAS QUERY
 

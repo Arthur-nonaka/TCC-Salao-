@@ -5,7 +5,7 @@ import axios from "axios";
 import Message from "../components/Message";
 
 import logo from "./yoshi.png";
-import "../Login.css";
+import "../Style.css";
 
 function LoginPage() {
   const [email, setEmail] = useState("");

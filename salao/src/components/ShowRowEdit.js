@@ -22,13 +22,14 @@ function ShowRowEdit({
     SetEditValues(values);
   }, []);
 
-  const handleClickEdit = () => {
-    axios
-      .post("/edit/" + type, { editValues, rowCode })
-      .then((res) => handleReset())
-      .catch((err) => console.log(err));
-    handleSetEditId(null);
-    
+  const handleClickEdit = async () => {
+    try {
+      handleSetEditId(0);
+      await axios.post("/edit/" + type, { editValues, rowCode });
+      handleReset();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleChangeInput = (event, index) => {

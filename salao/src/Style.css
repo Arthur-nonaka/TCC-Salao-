@@ -251,3 +251,22 @@ label:hover {
     border-right: solid 2px #FBACC7;
     border-left: solid 3px #FBACC7;
 }
+
+.schedule-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px;
+    width: 100vw;
+    height: 90%;
+}
+
+.schedule-part {
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+    margin-right: 8px;
+    border-radius: 12px;
+    width: 13vw;
+    background-color: #FBC8DB;
+}

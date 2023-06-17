@@ -2,22 +2,20 @@ import axios from "axios";
 import { BsFillTrash3Fill } from "react-icons/bs";
 
 function DeleteButton({ handleReset, values, type, rowCode }) {
-  const handleClickDelete = () => {
+  const handleClickDelete = async () => {
     let r = prompt("Digite '" + values[0] + "' para confirmar o DELETE");
     if (r === values[0]) {
-      axios
-        .post("/delete/" + type, { rowCode, type })
-        .then((res) => {
-          handleReset();
-        })
-        .catch((err) => {
-          alert("DELETE o agendamento PRIMEIRO");
-        });
+      try {
+        await axios.post("/delete/" + type, { rowCode, type });
+        handleReset();
+      } catch (error) {
+        console.log(error);
+      }
     } else {
       alert("Nao ocorreu o DELETE");
     }
   };
-
+  
   return (
     <button
       style={{

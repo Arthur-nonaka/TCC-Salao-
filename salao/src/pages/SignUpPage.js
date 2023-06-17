@@ -4,7 +4,7 @@ import axios from "axios";
 
 import Message from "../components/Message";
 
-import "../Login.css";
+import "../Style.css";
 
 function SignUpPage() {
   const [name, setName] = useState("");

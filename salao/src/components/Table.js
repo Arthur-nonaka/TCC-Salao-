@@ -5,7 +5,7 @@ import ShowRowEdit from "./ShowRowEdit";
 
 function Table({ data, config, type, handleReset, size, accordion }) {
   const [pageNumber, setPageNumber] = useState(1);
-  const [editId, setEditId] = useState(null);
+  const [editId, setEditId] = useState(0);
 
   const handleSetEditId = (id) => {
     setEditId(id);

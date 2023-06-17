@@ -3,7 +3,7 @@ const {
   deleteService,
   registerService,
   getServiceAccordion,
-  editExpense,
+  editService,
 } = require("../Query.js");
 
 function AddServiceRoutes(app) {
@@ -46,7 +46,7 @@ function AddServiceRoutes(app) {
     const values = req.body.editValues;
 
     try {
-      await editExpense(values[0], values[1], code);
+      await editService(values[0], values[1], code);
       res.send("Editado com sucesso");
       return;
     } catch (error) {

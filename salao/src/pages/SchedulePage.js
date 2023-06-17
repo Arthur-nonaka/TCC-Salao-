@@ -5,8 +5,9 @@ import axios from "axios";
 import Title from "../components/Title";
 import FunctionsBar from "../components/FunctionsBar";
 import Message from "../components/Message";
-import SearchTerm from "../components/SearchTerm";
+// import SearchTerm from "../components/SearchTerm";
 import ComboBox from "../components/ComboBox";
+import Schedules from "../components/Schedules";
 
 function SchedulePage() {
   const [date, setDate] = useState("");
@@ -14,7 +15,6 @@ function SchedulePage() {
   const [timeEnd, setTimeEnd] = useState("");
   const [clientSelected, setClientSelected] = useState("");
   const [servicesSelected, setServicesSelected] = useState([]);
-  const [items, setItems] = useState([]);
 
   const [clients, setClients] = useState([]);
   const [services, setServices] = useState([]);
@@ -59,7 +59,7 @@ function SchedulePage() {
         console.log(err);
       });
     axios
-      .post("/pull/Clientes", { email, type: "Clientes" })
+      .post("/pull/Clientes", { email})
       .then((res) => {
         setClients(res.data);
       })
@@ -69,7 +69,7 @@ function SchedulePage() {
         setMessageShow(true);
       });
     axios
-      .post("/pull/Servicos", { email, type: "Serviços" })
+      .post("/pull/Servicos", { email})
       .then((res) => {
         setServices(res.data);
       })
@@ -200,13 +200,12 @@ function SchedulePage() {
         messageType={messageType}
         message={message}
       />
-      <SearchTerm
+      <Schedules
         data={schedule}
-        config={config}
-        size={"10000px"}
         type={type}
         handleReset={handleReset}
-        accordion={type}
+        config={config}
+        email={email}
       />
       <FunctionsBar
         width={"420px"}
