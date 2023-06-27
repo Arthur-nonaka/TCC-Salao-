@@ -9,7 +9,6 @@ function ShowRow({
   config,
   type,
   handleReset,
-  editButtonFocus,
   accordion,
   handleSetEditId,
   id,
@@ -22,7 +21,6 @@ function ShowRow({
 
   const handleClickEdit = (id) => {
     handleSetEditId(id);
-    editButtonFocus();
   };
   const handleClickOpen = () => {
     if (accordion) {

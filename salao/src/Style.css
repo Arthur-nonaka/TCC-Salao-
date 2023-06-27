@@ -265,8 +265,14 @@ label:hover {
     display: flex;
     flex-direction: column;
     padding: 8px;
+    padding-right: 50px;
     margin-right: 8px;
     border-radius: 12px;
-    width: 13vw;
     background-color: #FBC8DB;
+}
+
+.buttons {
+    display: flex;
+    margin: 2px;
+    justify-content: space-between;
 }

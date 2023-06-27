@@ -10,8 +10,6 @@ function ShowRowEdit({
   type,
   handleReset,
   handleSetEditId,
-  accordion,
-  id,
 }) {
   const [editValues, SetEditValues] = useState([]);
 

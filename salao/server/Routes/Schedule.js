@@ -21,7 +21,8 @@ function AddScheduleRoutes(app) {
   });
 
   app.post("/pullAccordion/Agenda", async (req, res) => {
-    const rowCode = req.body.rowCode;
+    const schedule = req.body.schedule;
+    const rowCode = schedule.age_codigo;
     try {
       const rows = await getScheduleAccordion(rowCode);
       res.send(rows);

@@ -174,7 +174,7 @@ async function getSchedule(email) {
 
 async function getScheduleAccordion(code) {
   const [rows] = await db.query(
-    "SELECT ser_nome FROM servico S, agenda_servico AGS WHERE S.ser_codigo = AGS.ser_codigo AND AGS.age_codigo = ?",
+    "SELECT ser_nome, ser_preco FROM servico S, agenda_servico AGS WHERE S.ser_codigo = AGS.ser_codigo AND AGS.age_codigo = ?",
     [code]
   );
   return rows;
@@ -235,7 +235,6 @@ async function verifyScheduleEqual(dateTime, dateTimeEnd, email) {
   return between;
 }
 
-
 //DESPESAS QUERY
 
 async function getExpenses(email) {
@@ -264,6 +263,13 @@ async function registerExpense(desc, price, date, email) {
     VALUES (?, ?, ?, (SELECT usu_codigo FROM usuario WHERE usu_email = ?)) 
     `,
     [desc, price, date, email]
+  );
+}
+
+//VENDA QUERY
+async function getSellInfo(schedule) {
+  await db.query(
+    `SELECT `
   );
 }
 
@@ -302,4 +308,6 @@ module.exports = {
   deleteExpense,
   editExpense,
   registerExpense,
+
+  getSellInfo,
 };
