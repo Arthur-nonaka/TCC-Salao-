@@ -264,15 +264,26 @@ label:hover {
 .schedule-part {
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
     padding: 8px;
     padding-right: 50px;
     margin-right: 8px;
     border-radius: 12px;
     background-color: #FBC8DB;
+    width: 200px;
+    height: 250px;
 }
 
 .buttons {
     display: flex;
     margin: 2px;
-    justify-content: space-between;
+}
+
+.small-input {
+    width: 40px;
+    font-size: 15px;
+}
+
+.method {
+    cursor: pointer;
 }

@@ -206,6 +206,9 @@ function SchedulePage() {
         handleReset={handleReset}
         config={config}
         email={email}
+        setMessage={setMessage}
+        setMessageShow={setMessageShow}
+        setMessageType={setMessageType}
       />
       <FunctionsBar
         width={"420px"}

@@ -84,7 +84,6 @@ function FunctionsBar({
           </div>,
           document.querySelector(".modal-page")
         )}
-
       <ul className="navbar-nav mb-lg-0">
         <button onClick={handleShowRegister} className="options ">
           Cadastrar

@@ -4,6 +4,7 @@ const {
   registerService,
   getServiceAccordion,
   editService,
+  verifyServiceEqual,
 } = require("../Query.js");
 
 function AddServiceRoutes(app) {
@@ -61,9 +62,15 @@ function AddServiceRoutes(app) {
       const desc = values.desc;
       const price = values.price;
       const email = values.email;
-
-      await registerService(nome, price, desc, email);
-      res.send(nome + " cadastrado com sucesso");
+      var isEqual = await verifyServiceEqual(nome, email);
+      if(!isEqual) {
+        await registerService(nome, price, desc, email);
+        res.send(nome + " cadastrado com sucesso");
+      }
+      else {
+        res.status(400).send({ errorMessage: "Serviço Ja Cadastrado" });
+        return;
+      }
     } catch (error) {
       res.status(500).send({ errorMessage: "Erro 500" });
     }

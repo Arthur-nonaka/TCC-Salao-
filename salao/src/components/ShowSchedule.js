@@ -4,7 +4,16 @@ import SellButton from "./SellButton";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-function ShowSchedule({ schedule, type, handleReset, config }) {
+function ShowSchedule({
+  schedule,
+  type,
+  handleReset,
+  config,
+  setMessage,
+  setMessageType,
+  setMessageShow,
+  email
+}) {
   const [services, setServices] = useState([]);
 
   useEffect(() => {
@@ -18,6 +27,7 @@ function ShowSchedule({ schedule, type, handleReset, config }) {
     };
     fetchData();
   }, []);
+  
   const servicesShow = services.map((service, index) => {
     return <label key={index}>{service.ser_nome}</label>;
   });
@@ -37,7 +47,15 @@ function ShowSchedule({ schedule, type, handleReset, config }) {
       -------
       {servicesShow}
       <div className="buttons">
-        <SellButton schedule={schedule} services={services}/>
+        <SellButton
+          schedule={schedule}
+          services={services}
+          setMessage={setMessage}
+          setMessageShow={setMessageShow}
+          setMessageType={setMessageType}
+          email={email}
+          handleReset={handleReset}
+        />
         <DeleteButton
           handleReset={handleReset}
           type={type}

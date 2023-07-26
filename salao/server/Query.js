@@ -134,6 +134,18 @@ async function getServiceAccordion(code) {
   return rows;
 }
 
+async function verifyServiceEqual(nome, email) {
+  const [rows] = await db.query(
+    "SELECT * FROM servico S, usuario U WHERE S.usu_codigo = U.usu_codigo && ser_nome = ? && usu_email = ?",
+    [nome, email]
+  );
+  if (rows.length === 0) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
 async function deleteService(code) {
   await db.query("DELETE FROM servico WHERE ser_codigo = ?", [code]);
 }
@@ -174,9 +186,10 @@ async function getSchedule(email) {
 
 async function getScheduleAccordion(code) {
   const [rows] = await db.query(
-    "SELECT ser_nome, ser_preco FROM servico S, agenda_servico AGS WHERE S.ser_codigo = AGS.ser_codigo AND AGS.age_codigo = ?",
+    "SELECT ser_nome,S.ser_codigo, ser_preco FROM servico S, agenda_servico AGS WHERE S.ser_codigo = AGS.ser_codigo AND AGS.age_codigo = ?",
     [code]
   );
+  console.log(rows);
   return rows;
 }
 
@@ -268,8 +281,38 @@ async function registerExpense(desc, price, date, email) {
 
 //VENDA QUERY
 async function getSellInfo(schedule) {
+  await db.query(`SELECT `);
+}
+
+async function registerSell(
+  userCode,
+  clientName,
+  services,
+  totalPrice,
+  selectedValue,
+  scheduleCode
+) {
+
+  var batata = await db.query(
+    `INSERT INTO venda (cli_codigo, usu_codigo, ven_data, ven_valorTotal, ven_formaPagamento) 
+  VALUES ((SELECT cli_codigo FROM cliente WHERE cli_nome = ? AND usu_codigo = ?), ?, NOW() , ?, ?)`,
+    [clientName, userCode, userCode, totalPrice, selectedValue]
+  );
+  services.forEach(async (service) => {
+    await db.query(
+      `INSERT INTO venda_servico VALUES (?,?)`,
+      [batata[0].insertId,service.ser_codigo]
+    );
+  });
   await db.query(
-    `SELECT `
+    `DELETE FROM agenda_servico
+    WHERE age_codigo = ?`,
+    [scheduleCode]
+  );
+  await db.query(
+    `DELETE FROM agenda
+    WHERE age_codigo = ?`,
+    [scheduleCode]
   );
 }
 
@@ -296,6 +339,7 @@ module.exports = {
   deleteService,
   editService,
   registerService,
+  verifyServiceEqual,
 
   getSchedule,
   getScheduleAccordion,
@@ -310,4 +354,5 @@ module.exports = {
   registerExpense,
 
   getSellInfo,
+  registerSell,
 };
