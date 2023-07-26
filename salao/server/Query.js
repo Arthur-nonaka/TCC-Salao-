@@ -280,11 +280,30 @@ async function registerExpense(desc, price, date, email) {
 }
 
 //VENDA QUERY
-async function getSellInfo(schedule) {
+async function getSale(email) {
+  const [rows] = await db.query(
+    `SELECT * FROM venda V, usuario U WHERE V.usu_codigo = U.usu_codigo AND usu_email = ?`,
+    [email]
+  );
+  return rows;
+}
+
+async function getSaleMethod(email) {
+  const [rows] = await db.query(
+    `SELECT ven_formaPagamento As labels, COUNT(ven_formaPagamento)As series
+    FROM venda V, usuario U WHERE V.usu_codigo = U.usu_codigo 
+    AND usu_email = ? 
+    GROUP BY ven_formaPagamento`,
+    [email]
+  );
+  return rows;
+}
+
+async function getSaleInfo(schedule) {
   await db.query(`SELECT `);
 }
 
-async function registerSell(
+async function registerSale(
   userCode,
   clientName,
   services,
@@ -292,17 +311,16 @@ async function registerSell(
   selectedValue,
   scheduleCode
 ) {
-
   var batata = await db.query(
     `INSERT INTO venda (cli_codigo, usu_codigo, ven_data, ven_valorTotal, ven_formaPagamento) 
   VALUES ((SELECT cli_codigo FROM cliente WHERE cli_nome = ? AND usu_codigo = ?), ?, NOW() , ?, ?)`,
     [clientName, userCode, userCode, totalPrice, selectedValue]
   );
   services.forEach(async (service) => {
-    await db.query(
-      `INSERT INTO venda_servico VALUES (?,?)`,
-      [batata[0].insertId,service.ser_codigo]
-    );
+    await db.query(`INSERT INTO venda_servico VALUES (?,?)`, [
+      batata[0].insertId,
+      service.ser_codigo,
+    ]);
   });
   await db.query(
     `DELETE FROM agenda_servico
@@ -353,6 +371,8 @@ module.exports = {
   editExpense,
   registerExpense,
 
-  getSellInfo,
-  registerSell,
+  getSaleInfo,
+  registerSale,
+  getSale,
+  getSaleMethod,
 };

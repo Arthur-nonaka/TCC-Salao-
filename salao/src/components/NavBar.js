@@ -10,7 +10,9 @@ function NavBar() {
       style={{ backgroundColor: "#FBACC7" }}
     >
       <div className="container-fluid">
-        <p className="navbar-brand">Logo</p>
+        <Link style={{textDecoration: "none"}} to="/beautyflow" state={{ email }}>
+          <p className="navbar-brand">Logo</p>
+        </Link>
         <button
           className="navbar-toggler"
           type="button"
