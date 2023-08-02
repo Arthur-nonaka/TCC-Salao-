@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Chart from "react-apexcharts";
 import axios from "axios";
 
-function ServicesPie({ email, year, month}) {
+function ServicesPie({ email, year, month }) {
   const [values, setValues] = useState([]);
 
   useEffect(() => {
@@ -16,27 +16,35 @@ function ServicesPie({ email, year, month}) {
   let labels = [];
   values.forEach((value) => {
     series.push(value.series);
-    labels.push(value.labels);
+    if(value.labels.length > 19) {
+        labels.push(value.labels.substring(0, 19) + "...");
+    } else {
+        labels.push(value.labels);
+    }
   });
-  
 
   var options = {
     chart: {
       type: "pie",
-      width: 340
+      width: 340,
     },
     //colors: ['#008FFB', '#FEB019', '#7AEA77', '#FF4560'],
     plotOptions: {
-      pie: {
-      },
+      pie: {},
     },
     labels: labels,
-    series: series
+    series: series,
   };
 
   return (
     <div>
-      <Chart options={options} series={series} width={340} height={190} type="pie" />
+      <Chart
+        options={options}
+        series={series}
+        width={425}
+        height={187}
+        type="pie"
+      />
     </div>
   );
 }

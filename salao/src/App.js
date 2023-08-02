@@ -17,13 +17,24 @@ function App() {
   let content = <Outlet />;
   if (currentLocation.pathname === "/beautyflow") {
     content = (
-      <div className="row">
-        <div className="graph-container">
-          <MethodDonut email={email} />
-          <ServicesPie email={email} year={year} month={month}/>
+      <div className="container" style={{width: "800px"}}>
+        <div className="row d-flex justify-content-center ">
+          <div className="col">
+            <MethodDonut email={email} />
+          </div>
+          <div className="col">
+            <ServicesPie email={email} year={year} month={month} />
+          </div>
         </div>
-        <div className="graph-container">
-          <MonthSaleColumn email={email} year={year} setYear={setYear} setMonth={setMonth}/>
+        <div className="row">
+          <div className="col">
+            <MonthSaleColumn
+              email={email}
+              year={year}
+              setYear={setYear}
+              setMonth={setMonth}
+            />
+          </div>
         </div>
       </div>
     );
