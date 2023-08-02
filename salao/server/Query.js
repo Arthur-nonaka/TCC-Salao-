@@ -299,6 +299,52 @@ async function getSaleMethod(email) {
   return rows;
 }
 
+async function getSaleServices(codes) {
+  let codesUpdated = codes.map(code => {
+    return code.ven_codigo;
+  });
+  const [rows] = await db.query(
+    `SELECT (SELECT ser_nome FROM servico S WHERE VS.ser_codigo = S.ser_codigo ) As labels, COUNT(ser_codigo)As series
+    FROM venda_servico VS
+    WHERE ven_codigo IN (?)
+    GROUP BY ser_codigo`,
+    [codesUpdated]
+  );
+  return rows;
+}
+
+async function getSaleYearMonth(email, year, month) {
+  const [rows] = await db.query(
+    `SELECT ven_codigo
+    FROM venda V, usuario U WHERE V.usu_codigo = U.usu_codigo 
+    AND usu_email = ? 
+    AND YEAR(ven_data) = ?
+    AND MONTH(ven_data) = ?`,
+    [email, year, month]
+  );
+  return rows;
+}
+
+async function getSaleQuantity(email,year) {
+  const [rows] = await db.query(
+    `SELECT 
+    EXTRACT(YEAR FROM ven_data) AS year,
+    EXTRACT(MONTH FROM ven_data) AS month,
+    COUNT(ven_codigo) AS total_amount
+    FROM venda V, usuario U WHERE V.usu_codigo = U.usu_codigo
+    AND usu_email = ?  
+    AND EXTRACT(YEAR FROM ven_data) = ?
+    GROUP BY 
+    EXTRACT(YEAR FROM ven_data),
+    EXTRACT(MONTH FROM ven_data)
+    ORDER BY 
+    EXTRACT(YEAR FROM ven_data),
+    EXTRACT(MONTH FROM ven_data);`,
+    [email,year]
+  );
+  return rows;
+}
+
 async function getSaleInfo(schedule) {
   await db.query(`SELECT `);
 }
@@ -375,4 +421,7 @@ module.exports = {
   registerSale,
   getSale,
   getSaleMethod,
+  getSaleQuantity,
+  getSaleServices,
+  getSaleYearMonth
 };

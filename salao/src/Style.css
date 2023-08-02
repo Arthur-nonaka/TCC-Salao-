@@ -287,3 +287,27 @@ label:hover {
 .method {
     cursor: pointer;
 }
+
+.graph-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 280px;
+    width: 800px;
+    padding: 15px;
+}
+
+.month-sale {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.container-mainpage{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+}
