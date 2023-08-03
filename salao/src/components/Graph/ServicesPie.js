@@ -37,7 +37,6 @@ function ServicesPie({ email, year, month }) {
   };
 
   return (
-    <div>
       <Chart
         options={options}
         series={series}
@@ -45,7 +44,6 @@ function ServicesPie({ email, year, month }) {
         height={187}
         type="pie"
       />
-    </div>
   );
 }
 

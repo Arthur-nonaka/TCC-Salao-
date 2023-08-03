@@ -258,6 +258,14 @@ async function getExpenses(email) {
   return rows;
 }
 
+async function getExpensesMonth(email) {
+  const [rows] = await db.query(
+    "SELECT SUM(des_valor) As expenseValue FROM despesa D, usuario U WHERE D.usu_codigo = U.usu_codigo AND usu_email = ? AND MONTH(des_data) = MONTH(NOW()) AND YEAR(des_data) = YEAR(NOW())",
+    [email]
+  );
+  return rows;
+}
+
 async function deleteExpense(code) {
   await db.query("DELETE FROM despesa WHERE des_codigo = ?", [code]);
 }
@@ -299,8 +307,21 @@ async function getSaleMethod(email) {
   return rows;
 }
 
+async function getSaleMethodMonth(email) {
+  const [rows] = await db.query(
+    `SELECT ven_formaPagamento As labels, COUNT(ven_formaPagamento)As series
+    FROM venda V, usuario U WHERE V.usu_codigo = U.usu_codigo 
+    AND usu_email = ? 
+    AND MONTH(ven_data) = MONTH(NOW())
+    AND YEAR(ven_data) = YEAR(NOW())
+    GROUP BY ven_formaPagamento`,
+    [email]
+  );
+  return rows;
+}
+
 async function getSaleServices(codes) {
-  let codesUpdated = codes.map(code => {
+  let codesUpdated = codes.map((code) => {
     return code.ven_codigo;
   });
   const [rows] = await db.query(
@@ -325,7 +346,7 @@ async function getSaleYearMonth(email, year, month) {
   return rows;
 }
 
-async function getSaleQuantity(email,year) {
+async function getSaleQuantity(email, year) {
   const [rows] = await db.query(
     `SELECT 
     EXTRACT(YEAR FROM ven_data) AS year,
@@ -340,9 +361,20 @@ async function getSaleQuantity(email,year) {
     ORDER BY 
     EXTRACT(YEAR FROM ven_data),
     EXTRACT(MONTH FROM ven_data);`,
-    [email,year]
+    [email, year]
   );
   return rows;
+}
+
+async function getSaleProfit(email) {
+  const [rows] = await db.query(`
+  SELECT SUM(ven_valorTotal)As totalValue
+  FROM venda V, usuario U WHERE V.usu_codigo = U.usu_codigo
+  AND usu_email = ?
+  AND MONTH(ven_data) = MONTH(NOW())
+  AND YEAR(ven_data) = YEAR(NOW())
+  `, [email]);
+  return rows
 }
 
 async function getSaleInfo(schedule) {
@@ -413,6 +445,7 @@ module.exports = {
   verifyScheduleEqual,
 
   getExpenses,
+  getExpensesMonth,
   deleteExpense,
   editExpense,
   registerExpense,
@@ -421,7 +454,9 @@ module.exports = {
   registerSale,
   getSale,
   getSaleMethod,
+  getSaleMethodMonth,
   getSaleQuantity,
   getSaleServices,
-  getSaleYearMonth
+  getSaleYearMonth,
+  getSaleProfit,
 };

@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 import Chart from "react-apexcharts";
 import { BsCaretRightFill, BsCaretLeftFill } from "react-icons/bs";
 import axios from "axios";
 
-function MonthSaleColumn({ email, year, setYear, setMonth}) {
+function MonthSaleColumn({ email, year, setYear, setMonth }) {
   const [values, setValues] = useState([]);
 
   useEffect(() => {
@@ -13,14 +13,24 @@ function MonthSaleColumn({ email, year, setYear, setMonth}) {
       .catch((err) => console.log(err));
   }, [year]);
 
+  const handleYearAdd = (event) => {
+    event.preventDefault();
+    setYear(year + 1);
+  };
+
+  const handleYearRemove = (event) => {
+    event.preventDefault();
+    setYear(year - 1);
+  };
+
   var options = {
     chart: {
       type: "bar",
       height: 350,
       events: {
-        dataPointSelection: function (e,chart,opts) {
-          setMonth(opts.dataPointIndex + 1)
-        }
+        dataPointSelection: function (e, chart, opts) {
+          setMonth(opts.dataPointIndex + 1);
+        },
       },
     },
     series: values,
@@ -71,12 +81,12 @@ function MonthSaleColumn({ email, year, setYear, setMonth}) {
         width={700}
       />
       <div>
-        <button onClick={() => setYear(year - 1)} className="buttonWithSymbol">
+        <button onClick={handleYearRemove} className="buttonWithSymbol">
           {" "}
           <BsCaretLeftFill />{" "}
         </button>
         {year}
-        <button onClick={() => setYear(year + 1)} className="buttonWithSymbol">
+        <button onClick={handleYearAdd} className="buttonWithSymbol">
           {" "}
           <BsCaretRightFill />{" "}
         </button>

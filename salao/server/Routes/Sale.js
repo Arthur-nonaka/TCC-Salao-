@@ -4,9 +4,12 @@ const {
   getUserCode,
   getSale,
   getSaleMethod,
+  getSaleMethodMonth,
   getSaleQuantity,
   getSaleServices,
-  getSaleYearMonth
+  getSaleYearMonth,
+  getSaleProfit,
+  getExpensesMonth,
 } = require("../Query.js");
 
 function AddSaleRoutes(app) {
@@ -72,6 +75,18 @@ function AddSaleRoutes(app) {
     }
   });
 
+  app.post("/pull/VendaMetodoMes", async (req, res) => {
+    const email = req.body.email;
+    try {
+      const rows = await getSaleMethodMonth(email);
+      res.send(rows);
+      return;
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({ errorMessage: "Erro 500" });
+    }
+  });
+
   app.post("/pull/VendaServicos", async (req, res) => {
     const email = req.body.email;
     const year = req.body.year;
@@ -79,7 +94,7 @@ function AddSaleRoutes(app) {
     try {
       const codes = await getSaleYearMonth(email, year, month);
       let rows = [];
-      if(codes.length !== 0) {
+      if (codes.length !== 0) {
         rows = await getSaleServices(codes);
       }
       res.send(rows);
@@ -106,6 +121,19 @@ function AddSaleRoutes(app) {
         },
       ];
       res.send(series);
+      return;
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({ errorMessage: "Erro 500" });
+    }
+  });
+
+  app.post("/pull/VendaDinheiro", async (req, res) => {
+    const email = req.body.email;
+    try {
+      const gross = await getSaleProfit(email);
+      const expenses = await getExpensesMonth(email);
+      res.send({ gross: gross, expenses: expenses });
       return;
     } catch (error) {
       console.log(error);

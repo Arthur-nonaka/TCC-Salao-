@@ -16,6 +16,10 @@ AddScheduleRoutes(app);
 AddExpensesRoutes(app);
 AddSaleRoutes(app);
 
-app.listen(8000, () => {
+app.listen(80, () => {
   console.log(`Server is running on port 8000.`);
+});
+
+app.get("/", (req, res) => {
+  res.send("batata");
 });

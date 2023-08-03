@@ -302,6 +302,7 @@ label:hover {
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    width: fit-content;
 }
 
 .container-mainpage{
