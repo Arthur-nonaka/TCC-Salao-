@@ -33,8 +33,8 @@ function Profit({ email }) {
         <label
           style={
             values.gross[0].totalValue - values.expenses[0].expenseValue > 0
-              ? { color: "green", fontSize: "30px"}
-              : { color: "red",  fontSize: "30px" }
+              ? { color: "green", fontSize: "30px" }
+              : { color: "red", fontSize: "30px" }
           }
         >
           {values.gross[0].totalValue - values.expenses[0].expenseValue}

@@ -16,7 +16,7 @@ import ExpensesPage from "./pages/ExpensesPage";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-axios.defaults.baseURL = 'http://localhost:80';
+axios.defaults.baseURL = 'https://arthurnonakaback.azurewebsites.net';
 
 root.render(
     <BrowserRouter>
