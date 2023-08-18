@@ -28,6 +28,7 @@ function MethodDonutTotal({ email }) {
       position: 'right'
     },
     //colors: ['#008FFB', '#FEB019', '#7AEA77', '#FF4560'],
+    dataLabels: {enabled: false},
     plotOptions: {
       pie: {
         donut: {

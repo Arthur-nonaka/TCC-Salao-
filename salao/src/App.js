@@ -19,29 +19,39 @@ function App() {
   let content = <Outlet />;
   if (currentLocation.pathname === "/beautyflow") {
     content = (
-      <div className="container-fluid">
-        <Profit email={email} />
-        <div className="row d-flex justify-content-center ">
-          <div className="col-3">
-            <MethodDonutTotal email={email} />
-          </div>
-          <div className="col">
-            <ServicesPie email={email} year={year} month={month} />
-          </div>
-          <div className="col"></div>
+      <div className="container-fluid d-flex flex-row justify-content-between mt-2">
+        <div>
+          <Profit email={email} />
         </div>
-        <div className="row">
-          <div className="col-3">
+        <div>
+          <div className="row">
+            <div className="col-3">
+              <ServicesPie email={email} year={year} month={month} />
+            </div>
+            <div className="col-7">
+              <MonthSaleColumn
+                email={email}
+                year={year}
+                setYear={setYear}
+                setMonth={setMonth}
+              /></div>
+          </div>
+          <div className="row">
+            <div className="col">
+              <MethodDonutTotal email={email} />
+            </div>
+            <div className="col">
+              <MethodDonut email={email} />
+            </div>
+            <div className="col"> 
             <MethodDonut email={email} />
+            </div>
           </div>
-          <div className="col">
-            <MonthSaleColumn
-              email={email}
-              year={year}
-              setYear={setYear}
-              setMonth={setMonth}
-            />
-          </div>
+          {/* <div className="row">
+            <div className="col bg-primary"> 1</div>
+            <div className="col bg-alert"> 2</div>
+            <div className="col bg-danger"> 3</div>
+          </div> */}
         </div>
       </div>
     );

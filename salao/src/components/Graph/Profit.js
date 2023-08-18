@@ -15,30 +15,28 @@ function Profit({ email }) {
       })
       .catch((err) => console.log(err));
   }, []);
-  console.log(values);
 
   return (
-    <div className="row d-flex align-items-center justify-content-center mt-2">
-      <div className="col-3 d-flex align-items-center justify-content-center border me-2 rounded">
-        <label style={{ color: "green", fontSize: "30px" }}>
-          {values.gross[0].totalValue}
-        </label>
+    <div className="m-1">
+      <div className="card bg-light mb-3" style={{ width: "160px" }} >
+        <h5 className="card-header ">Lucro Final</h5>
+        <div className="card-body">
+          <p className="card-text" style={values.gross[0].totalValue - values.expenses[0].expenseValue > 0
+            ? { color: "green", fontSize: "30px" }
+            : { color: "red", fontSize: "30px" }}>{values.gross[0].totalValue - values.expenses[0].expenseValue}</p>
+        </div>
       </div>
-      <div className="col-3 d-flex align-items-center justify-content-center  border me-2 rounded">
-        <label style={{ color: "red", fontSize: "30px" }}>
-          {values.expenses[0].expenseValue}
-        </label>
+      <div className="card mb-3 text-white" style={{ width: "160px" }}>
+        <h5 className="card-header bg-danger">Despesas</h5>
+        <div className="card-body">
+          <p className="card-text" style={{ color: "red", fontSize: "30px" }}>{values.expenses[0].expenseValue}</p>
+        </div>
       </div>
-      <div className="col-4 d-flex align-items-center justify-content-center  border rounded">
-        <label
-          style={
-            values.gross[0].totalValue - values.expenses[0].expenseValue > 0
-              ? { color: "green", fontSize: "30px" }
-              : { color: "red", fontSize: "30px" }
-          }
-        >
-          {values.gross[0].totalValue - values.expenses[0].expenseValue}
-        </label>
+      <div className="card  mb-3 text-white" style={{ width: "160px" }}>
+        <h5 className="card-header bg-success">Ganho</h5>
+        <div className="card-body">
+          <p className="card-text" style={{ color: "green", fontSize: "30px" }}>{values.gross[0].totalValue}</p>
+        </div>
       </div>
     </div>
   );

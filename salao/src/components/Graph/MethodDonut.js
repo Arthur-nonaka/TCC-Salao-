@@ -24,6 +24,7 @@ function MethodDonut({ email }) {
       type: "donut",
       width: 320,
     },
+    dataLabels: {enabled: false},
     legend: {
       show: false,
       position: 'bottom'

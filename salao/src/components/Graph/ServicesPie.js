@@ -28,6 +28,10 @@ function ServicesPie({ email, year, month }) {
       type: "pie",
       width: 340,
     },
+    dataLabels: {enabled: false},
+    legend: {
+      position: 'bottom'
+    },
     //colors: ['#008FFB', '#FEB019', '#7AEA77', '#FF4560'],
     plotOptions: {
       pie: {},
