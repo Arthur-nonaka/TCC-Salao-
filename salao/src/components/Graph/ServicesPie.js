@@ -27,6 +27,7 @@ function ServicesPie({ email, year, month }) {
     chart: {
       type: "pie",
       width: 340,
+      height: 400,
     },
     dataLabels: {enabled: false},
     legend: {
@@ -44,8 +45,8 @@ function ServicesPie({ email, year, month }) {
       <Chart
         options={options}
         series={series}
-        width={425}
-        height={187}
+        width={225}
+        height={230}
         type="pie"
       />
   );
