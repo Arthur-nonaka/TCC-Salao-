@@ -216,8 +216,8 @@ async function registerSchedule(
     async (service) =>
       await db.query(
         `INSERT INTO agenda_servico (age_codigo, ser_codigo) 
-        VALUES ((SELECT age_codigo FROM agenda A, usuario U WHERE A.usu_codigo = U.usu_codigo and usu_email = ? ORDER BY age_codigo DESC LIMIT 1), (SELECT ser_codigo FROM servico WHERE ser_nome = ?))`,
-        [email, service]
+        VALUES ((SELECT age_codigo FROM agenda A, usuario U WHERE A.usu_codigo = U.usu_codigo and usu_email = ? ORDER BY age_codigo DESC LIMIT 1), (SELECT ser_codigo FROM servico S, usuario U WHERE S.usu_codigo = U.usu_codigo AND ser_nome = ? AND usu_email = ?))`,
+        [email, service, email]
       )
   );
 }

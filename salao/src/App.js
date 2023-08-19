@@ -20,7 +20,7 @@ function App() {
   if (currentLocation.pathname === "/beautyflow") {
     content = (
       <div className="container-fluid d-flex flex-row justify-content-between mt-2">
-        <div>
+        <div className="">
           <Profit email={email} />
         </div>
         <div>

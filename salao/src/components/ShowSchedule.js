@@ -12,7 +12,7 @@ function ShowSchedule({
   setMessage,
   setMessageType,
   setMessageShow,
-  email
+  email,
 }) {
   const [services, setServices] = useState([]);
 
@@ -27,8 +27,11 @@ function ShowSchedule({
     };
     fetchData();
   }, []);
-  
+
   const servicesShow = services.map((service, index) => {
+    if (service.ser_nome.length > 12) {
+      return <label key={index}>{service.ser_nome.substring(0, 12) + "..."}</label>
+    }
     return <label key={index}>{service.ser_nome}</label>;
   });
 

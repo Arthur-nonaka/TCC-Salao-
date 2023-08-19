@@ -18,24 +18,24 @@ function Profit({ email }) {
 
   return (
     <div className="m-1">
-      <div className="card bg-light mb-3" style={{ width: "160px" }} >
+      <div className="card bg-light mb-2" style={{ width: "260px" }} >
         <h5 className="card-header ">Lucro Final</h5>
         <div className="card-body">
           <p className="card-text" style={values.gross[0].totalValue - values.expenses[0].expenseValue > 0
             ? { color: "green", fontSize: "30px" }
-            : { color: "red", fontSize: "30px" }}>{values.gross[0].totalValue - values.expenses[0].expenseValue}</p>
+            : { color: "red", fontSize: "30px" }}>R$ {(values.gross[0].totalValue - values.expenses[0].expenseValue).toFixed(2)}</p>
         </div>
       </div>
-      <div className="card mb-3 text-white" style={{ width: "160px" }}>
+      <div className="card mb-2 text-white" style={{ width: "260px" }}>
         <h5 className="card-header bg-danger">Despesas</h5>
         <div className="card-body">
-          <p className="card-text" style={{ color: "red", fontSize: "30px" }}>{values.expenses[0].expenseValue}</p>
+          <p className="card-text" style={{ color: "red", fontSize: "30px" }}>R$ {values.expenses[0].expenseValue.toFixed(2)}</p>
         </div>
       </div>
-      <div className="card  mb-3 text-white" style={{ width: "160px" }}>
+      <div className="card  mb-2 text-white" style={{ width: "260px" }}>
         <h5 className="card-header bg-success">Ganho</h5>
         <div className="card-body">
-          <p className="card-text" style={{ color: "green", fontSize: "30px" }}>{values.gross[0].totalValue}</p>
+          <p className="card-text" style={{ color: "green", fontSize: "30px" }}>R$ {values.gross[0].totalValue.toFixed(2)}</p>
         </div>
       </div>
     </div>

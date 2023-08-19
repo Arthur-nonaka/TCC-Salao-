@@ -15,7 +15,7 @@ function SellButton({
 }) {
   const [showModal, setShowModal] = useState(false);
   const [price, setPrice] = useState(0);
-  const [totalPrice, setTotalPrice] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0.0);
 
   const handleSellClick = (event) => {
     event.preventDefault();
@@ -23,7 +23,13 @@ function SellButton({
     const selectedValue = selectElement.value;
 
     axios
-      .post("/register/Venda", {email, schedule, services, totalPrice, selectedValue})
+      .post("/register/Venda", {
+        email,
+        schedule,
+        services,
+        totalPrice,
+        selectedValue,
+      })
       .then((res) => {
         setMessageType("success");
         setMessage(res.data);
@@ -48,23 +54,28 @@ function SellButton({
 
   const plus = (event) => {
     event.preventDefault();
-    setTotalPrice(parseInt(totalPrice) + parseInt(price));
+    setTotalPrice((parseFloat(totalPrice) + parseFloat(price)).toFixed(2));
     setPrice(0);
   };
   const minus = (event) => {
     event.preventDefault();
-    if (parseInt(totalPrice) - parseInt(price) < 0) {
+    if (parseFloat(totalPrice) - parseFloat(price) < 0) {
     } else {
-      setTotalPrice(parseInt(totalPrice) - parseInt(price));
+      setTotalPrice((parseFloat(totalPrice) - parseFloat(price)).toFixed(2));
       setPrice(0);
     }
   };
 
   const servicesShow = services.map((service) => {
+    let content = service.ser_nome;
+    if (service.ser_nome.length > 12) {
+      content = <label>{service.ser_nome.substring(0, 12) + "..."}</label>;
+    }
+
     return (
       <li>
         <div>
-          {service.ser_nome} - R${service.ser_preco}{" "}
+          {content} - R${service.ser_preco}{" "}
         </div>
       </li>
     );
@@ -102,7 +113,9 @@ function SellButton({
               >
                 <div>
                   <h2> Realizar Venda</h2>
-                  <h5>{schedule.cli_nome}</h5>
+                  <h5 style={{ backgroundColor: "#FBC8DB", padding: "5px" }}>
+                    {schedule.cli_nome}
+                  </h5>
                   <h5> Serviços (R${servicesPrices}) </h5>
                   <ul>{servicesShow}</ul>
                   <h5>
