@@ -3,14 +3,9 @@ import { BsPencilFill } from "react-icons/bs";
 import axios from "axios";
 
 import DeleteButton from "./DeleteButton";
+import PhoneInput from "./PhoneInput";
 
-function ShowRowEdit({
-  row,
-  config,
-  type,
-  handleReset,
-  handleSetEditId,
-}) {
+function ShowRowEdit({ row, config, type, handleReset, handleSetEditId }) {
   const [editValues, SetEditValues] = useState([]);
 
   let values = Object.values(row);
@@ -42,16 +37,43 @@ function ShowRowEdit({
   };
 
   const renderedCellsEdit = config.map((column, index) => {
-    return (
-      <td key={index}>
-        <input
-          value={editValues[index]}
-          className="form-control input"
-          style={{ width: "180px", padding: "1px" }}
-          onChange={(event) => handleChangeInput(event, index)}
-        />
-      </td>
+    let content = (
+      <input
+        value={editValues[index]}
+        className="form-control input"
+        style={{ width: "180px", padding: "1px" }}
+        onChange={(event) => handleChangeInput(event, index)}
+      />
     );
+    if (typeof editValues[index] != "undefined") {
+      if (
+        editValues[index].length === 14 &&
+        editValues[index].substring(0, 1) === "("
+      ) {
+        content = (
+          <PhoneInput
+            phone={editValues[index]}
+            onChange={(event) => handleChangeInput(event, index)}
+            classname={"form-control form-control-sm input"}
+          />
+        );
+      } else if (
+        editValues[index].length === 10 &&
+        editValues[index].substring(4, 5) === "-" &&
+        editValues[index].substring(7, 8) === "-"
+      ) {
+        content = (
+          <input
+            value={editValues[index]}
+            type="date"
+            className="form-control input"
+            style={{ width: "180px", padding: "1px" }}
+            onChange={(event) => handleChangeInput(event, index)}
+          />
+        );
+      }
+    }
+    return <td key={index}>{content}</td>;
   });
 
   const renderedRowEdit = (

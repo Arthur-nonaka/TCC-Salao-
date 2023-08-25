@@ -307,15 +307,27 @@ async function getSaleMethod(email) {
   return rows;
 }
 
-async function getSaleMethodMonth(email) {
+async function getSaleMethodMonth(email, month, year) {
   const [rows] = await db.query(
     `SELECT ven_formaPagamento As labels, COUNT(ven_formaPagamento)As series
     FROM venda V, usuario U WHERE V.usu_codigo = U.usu_codigo 
     AND usu_email = ? 
-    AND MONTH(ven_data) = MONTH(NOW())
-    AND YEAR(ven_data) = YEAR(NOW())
+    AND MONTH(ven_data) = ?
+    AND YEAR(ven_data) = ?
     GROUP BY ven_formaPagamento`,
-    [email]
+    [email, month, year]
+  );
+  return rows;
+}
+
+async function getSaleMethodYear(email, year) {
+  const [rows] = await db.query(
+    `SELECT ven_formaPagamento As labels, COUNT(ven_formaPagamento)As series
+    FROM venda V, usuario U WHERE V.usu_codigo = U.usu_codigo 
+    AND usu_email = ? 
+    AND YEAR(ven_data) = ?
+    GROUP BY ven_formaPagamento`,
+    [email, year]
   );
   return rows;
 }
@@ -367,14 +379,17 @@ async function getSaleQuantity(email, year) {
 }
 
 async function getSaleProfit(email) {
-  const [rows] = await db.query(`
+  const [rows] = await db.query(
+    `
   SELECT SUM(ven_valorTotal)As totalValue
   FROM venda V, usuario U WHERE V.usu_codigo = U.usu_codigo
   AND usu_email = ?
   AND MONTH(ven_data) = MONTH(NOW())
   AND YEAR(ven_data) = YEAR(NOW())
-  `, [email]);
-  return rows
+  `,
+    [email]
+  );
+  return rows;
 }
 
 async function getSaleInfo(schedule) {
@@ -458,5 +473,6 @@ module.exports = {
   getSaleQuantity,
   getSaleServices,
   getSaleYearMonth,
+  getSaleMethodYear,
   getSaleProfit,
 };

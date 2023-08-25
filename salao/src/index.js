@@ -4,7 +4,7 @@ import App from './App'
 import './App.css'
 import axios from "axios";
 
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useSearchParams } from "react-router-dom";
 
 import LoginPage from './pages/LoginPage';
 import SchedulePage from './pages/SchedulePage';

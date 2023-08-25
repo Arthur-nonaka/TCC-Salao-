@@ -1,9 +1,9 @@
 import InputMask from "react-input-mask";
 
-function PhoneInput({ phone, onChange }) {
+function PhoneInput({  phone, onChange, classname}) {
   return (
     <InputMask
-      className="form-control p-2 input"
+      className= {classname}
       mask="(99)99999-9999"
       value={phone}
       onChange={onChange}

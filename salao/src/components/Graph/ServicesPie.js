@@ -2,24 +2,28 @@ import { useState, useEffect } from "react";
 import Chart from "react-apexcharts";
 import axios from "axios";
 
-function ServicesPie({ email, year, month }) {
+function ServicesPie({ email, year, month, setShowLoading }) {
   const [values, setValues] = useState([]);
 
   useEffect(() => {
+    setShowLoading(true);
     axios
       .post("/pull/VendaServicos", { email, year, month })
-      .then((res) => setValues(res.data))
+      .then((res) => {
+        setValues(res.data);
+        setShowLoading(false);
+      })
       .catch((err) => console.log(err));
-  }, [month]);
+  }, [month, year]);
 
   let series = [];
   let labels = [];
   values.forEach((value) => {
     series.push(value.series);
-    if(value.labels.length > 19) {
-        labels.push(value.labels.substring(0, 19) + "...");
+    if (value.labels.length > 19) {
+      labels.push(value.labels.substring(0, 19) + "...");
     } else {
-        labels.push(value.labels);
+      labels.push(value.labels);
     }
   });
 
@@ -29,9 +33,9 @@ function ServicesPie({ email, year, month }) {
       width: 340,
       height: 400,
     },
-    dataLabels: {enabled: false},
+    dataLabels: { enabled: false },
     legend: {
-      position: 'bottom'
+      position: "bottom",
     },
     //colors: ['#008FFB', '#FEB019', '#7AEA77', '#FF4560'],
     plotOptions: {
@@ -42,13 +46,13 @@ function ServicesPie({ email, year, month }) {
   };
 
   return (
-      <Chart
-        options={options}
-        series={series}
-        width={225}
-        height={230}
-        type="pie"
-      />
+    <Chart
+      options={options}
+      series={series}
+      width={250}
+      height={250}
+      type="pie"
+    />
   );
 }
 

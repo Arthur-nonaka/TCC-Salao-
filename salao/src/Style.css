@@ -312,3 +312,54 @@ label:hover {
     flex-direction: column;
     width: 100%;
 }
+
+.loader {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.61);
+    filter: blur(14px) contrast(25);
+}
+
+.circle {
+    background-color: rgb(0, 0, 0);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.circle:first-child {
+    animation: go 1s ease-in-out alternate infinite ;
+}
+
+.circle:nth-child(2) {
+    animation: back 1s ease-in-out alternate infinite ;
+}
+
+.circle:nth-child(3) {
+    animation: go 1s ease-in-out alternate infinite ;
+}
+/* .circle:last-child {
+    animation: back 5s linear alternate infinite ;
+} */
+@keyframes go {
+    0% {
+        transform: translateY(0px);
+    }
+    100% {
+        transform: translateY(-60px);
+    }
+}
+
+@keyframes back {
+    0% {
+        transform: translateY(-60px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}

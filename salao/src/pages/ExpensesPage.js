@@ -47,7 +47,7 @@ function ExpensesPage() {
     },
     {
       label: "Preço",
-      render: (value) => value.des_valor,
+      render: (value) => <div>R${value.des_valor}</div>,
       value: (value) => value.des_valor,
     },
     {

@@ -77,7 +77,7 @@ function ClientsPage() {
       </div>
       <div className="form-group  m-2 w-auto me-1">
         <label className="fs-6 mb-1"> Telefone </label>
-        <PhoneInput value={fone} onChange={handleChangeFone} />
+        <PhoneInput value={fone} onChange={handleChangeFone} classname={"form-control p-2 input"}/>
       </div>
     </div>
   );

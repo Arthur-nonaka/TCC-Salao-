@@ -5,6 +5,7 @@ const {
   getSale,
   getSaleMethod,
   getSaleMethodMonth,
+  getSaleMethodYear,
   getSaleQuantity,
   getSaleServices,
   getSaleYearMonth,
@@ -77,8 +78,23 @@ function AddSaleRoutes(app) {
 
   app.post("/pull/VendaMetodoMes", async (req, res) => {
     const email = req.body.email;
+    const month = req.body.month;
+    const year = req.body.year;
     try {
-      const rows = await getSaleMethodMonth(email);
+      const rows = await getSaleMethodMonth(email, month, year);
+      res.send(rows);
+      return;
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({ errorMessage: "Erro 500" });
+    }
+  });
+
+  app.post("/pull/VendaMetodoAno", async (req, res) => {
+    const email = req.body.email;
+    const year = req.body.year;
+    try {
+      const rows = await getSaleMethodYear(email, year);
       res.send(rows);
       return;
     } catch (error) {

@@ -2,15 +2,15 @@ import { useState, useEffect } from "react";
 import Chart from "react-apexcharts";
 import axios from "axios";
 
-function MethodDonutTotal({ email }) {
+function MethodDonutYear({ email, year }) {
   const [values, setValues] = useState([]);
 
   useEffect(() => {
     axios
-      .post("/pull/VendaMetodo", { email })
+      .post("/pull/VendaMetodoAno", { email, year })
       .then((res) => setValues(res.data))
       .catch((err) => console.log(err));
-  }, []);
+  }, [year]);
 
   let series = [];
   let labels = [];
@@ -24,29 +24,29 @@ function MethodDonutTotal({ email }) {
       type: "donut",
       width: 320,
     },
+    dataLabels: { enabled: false },
     legend: {
       show: false,
-      position: 'right',
+      position: "bottom",
     },
     //colors: ['#008FFB', '#FEB019', '#7AEA77', '#FF4560'],
-    dataLabels: {enabled: false},
     plotOptions: {
       pie: {
         donut: {
-          size: "70%",
+          size: "72%",
           labels: {
             show: true,
             name: {
-                show: true,
-                color: "#000"
+              show: true,
+              color: "#000",
             },
             value: {
-                show: true,
+              show: true,
             },
             total: {
               show: true,
-              label: "Vendas Total",
-              color: "#000000"
+              label: "Ano",
+              color: "#000000",
             },
           },
         },
@@ -56,10 +56,16 @@ function MethodDonutTotal({ email }) {
   };
 
   return (
-    <div style={{display: "flex", justifyContent: "start"}}>
-      <Chart options={options} series={series} width={240} height={240} type="donut" />
+    <div style={{ display: "flex", justifyContent: "start" }}>
+      <Chart
+        options={options}
+        series={series}
+        width={200}
+        height={200}
+        type="donut"
+      />
     </div>
   );
 }
 
-export default MethodDonutTotal;
+export default MethodDonutYear;
