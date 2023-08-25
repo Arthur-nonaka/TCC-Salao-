@@ -11,6 +11,8 @@ function ExpensesPage() {
   const [desc, setDesc] = useState("");
   const [price, setPrice] = useState(0);
   const [date, setDate] = useState("");
+  const [month, setMonth] = useState(new Date().getMonth()+1);
+  const [year, setYear] = useState(new Date().getFullYear());
 
   const [messageShow, setMessageShow] = useState(false);
   const [message, setMessage] = useState("");
@@ -24,11 +26,10 @@ function ExpensesPage() {
   const handleReset = () => {
     setReset(!reset);
   };
-
   const [expenses, setExpenses] = useState([]);
   useEffect(() => {
     axios
-      .post("/pull/Despesas", { email })
+      .post("/pull/Despesas", { email, year, month })
       .then((res) => {
         setExpenses(res.data);
       })
@@ -37,7 +38,7 @@ function ExpensesPage() {
         setMessage(err);
         setMessageShow(true);
       });
-  }, [reset, email]);
+  }, [reset, email, year, month]);
 
   const config = [
     {
@@ -120,6 +121,10 @@ function ExpensesPage() {
         size={"10000px"}
         type={type}
         handleReset={handleReset}
+        setYear={setYear}
+        setMonth={setMonth}
+        year={year}
+        month={month}
       />
       <FunctionsBar
         width={"300px"}

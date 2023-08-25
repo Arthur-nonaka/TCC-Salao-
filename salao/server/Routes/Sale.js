@@ -149,6 +149,12 @@ function AddSaleRoutes(app) {
     try {
       const gross = await getSaleProfit(email);
       const expenses = await getExpensesMonth(email);
+      if (gross[0].totalValue == null ) {
+        gross[0].totalValue = 0.00;  
+      }
+      if (expenses[0].expenseValue == null) {
+        expenses[0].expenseValue = 0.00;
+      }
       res.send({ gross: gross, expenses: expenses });
       return;
     } catch (error) {

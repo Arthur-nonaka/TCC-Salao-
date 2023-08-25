@@ -8,8 +8,10 @@ const {
 function AddExpensesRoutes(app) {
   app.post("/pull/Despesas", async (req, res) => {
     const email = req.body.email;
+    const year = req.body.year;
+    const month = req.body.month;
     try {
-      const rows = await getExpenses(email);
+      const rows = await getExpenses(email,year,month);
       res.send(rows);
       return;
     } catch (error) {

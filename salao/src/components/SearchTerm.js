@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import SortableTable from "./SortableTable";
 
-function SearchTerm({ data, config, size, type, handleReset, accordion }) {
+function SearchTerm({ data, config, size, type, handleReset, accordion, setYear, setMonth, year, month }) {
   const [SearchTerm, setSearchTerm] = useState("");
 
   const handleInputChange = (event) => {
@@ -27,6 +27,10 @@ function SearchTerm({ data, config, size, type, handleReset, accordion }) {
         type={type}
         handleReset={handleReset}
         accordion={accordion}
+        setYear={setYear}
+        setMonth={setMonth}
+        year={year}
+        month={month}
       />
     </div>
   );

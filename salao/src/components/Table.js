@@ -3,7 +3,7 @@ import { BsCaretRightFill, BsCaretLeftFill } from "react-icons/bs";
 import ShowRow from "./ShowRow";
 import ShowRowEdit from "./ShowRowEdit";
 
-function Table({ data, config, type, handleReset, size, accordion }) {
+function Table({ data, config, type, handleReset, size, accordion, setYear, setMonth, year, month }) {
   const [pageNumber, setPageNumber] = useState(1);
   const [editId, setEditId] = useState(0);
 
@@ -66,6 +66,81 @@ function Table({ data, config, type, handleReset, size, accordion }) {
     }
     return content;
   });
+  const handleLeftMonthClick = () => {
+    setPageNumber(1);
+    setMonth(month - 1);
+    if (month <= 1) {
+      setYear(year - 1);
+      setMonth(12);
+    }
+  }
+  const handleRightMonthClick = () => {
+    setPageNumber(1);
+    setMonth(month + 1);
+    if (month >= 12) {
+      setYear(year + 1);
+      setMonth(1);
+    }
+  }
+  let monthName;
+  switch (month) {
+    case 1:
+      monthName = "Janeiro";
+      break;
+    case 2:
+      monthName = "Fevereiro";
+      break;
+    case 3:
+      monthName = "Março";
+      break;
+    case 4:
+      monthName = "Abril";
+      break;
+    case 5:
+      monthName = "Maio";
+      break;
+    case 6:
+      monthName = "Junho";
+      break;
+    case 7:
+      monthName = "Julho";
+      break;
+    case 8:
+      monthName = "Agosto";
+      break;
+    case 9:
+      monthName = "Setembro";
+      break;
+    case 10:
+      monthName = "Outubro";
+      break;
+    case 11:
+      monthName = "Novembro";
+      break;
+    case 12:
+      monthName = "Dezembro";
+      break;
+  }
+
+  let monthContent = <div></div>;
+  if (year !== undefined) {
+    monthContent =
+      <div>
+        {year}
+        <button onClick={handleLeftMonthClick} className="buttonWithSymbol">
+          {" "}
+          <BsCaretLeftFill />{" "}
+        </button>
+        <label style={{width: "80px", textAlign: "center"}}>
+          {monthName}
+        </label>
+        <button onClick={handleRightMonthClick} className="buttonWithSymbol">
+          {" "}
+          <BsCaretRightFill />{" "}
+        </button>
+      </div>
+  }
+
   return (
     <div>
       <table
@@ -78,18 +153,20 @@ function Table({ data, config, type, handleReset, size, accordion }) {
         <tbody>{renderedRows}</tbody>
       </table>
       <div className="page">
-        <button onClick={handleLeftClick} className="buttonWithSymbol">
-          <BsCaretLeftFill size={19} />
-        </button>
-        <label style={{ fontSize: "20px" }}>{pageNumber}</label>
-
-        <button
-          onClick={handleRightClick}
-          className="buttonWithSymbol"
-          disabled={nextupdatedData.length === 0}
-        >
-          <BsCaretRightFill size={19} />
-        </button>
+        <div>
+          <button onClick={handleLeftClick} className="buttonWithSymbol">
+            <BsCaretLeftFill size={19} />
+          </button>
+          <label style={{ fontSize: "20px" }}>{pageNumber}</label>
+          <button
+            onClick={handleRightClick}
+            className="buttonWithSymbol"
+            disabled={nextupdatedData.length === 0}
+          >
+            <BsCaretRightFill size={19} />
+          </button>
+        </div>
+        {monthContent}
       </div>
     </div>
   );

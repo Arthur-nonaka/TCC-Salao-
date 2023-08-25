@@ -3,8 +3,8 @@ import axios from "axios";
 
 function Profit({ email }) {
   const [values, setValues] = useState({
-    gross: [{ totalValue: 0 }],
-    expenses: [{ expenseValue: 0 }],
+    gross: [{ totalValue: 0.00 }],
+    expenses: [{ expenseValue: 0.00 }],
   });
 
   useEffect(() => {
