@@ -4,7 +4,7 @@ import axios from "axios";
 
 import Message from "../components/Message";
 
-import logo from "./yoshi.png";
+import logo from "./logo2.png";
 import "../Style.css";
 
 function LoginPage() {

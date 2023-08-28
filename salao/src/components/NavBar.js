@@ -1,5 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 
+import logo from "../pages/logo.jpeg";
+
 function NavBar() {
   let currentLocation = useLocation();
   const email = currentLocation.state.email;
@@ -10,8 +12,8 @@ function NavBar() {
       style={{ backgroundColor: "#FBACC7" }}
     >
       <div className="container-fluid">
-        <Link style={{textDecoration: "none"}} to="/beautyflow" state={{ email }}>
-          <p className="navbar-brand">Logo</p>
+        <Link style={{ textDecoration: "none" }} to="/beautyflow" state={{ email }}>
+          <img className="" src={logo} alt="" width="72" height="57" />
         </Link>
         <button
           className="navbar-toggler"
