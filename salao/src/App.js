@@ -20,7 +20,7 @@ function App() {
   const [month, setMonth] = useState(new Date().getMonth() + 1);
   const [showLoading, setShowLoading] = useState(false);
 
-  let content = <Outlet />;
+  let content = <Outlet setShowLoading={setShowLoading}/>;
   if (currentLocation.pathname === "/beautyflow") {
     content = (
       <div className="container-fluid d-flex flex-row justify-content-start mt-2">

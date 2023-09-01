@@ -2,7 +2,12 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 
-app.use(cors());
+const corsOptions = {
+    origin: 'http://177.91.120.132',
+    optionsSuccessStatus: 200,
+  };
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 module.exports = { app };
