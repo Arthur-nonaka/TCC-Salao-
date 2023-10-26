@@ -27,7 +27,7 @@ function App() {
     content = (
       <div className="container-fluid d-flex flex-row justify-content-start mt-2">
         <div className="">
-          <Profit email={email} />
+          <Profit email={email} year={year} month={month} />
         </div>
         <div>
           <div className="row">

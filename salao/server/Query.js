@@ -257,10 +257,18 @@ async function getExpenses(email, year, month) {
   return rows;
 }
 
-async function getExpensesMonth(email) {
+async function getExpensesMonth(email, month, year) {
   const [rows] = await db.query(
-    "SELECT SUM(des_valor) As expenseValue FROM despesa D, usuario U WHERE D.usu_codigo = U.usu_codigo AND usu_email = ? AND MONTH(des_data) = MONTH(NOW()) AND YEAR(des_data) = YEAR(NOW())",
-    [email]
+    "SELECT SUM(des_valor) As expenseValue FROM despesa D, usuario U WHERE D.usu_codigo = U.usu_codigo AND usu_email = ? AND MONTH(des_data) = ? AND YEAR(des_data) = ?",
+    [email, month, year]
+  );
+  return rows;
+}
+
+async function getExpensesYear(email, year) {
+  const [rows] = await db.query(
+    "SELECT SUM(des_valor) As expenseValue FROM despesa D, usuario U WHERE D.usu_codigo = U.usu_codigo AND usu_email = ? AND YEAR(des_data) = ?",
+    [email, year]
   );
   return rows;
 }
@@ -377,16 +385,16 @@ async function getSaleQuantity(email, year) {
   return rows;
 }
 
-async function getSaleProfit(email) {
+async function getSaleProfit(email, month, year) {
   const [rows] = await db.query(
     `
   SELECT SUM(ven_valorTotal)As totalValue
   FROM venda V, usuario U WHERE V.usu_codigo = U.usu_codigo
   AND usu_email = ?
-  AND MONTH(ven_data) = MONTH(NOW())
-  AND YEAR(ven_data) = YEAR(NOW())
+  AND MONTH(ven_data) = ?
+  AND YEAR(ven_data) = ?
   `,
-    [email]
+    [email, month, year]
   );
   return rows;
 }
@@ -460,6 +468,7 @@ module.exports = {
 
   getExpenses,
   getExpensesMonth,
+  getExpensesYear,
   deleteExpense,
   editExpense,
   registerExpense,

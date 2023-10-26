@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-function Profit({ email }) {
+function Profit({ email, year, month }) {
+  const [range, setRange] = useState('anual');
   const [values, setValues] = useState({
     gross: [{ totalValue: 0.00 }],
     expenses: [{ expenseValue: 0.00 }],
@@ -9,7 +10,7 @@ function Profit({ email }) {
 
   useEffect(() => {
     axios
-      .post("/pull/VendaDinheiro", { email })
+      .post("/pull/VendaDinheiro", { email, year, month, range })
       .then((res) => {
         setValues(res.data);
       })
@@ -18,6 +19,11 @@ function Profit({ email }) {
 
   return (
     <div className="m-1">
+      {range}
+      <div className="btn-group" role="group">
+        <button type="button" className="btn btn-info" onClick={() => setRange('anual')}>Anual</button>
+        <button type="button" className="btn btn-info" onClick={() => setRange('mensal')}>Mensal</button>
+      </div>
       <div className="card bg-light mb-2" style={{ width: "260px" }} >
         <h5 className="card-header ">Lucro Final</h5>
         <div className="card-body">

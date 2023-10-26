@@ -11,6 +11,7 @@ const {
   getSaleYearMonth,
   getSaleProfit,
   getExpensesMonth,
+  getExpensesYear,
 } = require("../Query.js");
 
 function AddSaleRoutes(app) {
@@ -146,11 +147,26 @@ function AddSaleRoutes(app) {
 
   app.post("/pull/VendaDinheiro", async (req, res) => {
     const email = req.body.email;
+    const year = req.body.year;
+    const month = req.body.month;
+    const range = req.body.range;
     try {
-      const gross = await getSaleProfit(email);
-      const expenses = await getExpensesMonth(email);
-      if (gross[0].totalValue == null ) {
-        gross[0].totalValue = 0.00;  
+      let gross;
+      let expenses;
+      switch (range) {
+        case 'anual':
+          gross = await getSaleProfitYear(email,year);
+          expenses = await getExpensesYear(email,year);
+          break;
+        case 'mensal':
+          gross = await getSaleProfit(email, month, year);
+          expenses = await getExpensesMonth(email, month, year);
+          break;
+        default:
+          break;
+      }
+      if (gross[0].totalValue == null) {
+        gross[0].totalValue = 0.00;
       }
       if (expenses[0].expenseValue == null) {
         expenses[0].expenseValue = 0.00;
