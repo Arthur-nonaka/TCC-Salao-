@@ -15,6 +15,7 @@ function ShowSchedule({
   email,
 }) {
   const [services, setServices] = useState([]);
+  let isPastDate = false;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,7 +31,9 @@ function ShowSchedule({
 
   const servicesShow = services.map((service, index) => {
     if (service.ser_nome.length > 12) {
-      return <label key={index}>{service.ser_nome.substring(0, 12) + "..."}</label>
+      return (
+        <label key={index}>{service.ser_nome.substring(0, 12) + "..."}</label>
+      );
     }
     return <label key={index}>{service.ser_nome}</label>;
   });
@@ -42,10 +45,26 @@ function ShowSchedule({
       </div>
     );
   });
+  const date = new Date();
+  var datearray = schedule.age_date.split("-");
+  date.setHours(0);
+  date.setSeconds(0);
+  date.setMinutes(0);
+  date.setMilliseconds(0);
+  if (date > new Date(datearray[1] + "-" + datearray[0] + "-" + datearray[2])) {
+    isPastDate = true;
+  }
 
   let values = [schedule.cli_nome];
   return (
-    <div className="schedule-part">
+    <div
+      className="schedule-part"
+      style={
+        isPastDate
+          ? { backgroundColor: "#F6D55C" }
+          : { backgroundColor: "#FBC8DB" }
+      }
+    >
       {content}
       -------
       {servicesShow}
