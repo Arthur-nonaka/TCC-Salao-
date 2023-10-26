@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useOutletContext } from "react-router-dom";
 import axios from "axios";
 
 import Title from "../components/Title";
@@ -8,6 +8,7 @@ import Message from "../components/Message";
 import SearchTerm from "../components/SearchTerm";
 
 function ServicesPage() {
+  const setShowLoading = useOutletContext();
   const [desc, setDesc] = useState("");
   const [price, setPrice] = useState(0);
   const [nome, setNome] = useState("");
@@ -26,10 +27,12 @@ function ServicesPage() {
 
   const [services, setServices] = useState([]);
   useEffect(() => {
+    setShowLoading(true);
     axios
       .post("/pull/Servicos", { email, type })
       .then((res) => {
         setServices(res.data);
+        setShowLoading(false);
       })
       .catch((err) => {
         setMessageType("error");

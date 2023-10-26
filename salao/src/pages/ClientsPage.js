@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation,useOutletContext } from "react-router-dom";
 import axios from "axios";
 
 import PhoneInput from "../components/PhoneInput";
@@ -9,6 +9,7 @@ import Message from "../components/Message";
 import SearchTerm from "../components/SearchTerm";
 
 function ClientsPage() {
+  const setShowLoading = useOutletContext();
   const [name, setName] = useState("");
   const [fone, setFone] = useState("");
 
@@ -28,10 +29,12 @@ function ClientsPage() {
   const [clients, setClients] = useState([]);
 
   useEffect(() => {
+    setShowLoading(true);
     axios
       .post("/pull/Clientes", { email })
       .then((res) => {
         setClients(res.data);
+        setShowLoading(false);
       })
       .catch((err) => {
         setMessageType("error");

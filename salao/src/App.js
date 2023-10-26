@@ -4,6 +4,8 @@ import ReactDOM from "react-dom";
 import { Outlet, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 
+import logo from "./pages/logo.jpeg";
+
 import MethodDonut from "./components/Graph/MethodDonut";
 import MethodDonutTotal from "./components/Graph/MethodDonutTotal";
 import ServicesPie from "./components/Graph/ServicesPie";
@@ -20,7 +22,7 @@ function App() {
   const [month, setMonth] = useState(new Date().getMonth() + 1);
   const [showLoading, setShowLoading] = useState(false);
 
-  let content = <Outlet setShowLoading={setShowLoading}/>;
+  let content = <Outlet context={setShowLoading} />;
   if (currentLocation.pathname === "/beautyflow") {
     content = (
       <div className="container-fluid d-flex flex-row justify-content-start mt-2">
@@ -57,11 +59,6 @@ function App() {
               <MethodDonut email={email} year={year} month={month} />
             </div>
           </div>
-          {/* <div className="row">
-            <div className="col bg-primary"> 1</div>
-            <div className="col bg-alert"> 2</div>
-            <div className="col bg-danger"> 3</div>
-          </div> */}
         </div>
       </div>
     );
@@ -74,7 +71,30 @@ function App() {
           document.querySelector(".loading")
         )}
       <NavBar />
-      {content}
+      <div style={{ height: "94vh" }}>{content}</div>
+
+      <footer>
+        <div className="rodape">
+          <div className="contato">
+            <label className="title">Fale Conosco:</label>
+            <i className="bx bxl-instagram-alt">
+              <a className="desc">@BeautyFlowOFC</a>
+            </i>
+            <i className="bx bxl-facebook-circle">
+              <a className="desc">BeautyFlowOFC</a>
+            </i>
+            <i className="bx bxl-twitter">
+              <a className="desc">yourBeautyFlow</a>
+            </i>
+            <i className="bx bxs-phone">
+              <a className="desc">99607-1828</a>
+            </i>
+          </div>
+          <div className="logo">
+            <img className="logoImg" src={logo} />
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

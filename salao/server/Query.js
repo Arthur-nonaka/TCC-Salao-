@@ -189,7 +189,6 @@ async function getScheduleAccordion(code) {
     "SELECT ser_nome,S.ser_codigo, ser_preco FROM servico S, agenda_servico AGS WHERE S.ser_codigo = AGS.ser_codigo AND AGS.age_codigo = ?",
     [code]
   );
-  console.log(rows);
   return rows;
 }
 

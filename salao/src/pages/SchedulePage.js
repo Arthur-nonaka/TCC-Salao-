@@ -1,15 +1,15 @@
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useOutletContext } from "react-router-dom";
 import axios from "axios";
 
 import Title from "../components/Title";
 import FunctionsBar from "../components/FunctionsBar";
 import Message from "../components/Message";
-// import SearchTerm from "../components/SearchTerm";
 import ComboBox from "../components/ComboBox";
 import Schedules from "../components/Schedules";
 
 function SchedulePage() {
+  const setShowLoading = useOutletContext();
   const [date, setDate] = useState("");
   const [timeStart, setTimeStart] = useState("");
   const [timeEnd, setTimeEnd] = useState("");
@@ -50,6 +50,7 @@ function SchedulePage() {
   };
 
   useEffect(() => {
+    setShowLoading(true);
     axios
       .post("/pull/Agenda", { email })
       .then((res) => {
@@ -72,6 +73,7 @@ function SchedulePage() {
       .post("/pull/Servicos", { email})
       .then((res) => {
         setServices(res.data);
+        setShowLoading(false);
       })
       .catch((err) => {
         setMessageType("error");
