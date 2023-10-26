@@ -10,6 +10,7 @@ const {
   getSaleServices,
   getSaleYearMonth,
   getSaleProfit,
+  getSaleProfitYear,
   getExpensesMonth,
   getExpensesYear,
 } = require("../Query.js");

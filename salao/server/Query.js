@@ -399,6 +399,19 @@ async function getSaleProfit(email, month, year) {
   return rows;
 }
 
+async function getSaleProfitYear(email, year) {
+  const [rows] = await db.query(
+    `
+  SELECT SUM(ven_valorTotal)As totalValue
+  FROM venda V, usuario U WHERE V.usu_codigo = U.usu_codigo
+  AND usu_email = ?
+  AND YEAR(ven_data) = ?
+  `,
+    [email,year]
+  );
+  return rows;
+}
+
 async function getSaleInfo(schedule) {
   await db.query(`SELECT `);
 }
@@ -483,4 +496,5 @@ module.exports = {
   getSaleYearMonth,
   getSaleMethodYear,
   getSaleProfit,
+  getSaleProfitYear,
 };
