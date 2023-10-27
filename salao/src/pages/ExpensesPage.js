@@ -5,7 +5,7 @@ import axios from "axios";
 import Title from "../components/Title";
 import FunctionsBar from "../components/FunctionsBar";
 import Message from "../components/Message";
-import SearchTerm from "../components/SearchTerm";
+import Table from "../components/Table";
 
 function ExpensesPage() {
   const setShowLoading = useOutletContext();
@@ -118,7 +118,7 @@ function ExpensesPage() {
         messageType={messageType}
         message={message}
       />
-      <SearchTerm
+      <Table
         data={expenses}
         config={config}
         size={"10000px"}

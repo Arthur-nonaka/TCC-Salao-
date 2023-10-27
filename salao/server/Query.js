@@ -251,7 +251,7 @@ async function verifyScheduleEqual(dateTime, dateTimeEnd, email) {
 
 async function getExpenses(email, year, month) {
   const [rows] = await db.query(
-    "SELECT des_codigo As id,des_descricao,des_valor,des_data FROM despesa D, usuario U WHERE D.usu_codigo = U.usu_codigo AND usu_email = ? AND ? = MONTH(NOW()) AND ? = YEAR(NOW())",
+    "SELECT des_codigo As id,des_descricao,des_valor,des_data FROM despesa D, usuario U WHERE D.usu_codigo = U.usu_codigo AND usu_email = ? AND ? = MONTH(des_data) AND ? = YEAR(des_data)",
     [email, month, year]
   );
   return rows;

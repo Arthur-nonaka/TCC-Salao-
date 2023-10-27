@@ -2,7 +2,18 @@ import { useState } from "react";
 
 import SortableTable from "./SortableTable";
 
-function SearchTerm({ data, config, size, type, handleReset, accordion, setYear, setMonth, year, month }) {
+function SearchTerm({
+  data,
+  config,
+  size,
+  type,
+  handleReset,
+  accordion,
+  setYear,
+  setMonth,
+  year,
+  month,
+}) {
   const [SearchTerm, setSearchTerm] = useState("");
 
   const handleInputChange = (event) => {
@@ -18,8 +29,9 @@ function SearchTerm({ data, config, size, type, handleReset, accordion, setYear,
 
   return (
     <div>
-      Search:
-      <input value={SearchTerm} onChange={handleInputChange}></input>
+      <div className="search">
+        <input value={SearchTerm} onChange={handleInputChange}></input>
+      </div>
       <SortableTable
         data={updatedData}
         config={config}

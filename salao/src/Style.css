@@ -275,6 +275,12 @@ label:hover {
     height: 250px;
 }
 
+.search {
+    width: 100%;
+    padding: 10px;
+    background-color: #FBACC7;
+}
+
 .buttons {
     display: flex;
     margin: 2px;
